@@ -1,0 +1,1018 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Abdelrahman Hassan — Backend Developer</title>
+
+<!-- fonts & icons -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+    
+    .subtitle{
+  font-size:22px;
+  font-weight:600;
+  color:#38bdf8;
+  margin-top:14px;
+}
+    .contact-wrapper{
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  gap:40px;
+  max-width:1000px;
+  margin:40px auto;
+}
+
+.contact-form{
+  background:rgba(255,255,255,0.03);
+  padding:30px;
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,0.05);
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+
+.form-row{
+  display:flex;
+  gap:18px;
+}
+
+.contact-form input,
+.contact-form textarea{
+  width:100%;
+  padding:14px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.1);
+  background:rgba(0,0,0,0.2);
+  color:white;
+  font-family:Poppins;
+}
+
+.contact-form button{
+  padding:14px;
+  border:none;
+  border-radius:999px;
+  font-weight:700;
+  background:linear-gradient(90deg,#38bdf8,#34d399);
+  cursor:pointer;
+}
+
+.contact-info{
+  display:flex;
+  flex-direction:column;
+  gap:25px;
+  justify-content:center;
+}
+
+.contact-info div{
+  display:flex;
+  gap:15px;
+  align-items:center;
+  font-size:15px;
+}
+
+.contact-info i{
+  color:#38bdf8;
+  font-size:20px;
+}
+
+@media(max-width:900px){
+  .contact-wrapper{
+    grid-template-columns:1fr;
+  }
+
+  .form-row{
+    flex-direction:column;
+  }
+}
+.edu-wrapper{
+  position:relative;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(350px,1fr));
+  gap:50px;
+  max-width:1000px;
+  margin:60px auto;
+}
+
+.edu-wrapper::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:0;
+  transform:translateX(-50%);
+  width:4px;
+  height:100%;
+  background:linear-gradient(180deg,#38bdf8,#34d399);
+  opacity:.2;
+}
+
+.edu-card{
+  position:relative;
+  background:rgba(255,255,255,0.03);
+  padding:30px;
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,0.05);
+  min-height:260px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  text-align:center;
+  box-shadow:0 20px 40px rgba(0,0,0,.6);
+  transition:.3s;
+}
+
+.edu-card:hover{
+  transform:translateY(-8px);
+}
+
+.edu-card h3{
+  color:#38bdf8;
+  margin-bottom:6px;
+}
+
+.edu-card h4{
+  font-weight:600;
+  margin-bottom:8px;
+}
+
+.edu-date{
+  display:block;
+  font-size:14px;
+  opacity:.7;
+  margin-bottom:10px;
+}
+
+.edu-dot{
+  position:absolute;
+  top:50%;
+  left:-32px;
+  transform:translateY(-50%);
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  background:linear-gradient(90deg,#38bdf8,#34d399);
+  box-shadow:0 0 20px rgba(56,189,248,.5);
+}
+
+.edu-card:nth-child(2) .edu-dot{
+  left:auto;
+  right:-32px;
+}
+
+@media(max-width:900px){
+
+  .edu-wrapper{
+    grid-template-columns:1fr;
+  }
+
+  .edu-wrapper::before{
+    left:20px;
+  }
+
+  .edu-dot{
+    left:-28px !important;
+    right:auto !important;
+  }
+}
+.hero-stats-modern{
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap:40px;
+  margin:35px 0;
+}
+
+.stat-box{
+  text-align:left;
+}
+
+.stat-box h2{
+  font-size:38px;
+  font-weight:800;
+  color:#ffffff;
+  margin-bottom:6px;
+}
+
+.stat-box span{
+  font-size:14px;
+  color:rgba(255,255,255,0.6);
+}
+
+.divider{
+  width:1px;
+  height:50px;
+  background:rgba(255,255,255,0.15);
+}
+
+@media(max-width:768px){
+  .hero-stats-modern{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:25px;
+  }
+
+  .divider{
+    display:none;
+  }
+}
+/* =========================
+   VARS
+   ========================= */
+:root{
+  --bg1:#041428; --bg2:#062a36;
+  --accent:#34d399; --accent2:#38bdf8; --muted:rgba(230,238,243,0.78);
+  --card:#0d2734; --glass: rgba(255,255,255,0.03);
+  --text:#e6eef3; --soft:#c6dbe6;
+  --max-width:1180px;
+}
+
+/* =========================
+   RESET + BASE
+   ========================= */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family:'Poppins',sans-serif;background:linear-gradient(120deg,var(--bg1),var(--bg2));color:var(--text);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+
+/* =========================
+   BACKGROUND LAYERS
+   ========================= */
+/* canvas for particles */
+#bg-canvas{position:fixed;inset:0;z-index:0;display:block;pointer-events:none}
+/* soft blurred blobs */
+.bg-blobs{position:fixed;inset:0;z-index:1;pointer-events:none;mix-blend-mode:screen}
+.blob{position:absolute;border-radius:50%;filter:blur(64px);opacity:0.14;transform:translate3d(0,0,0)}
+.blob.b1{width:560px;height:560px;right:-140px;bottom:-160px;background:linear-gradient(180deg,#1fb6ff,#22c55e)}
+.blob.b2{width:460px;height:460px;left:-160px;top:-80px;background:linear-gradient(180deg,#6d28d9,#38bdf8)}
+.blobAnim{animation:blobMove 16s ease-in-out infinite}
+@keyframes blobMove{
+  0%{transform:translateY(0) scale(1);opacity:0.14}
+  25%{transform:translateY(-22px) scale(1.03);opacity:0.16}
+  50%{transform:translateY(-36px) scale(1.06);opacity:0.12}
+  75%{transform:translateY(-22px) scale(1.03);opacity:0.16}
+  100%{transform:translateY(0) scale(1);opacity:0.14}
+}
+
+/* overlay for depth */
+.bg-overlay{position:fixed;inset:0;pointer-events:none;background:
+  linear-gradient(180deg, rgba(3,10,16,0.08), rgba(2,8,12,0.14));mix-blend-mode:overlay;z-index:2}
+
+/* =========================
+   NAV / HEADER
+   ========================= */
+.container{max-width:var(--max-width);margin:0 auto;padding:120px 6% 80px;position:relative;z-index:6}
+nav{position:fixed;left:0;right:0;top:0;display:flex;justify-content:space-between;align-items:center;padding:12px 6%;background:rgba(255,255,255,0.02);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,0.03);z-index:40}
+.logo{display:flex;gap:12px;align-items:center}
+.logo img{width:44px;height:44px;border-radius:50%;border:2px solid rgba(255,255,255,0.03);object-fit:cover}
+.logo .title{font-weight:800;letter-spacing:0.2px}
+.logo small{display:block;font-size:11px;color:var(--soft)}
+.nav-links{display:flex;gap:12px;align-items:center}
+.nav-links a{color:var(--text);text-decoration:none;padding:8px 10px;border-radius:8px;font-weight:600;transition:all .18s}
+.nav-links a:hover{background:rgba(255,255,255,0.02);transform:translateY(-3px);color:var(--accent2)}
+.cv-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(90deg,var(--accent2),var(--accent));color:#042025;padding:8px 12px;border-radius:999px;font-weight:700;text-decoration:none;box-shadow:0 12px 36px rgba(56,189,248,0.06)}
+.toggle-anim{margin-left:6px;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:var(--soft);cursor:pointer}
+
+/* =========================
+   HERO
+   ========================= */
+.hero{display:flex;gap:36px;align-items:center;justify-content:space-between}
+.left{max-width:720px}
+.title-lg{font-size:36px;font-weight:800;line-height:1.02}
+.title-lg span{background:linear-gradient(90deg,var(--accent2),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.subtitle{margin-top:8px;color:rgba(230,238,243,0.92);font-weight:600}
+.lead{margin-top:14px;color:rgba(230,238,243,0.84);font-size:15px}
+.cta{margin-top:18px;display:flex;gap:12px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:999px;border:none;cursor:pointer;font-weight:700;background:linear-gradient(90deg,var(--accent2),var(--accent));color:#042025;box-shadow:0 12px 36px rgba(56,189,248,0.06);transition:transform .16s}
+.btn:hover{transform:translateY(-6px)}
+.btn-outline{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--text);padding:9px 14px;border-radius:999px}
+
+/* profile */
+.right{width:280px;text-align:center}
+.avatar{width:300px;height:300px;border-radius:50%;overflow:hidden;margin:0 auto;border:4px solid rgba(56,189,248,0.06);box-shadow:0 12px 44px rgba(2,6,23,0.6);transition:transform .45s}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.avatar:hover{transform:scale(1.03) rotate(3deg)}
+
+/* =========================
+   SECTIONS & TITLES
+   ========================= */
+section{padding:70px 0}
+.section-title{text-align:center;font-size:20px;color:var(--accent2);font-weight:700;margin-bottom:6px}
+.section-sub{max-width:900px;margin:8px auto 0;text-align:center;color:rgba(230,238,243,0.82)}
+
+/* =========================
+   ABOUT CARD
+   ========================= */
+.about-card{max-width:980px;margin:18px auto;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.02);box-shadow:0 18px 40px rgba(0,0,0,0.6)}
+.about-grid{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:12px}
+.about-item{padding:10px 12px;border-radius:10px;background:rgba(255,255,255,0.01);font-weight:600;color:rgba(230,238,243,0.9)}
+
+/* =========================
+   EDUCATION (FIXED & EQUAL)
+   ========================= */
+/* container + vertical timeline line */
+.timeline{max-width:980px;margin:18px auto;position:relative;padding:20px 0;z-index:6}
+.timeline-line{position:absolute;left:50%;transform:translateX(-50%);width:6px;height:100%;background:linear-gradient(180deg,var(--accent2),var(--accent));opacity:0.06;border-radius:6px;box-shadow:inset 0 0 18px rgba(0,0,0,0.35)}
+
+/* grid that ensures equal height cards: use align-stretch + min-height */
+.edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px 32px;align-items:stretch}
+.edu-item{position:relative;display:flex;flex-direction:column;min-height:210px;opacity:0;transform:translateY(20px);transition:all .6s cubic-bezier(.2,.9,.2,1)}
+.edu-item.show{opacity:1;transform:none}
+
+/* bubble set to stretch and center content vertically */
+.edu-bubble{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));padding:22px;border-radius:12px;border:1px solid rgba(255,255,255,0.02);box-shadow:0 12px 36px rgba(2,6,23,0.6);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;min-height:200px;transition:transform .4s,box-shadow .4s}
+.edu-bubble:hover{transform:translateY(-6px);box-shadow:0 26px 60px rgba(2,6,23,0.7)}
+.edu-meta{font-weight:800;color:var(--accent2);margin-bottom:8px;font-size:17px}
+.edu-date{font-size:13px;color:rgba(230,238,243,0.72);margin-bottom:8px}
+.edu-desc{color:rgba(230,238,243,0.88);line-height:1.45}
+
+/* left / right alignment for text visual */
+.edu-item.left .edu-bubble{text-align:right}
+.edu-item.right .edu-bubble{text-align:left}
+
+/* small marker circle next to the center line */
+.marker{position:absolute;width:18px;height:18px;border-radius:50%;background:linear-gradient(90deg,var(--accent2),var(--accent));box-shadow:0 8px 22px rgba(45,212,191,0.09)}
+
+/* marker positions */
+.edu-item.left .marker{right:-10px;top:36px}
+.edu-item.right .marker{left:-10px;top:36px}
+
+/* a subtle floating animation for edu cards to look alive */
+@keyframes eduFloat {
+  0%{transform:translateY(0)}
+  50%{transform:translateY(-6px)}
+  100%{transform:translateY(0)}
+}
+
+/* =========================
+   SKILLS
+   ========================= */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:18px}
+.skill{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));padding:12px;border-radius:10px;display:flex;align-items:center;gap:10px;border:1px solid rgba(255,255,255,0.02);transition:transform .18s}
+.skill i{font-size:18px;color:var(--accent2)}
+.skill:hover{transform:translateY(-6px);box-shadow:0 10px 30px rgba(56,189,248,0.04)}
+
+/* =========================
+   PROJECTS
+   ========================= */
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:14px}
+.project{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));border-radius:12px;overflow:hidden;padding:0;border:1px solid rgba(255,255,255,0.02);transform-style:preserve-3d;transition:transform .22s,box-shadow .22s;cursor:pointer}
+.project .thumb{height:150px;width:100%;object-fit:cover;display:block;transition:transform .28s}
+.project:hover .thumb{transform:scale(1.03)}
+.body{padding:12px}
+.project h4{margin:0 0 8px}
+.project p{margin:0;color:rgba(230,238,243,0.85);font-size:13px}
+.links{margin-top:12px;display:flex;gap:8px;align-items:center}
+.icon{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.015);color:var(--accent2);border:1px solid rgba(255,255,255,0.02);text-decoration:none;transition:transform .12s}
+.icon:hover{transform:translateY(-4px);box-shadow:0 10px 28px rgba(45,212,191,0.05)}
+
+/* =========================
+   CONTACT
+   ========================= */
+.contact-grid{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.contact-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;background:linear-gradient(90deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));border:1px solid rgba(56,189,248,0.06);box-shadow:0 10px 30px rgba(2,6,23,0.45)}
+.contact-item i{color:var(--accent2);background:rgba(255,255,255,0.02);padding:8px;border-radius:8px}
+.contact-item a{color:var(--text);text-decoration:underline;font-weight:700;transition:color .12s}
+.contact-item a:hover{color:var(--accent)}
+
+/* =========================
+   MODAL
+   ========================= */
+.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:60;background:rgba(1,6,12,0.7);backdrop-filter:blur(6px)}
+.modal.show{display:flex}
+.modal-card{width:min(920px,96%);background:linear-gradient(180deg,#07101b,#0a1622);border-radius:12px;padding:18px;border:1px solid rgba(56,189,248,0.06);transform:scale(.94);opacity:0;transition:all .28s}
+.modal.show .modal-card{transform:scale(1);opacity:1}
+.modal-hero{display:flex;gap:18px;align-items:flex-start}
+.modal-hero img{width:48%;border-radius:8px;object-fit:cover}
+.modal-ct{flex:1}
+.modal-title{font-size:20px;margin:0 0 8px}
+.modal-desc{color:rgba(230,238,243,0.88)}
+.modal-actions{margin-top:12px;display:flex;gap:10px}
+
+/* =========================
+   REVEAL HELPERS & RESPONSIVE
+   ========================= */
+.reveal{opacity:0;transform:translateY(28px);transition:all .7s cubic-bezier(.2,.9,.2,1)}
+.reveal.show{opacity:1;transform:translateY(0)}
+
+@media(max-width:920px){
+  .hero{flex-direction:column;gap:18px}
+  .right{width:100%}
+  .avatar{width:180px;height:180px}
+  .edu-grid{grid-template-columns:1fr;gap:18px}
+  .timeline-line{left:18px;transform:none;height:100%}
+  .edu-item.left .marker{right:auto;left:-8px;top:20px}
+  .edu-item.right .marker{left:-8px;top:20px}
+}
+
+/* =========================
+   LONG COMMENT: End of CSS
+   (lots of visual tuning above to keep code readable)
+   ========================= */
+</style>
+</head>
+<body>
+
+<!-- =========================
+     BACKGROUND LAYERS: Canvas + Blobs + Overlay
+     ========================= -->
+<canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+<div class="bg-blobs" aria-hidden="true">
+  <div class="blob b1 blobAnim" aria-hidden="true"></div>
+  <div class="blob b2 blobAnim" aria-hidden="true" style="animation-delay:2s"></div>
+</div>
+
+<div class="bg-overlay" aria-hidden="true"></div>
+
+<!-- =========================
+     NAV / HEADER
+     ========================= -->
+<nav>
+  <div class="logo">
+    <img src="images/profile.jpg" alt="profile">
+    <div>
+      <div class="title">Abdelrahman Hassan</div>
+      <small>Backend Developer</small>
+    </div>
+  </div>
+
+  <div class="nav-links" role="navigation" aria-label="main">
+    <a href="#about">About</a>
+    <a href="#education">Education</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+    <a href="achievements.html">Achievements</a>
+    <a class="cv-btn" href="cv.pdf" download><i class="fa fa-download"></i>&nbsp;Download CV</a>
+    <button id="toggleAnim" class="toggle-anim" title="Toggle background animation">⏯ Animation</button>
+  </div>
+</nav>
+
+<!-- =========================
+     MAIN CONTAINER
+     ========================= -->
+<main class="container" role="main">
+
+  <!-- HERO -->
+  <section class="hero reveal" id="hero">
+    <div class="left">
+      <div class="title-lg">Hi — I'm <span>Abdelrahman Hassan</span></div>
+      <div class="subtitle" id="typing">Backend Developer · Laravel · APIs</div>
+      <p class="lead">I specialize in designing secure, scalable back-end architectures powered by Laravel,
+MySQL, and Redis. My expertise lies in crafting clean RESTful APIs,
+optimizing database performance, and implementing robust authentication systems.
+
+With a strong focus on code quality and maintainability,
+I build production-ready solutions that are engineered to scale,
+handle real-world traffic, and deliver long-term reliability.</p>
+      <div class="cta" role="region" aria-label="hero actions">
+        <div class="hero-stats-modern">
+
+  <div class="stat-box">
+    <h2>2+</h2>
+    <span>Years Experience</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="stat-box">
+    <h2>20+</h2>
+    <span>Projects Delivered</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="stat-box">
+    <h2>15+</h2>
+    <span>Happy Clients</span>
+  </div>
+
+</div>
+        <!-- <a class="btn" href="#projects" aria-label="View projects"><i class="fa fa-folder-open"></i> View Projects</a> -->
+        <!-- <a class="btn-outline" href="mailto:abdelrahmanhasan020@gmail.com" aria-label="Send email"><i class="fa fa-envelope"></i> Email</a> -->
+      </div>
+    </div>
+
+    <div class="right" aria-hidden="false">
+      <div class="avatar" title="Profile photo"><img src="images/profile.jpg" alt="Abdelrahman Hassan"></div>
+      <div style="margin-top:10px">
+        <div style="font-weight:700">Mansoura, Egypt</div>
+        <!-- <div style="color:rgba(230,238,243,0.72);font-size:13px;margin-top:6px">Laravel • APIs • MySQL • Redis</div> -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="reveal" aria-labelledby="aboutTitle">
+    <h2 id="aboutTitle" class="section-title">About</h2>
+    <p class="section-sub">Quick summary of experience and core strengths</p>
+
+    <div class="about-card" role="article" aria-label="About card">
+      <p>Backend Developer specialized in Laravel and scalable API architecture.
+I build secure, high-performance backend systems with clean code practices,
+optimized databases, and production-ready authentication systems.
+Focused on reliability, maintainability, and real-world scalability.</p>
+
+      <div class="about-grid" role="list">
+        <div class="about-item" role="listitem">Backend APIs</div>
+        <div class="about-item" role="listitem">Authentication</div>
+        <div class="about-item" role="listitem">DB Optimization</div>
+        <div class="about-item" role="listitem">Redis &amp; Caching</div>
+      </div>
+    </div>
+  </section>
+
+
+        <section id="education" class="reveal">
+  <h2 class="section-title">Education</h2>
+  <p class="section-sub">Formal education as listed in my CV</p>
+
+  <div class="edu-wrapper">
+
+    <div class="edu-card">
+      <div class="edu-dot"></div>
+      <h3>Faculty of Computer & Information Sciences</h3>
+      <h4>Mansoura University</h4>
+      <span class="edu-date">10/2023 – 10/2026</span>
+      <p>Currently enrolled (Computer Science / Software Engineering focus)</p>
+    </div>
+
+    <div class="edu-card">
+      <div class="edu-dot"></div>
+      <h3>Faculty of Computer & Artificial Intelligence</h3>
+      <h4>Beni-Suef University</h4>
+      <span class="edu-date">10/2022 – 06/2023</span>
+      <p>Previously attended (transfer)</p>
+    </div>
+
+  </div>
+
+  <!-- SKILLS -->
+  <section id="skills" class="reveal" aria-labelledby="skillsTitle">
+    <h2 id="skillsTitle" class="section-title">Skills</h2>
+    <p class="section-sub">Technologies &amp; tools I use regularly</p>
+
+    <div class="skills-grid" role="list">
+      <div class="skill" role="listitem"><i class="fa-brands fa-laravel" aria-hidden="true"></i><div>Laravel</div></div>
+      <div class="skill" role="listitem"><i class="fa fa-server" aria-hidden="true"></i><div>RESTful APIs</div></div>
+      <div class="skill" role="listitem"><i class="fa fa-database" aria-hidden="true"></i><div>MySQL</div></div>
+      <div class="skill" role="listitem"><i class="fa fa-bolt" aria-hidden="true"></i><div>Redis</div></div>
+      <div class="skill" role="listitem"><i class="fa fa-lock" aria-hidden="true"></i><div>Auth &amp; Security</div></div>
+      <div class="skill" role="listitem"><i class="fa-brands fa-aws" aria-hidden="true"></i><div>AWS EC2</div></div>
+      <div class="skill" role="listitem"><i class="fa-brands fa-github" aria-hidden="true"></i><div>Git &amp; GitHub</div></div>
+      <div class="skill" role="listitem"><i class="fa fa-code" aria-hidden="true"></i><div>OOP &amp; SOLID</div></div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="reveal" aria-labelledby="projectsTitle">
+    <h2 id="projectsTitle" class="section-title">Projects</h2>
+    <p class="section-sub">Five selected projects — click any project to open a larger view</p>
+
+    <div class="projects-grid" id="projectsGrid" role="list">
+      <!-- Smart Learn -->
+      <article class="project" data-title="Smart Learn" data-img="images/smartlearn.png" data-desc="AI-powered learning platform with chatbot and smart tools." data-gh="https://github.com/Abdelrahman5884/Smart-Learn" role="listitem" tabindex="0">
+        <img class="thumb" src="images/smartlearn.png" alt="Smart Learn">
+        <div class="body">
+          <h4>Smart Learn</h4>
+          <p>AI-powered learning platform with chatbot and smart tools.</p>
+          <div class="links">
+            <a class="icon" href="https://github.com/Abdelrahman5884/Smart-Learn" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+            <a class="icon" href="https://www.linkedin.com/posts/abdelrahman-hassan-809b3b339_webdevelopment-php-laravel-activity-7370444747905142784-XNJK" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Bright -->
+      <article class="project" data-title="Bright E-Learning" data-img="images/bright.png" data-desc="E-learning platform with progress tracking & real-time interactions." data-gh="https://github.com/Abdelrahman5884/bright" role="listitem" tabindex="0">
+        <img class="thumb" src="images/bright.png" alt="Bright">
+        <div class="body">
+          <h4>Bright E-Learning</h4>
+          <p>E-learning platform with progress tracking and real-time interactions.</p>
+          <div class="links">
+            <a class="icon" href="https://github.com/Abdelrahman5884/bright" target="_blank"><i class="fa-brands fa-github"></i></a>
+            <a class="icon" href="https://www.linkedin.com/posts/shalan1_i-am-proud-to-share-a-short-story-from-our-ugcPost-7408560819531268096-iOSn" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Chatbot -->
+      <article class="project" data-title="AI Chatbot" data-img="images/chatbot.png" data-desc="Context-aware chatbot integrated with Laravel back-end and NLP APIs." data-gh="https://github.com/Abdelrahman5884/Chatbot" role="listitem" tabindex="0">
+        <img class="thumb" src="images/chatbot.png" alt="Chatbot">
+        <div class="body">
+          <h4>AI Chatbot</h4>
+          <p>Context-aware chatbot integrated with Laravel back-end and NLP APIs.</p>
+          <div class="links">
+            <a class="icon" href="https://github.com/Abdelrahman5884/Chatbot" target="_blank"><i class="fa-brands fa-github"></i></a>
+            <a class="icon" href="https://www.linkedin.com/posts/abdelrahman-hassan-809b3b339_php-mysql-backenddevelopment-activity-7354115430631788546-9ZGp" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Library -->
+      <article class="project" data-title="Library Management" data-img="images/library.png" data-desc="RESTful backend for books, users and borrowing operations." data-gh="https://github.com/Abdelrahman5884/libraryMS" role="listitem" tabindex="0">
+        <img class="thumb" src="images/library.png" alt="Library">
+        <div class="body">
+          <h4>Library Management</h4>
+          <p>RESTful backend for books, users and borrowing operations.</p>
+          <div class="links">
+            <a class="icon" href="https://github.com/Abdelrahman5884/libraryMS" target="_blank"><i class="fa-brands fa-github"></i></a>
+            <a class="icon" href="https://www.linkedin.com/posts/ameeenmv_mvlib-online-library-management-system-ugcPost-7361809997564968960-L45g" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+          </div>
+        </div>
+      </article>
+
+      <!-- E-commerce -->
+      <article class="project" data-title="E-Commerce Platform" data-img="images/ecommerce.png" data-desc="Role-based Laravel e-commerce system with APIs and dashboards." data-gh="https://github.com/Abdelrahman5884/Smart-Learn" role="listitem" tabindex="0">
+        <img class="thumb" src="images/ecommerce.png" alt="E-Commerce">
+        <div class="body">
+          <h4>E-Commerce Platform</h4>
+          <p>Role-based Laravel e-commerce system with APIs and dashboards.</p>
+          <div class="links">
+            <a class="icon" href="https://github.com/Abdelrahman5884/Smart-Learn" target="_blank"><i class="fa-brands fa-github"></i></a>
+            <a class="icon" href="https://www.linkedin.com/posts/abdelrahman-hassan-809b3b339_laravel-ecommerce-php-activity-7375879631301705728-7nEo" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <!-- <section id="contact" class="reveal" aria-labelledby="contactTitle">
+    <h2 id="contactTitle" class="section-title">Contact</h2>
+    <p class="section-sub">Get in touch for collaborations, freelance work or jobs</p>
+
+    <div class="contact-grid" role="list">
+      <div class="contact-item" role="listitem"><i class="fa fa-envelope" aria-hidden="true"></i><a href="mailto:abdelrahmanhasan020@gmail.com">abdelrahmanhasan020@gmail.com</a></div>
+      <div class="contact-item" role="listitem"><i class="fa fa-phone" aria-hidden="true"></i><a href="tel:+201004732940">+20 100 473 2940</a></div>
+      <div class="contact-item" role="listitem"><i class="fa-brands fa-github" aria-hidden="true"></i><a href="https://github.com/Abdelrahman5884" target="_blank">github.com/Abdelrahman5884</a></div>
+      <div class="contact-item" role="listitem"><i class="fa-brands fa-linkedin" aria-hidden="true"></i><a href="https://www.linkedin.com/in/abdelrahman-hassan-809b3b339/" target="_blank">LinkedIn</a></div>
+    </div>
+  </section> -->
+  <section id="contact" class="reveal">
+  <h2 class="section-title">Contact</h2>
+  <p class="section-sub">Let’s work together</p>
+
+  <div class="contact-wrapper">
+
+    <form class="contact-form">
+      <div class="form-row">
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Your Email" required>
+      </div>
+
+      <input type="email" placeholder="Email" required>
+
+      <textarea rows="6" placeholder="Your Message..." required></textarea>
+
+      <button type="submit">Send Message</button>
+    </form>
+
+    <div class="contact-info">
+      <div>
+      <div class="contact-item" role="listitem"><i class="fa fa-envelope" aria-hidden="true"></i><a href="mailto:abdelrahmanhasan020@gmail.com">abdelrahmanhasan020@gmail.com</a></div>
+      </div>
+      <div>
+      <div class="contact-item" role="listitem"><i class="fa fa-phone" aria-hidden="true"></i><a href="tel:+201004732940">+20 100 473 2940</a></div>
+      </div>
+      <div>
+        <div class="contact-item" role="listitem"><i class="fa-brands fa-github" aria-hidden="true"></i><a href="https://github.com/Abdelrahman5884" target="_blank">GitHub</a></div>
+        <div class="contact-item" role="listitem"><i class="fa-brands fa-linkedin" aria-hidden="true"></i><a href="https://www.linkedin.com/in/abdelrahman-hassan-809b3b339/" target="_blank">LinkedIn</a></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer style="text-align:center;padding:22px 6%;color:rgba(230,238,243,0.6);z-index:6;position:relative">© 2026 Abdelrahman Hassan — Backend Developer</footer>
+
+<!-- =========================
+     MODAL
+     ========================= -->
+<div id="modal" class="modal" aria-hidden="true">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-label="Project details">
+    <button aria-label="Close" onclick="closeModal()" style="background:transparent;border:none;color:var(--text);font-size:20px;float:right"><i class="fa fa-times"></i></button>
+    <div class="modal-hero">
+      <img id="modal-img" src="" alt="project image">
+      <div class="modal-ct">
+        <h3 id="modal-title" class="modal-title"></h3>
+        <p id="modal-desc" class="modal-desc"></p>
+        <div class="modal-actions">
+          <a id="modal-gh" class="btn" href="#" target="_blank"><i class="fa-brands fa-github"></i> View on GitHub</a>
+          <a id="modal-link" class="btn-outline" href="#" target="_blank">Open LinkedIn Post</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =========================
+     SCRIPTS
+     ========================= -->
+<script>
+/* ====================================================
+   BACKGROUND: particles + lines + parallax + blobs
+   - optimized to reduce CPU on small screens
+   - toggleable via header button (toggleAnim)
+   ==================================================== */
+
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+
+let W = window.innerWidth, H = window.innerHeight;
+let particles = [];
+let linesEnabled = true;
+let animationEnabled = true;
+let particleCount = Math.max(40, Math.floor(W * H / 40000)); // responsive count
+
+function resizeCanvas(){
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+  // recalc particle count
+  particleCount = Math.max(40, Math.floor(W * H / 40000));
+  initParticles(Math.min(220, particleCount));
+}
+window.addEventListener('resize', () => { resizeCanvas(); });
+
+function rand(a,b){ return Math.random()*(b-a)+a; }
+
+function initParticles(n=90){
+  particles = [];
+  for(let i=0;i<n;i++){
+    particles.push({
+      x: rand(0,W),
+      y: rand(0,H),
+      r: rand(0.6,3.2),
+      vx: rand(-0.35,0.35),
+      vy: rand(-0.25,0.25),
+      hue: rand(180,220),
+      alpha: rand(0.03,0.16)
+    });
+  }
+}
+resizeCanvas();
+
+/* parallax on mouse */
+let pointer = {x: W/2, y: H/2};
+window.addEventListener('mousemove', (e) => {
+  pointer.x = e.clientX;
+  pointer.y = e.clientY;
+});
+
+/* small helper: reduce CPU on low-power */
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(prefersReducedMotion){
+  animationEnabled = false;
+}
+
+/* draw loop */
+let gradShift = 0;
+function draw(){
+  if(!animationEnabled) return;
+  ctx.clearRect(0,0,W,H);
+
+  // moving soft gradient
+  const g = ctx.createLinearGradient(0, gradShift, W, H - gradShift);
+  g.addColorStop(0, 'rgba(3,57,80,0.12)');
+  g.addColorStop(1, 'rgba(7,26,38,0.12)');
+  ctx.fillStyle = g;
+  ctx.fillRect(0,0,W,H);
+  gradShift += 0.08; if(gradShift > H) gradShift = 0;
+
+  // update particles with slight parallax offset based on pointer
+  const px = (pointer.x - W/2) * 0.02;
+  const py = (pointer.y - H/2) * 0.02;
+
+  for(let p of particles){
+    p.x += p.vx + px * (p.r*0.002);
+    p.y += p.vy + py * (p.r*0.002);
+
+    // wrap
+    if(p.x < -60) p.x = W + 60;
+    if(p.x > W + 60) p.x = -60;
+    if(p.y < -60) p.y = H + 60;
+    if(p.y > H + 60) p.y = -60;
+
+    ctx.beginPath();
+    ctx.fillStyle = `hsla(${p.hue},80%,58%,${p.alpha})`;
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+    ctx.fill();
+  }
+
+  if(linesEnabled){
+    // draw connecting lines when near
+    for(let i=0;i<particles.length;i++){
+      for(let j=i+1;j<particles.length;j++){
+        const a = particles[i], b = particles[j];
+        const dx = a.x - b.x, dy = a.y - b.y;
+        const d = Math.sqrt(dx*dx + dy*dy);
+        if(d < 120){
+          ctx.beginPath();
+          ctx.strokeStyle = `rgba(56,189,248,${((120-d)/120*0.08).toFixed(3)})`;
+          ctx.lineWidth = 1;
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  requestAnimationFrame(draw);
+}
+
+/* start animation if enabled */
+if(animationEnabled) draw();
+
+/* toggle button */
+const toggleBtn = document.getElementById('toggleAnim');
+toggleBtn.addEventListener('click', () => {
+  animationEnabled = !animationEnabled;
+  if(animationEnabled){
+    initParticles(Math.min(220, particleCount));
+    draw();
+    toggleBtn.textContent = '⏯ Animation';
+  } else {
+    // clear canvas
+    ctx.clearRect(0,0,W,H);
+    toggleBtn.textContent = '▶ Resume';
+  }
+});
+
+/* reduce work on mobile: slow particles and fewer of them */
+if(/Mobi|Android/i.test(navigator.userAgent) || window.innerWidth < 780){
+  particles = particles.slice(0, Math.max(30, Math.floor(particles.length * 0.6)));
+}
+
+/* ====================================================
+   TYPING (hero)
+   ==================================================== */
+const typingEl = document.getElementById('typing');
+const msgs = ["Backend Developer · Laravel · APIs","I build scalable backend systems.","MySQL · Redis · Secure Auth"];
+let mi=0, ci=0, dir=1;
+function typeLoop(){
+  const txt = msgs[mi];
+  ci += dir;
+  typingEl.textContent = txt.slice(0,ci) + (ci%2? '▌':'');
+  if(ci === txt.length){
+    dir = -1;
+    setTimeout(typeLoop, 900);
+    return;
+  }
+  if(ci === 0 && dir === -1){
+    dir = 1;
+    mi = (mi + 1) % msgs.length;
+    setTimeout(typeLoop, 300);
+    return;
+  }
+  setTimeout(typeLoop, 40);
+}
+typeLoop();
+
+/* ====================================================
+   REVEAL ON SCROLL (intersection observer)
+   - reveals each .reveal container, and staggers children
+   ==================================================== */
+const reveals = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries, obs) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('show');
+      obs.unobserve(entry.target);
+      // stagger children inside section
+      const children = entry.target.querySelectorAll('.edu-item, .skill, .project, .about-item, .contact-item');
+      children.forEach((c, idx) => {
+        setTimeout(()=> c.classList.add('show'), idx * 70);
+      });
+      // for edu items also add float animation
+      const eduChildren = entry.target.querySelectorAll('.edu-bubble');
+      eduChildren.forEach((b, i) => {
+        b.style.animation = `eduFloat ${6 + i*0.6}s ease-in-out ${i*0.12}s infinite`;
+      });
+    }
+  });
+}, {threshold: 0.16});
+reveals.forEach(r => io.observe(r));
+
+/* ====================================================
+   EDUCATION EQUALIZATION (safety)
+   - ensures cards equal height (in case of content differences)
+   - uses JS to set min-heights when necessary
+   ==================================================== */
+// function equalizeEducation(){
+//   const grid = document.querySelector('.edu-grid');
+//   if(!grid) return;
+//   const items = grid.querySelectorAll('.edu-item .edu-bubble');
+//   let maxH = 0;
+//   items.forEach(it => {
+//     it.style.minHeight = ''; // reset
+//     const h = it.getBoundingClientRect().height;
+//     if(h > maxH) maxH = h;
+//   });
+//   // set equal min-height + some breathing room
+//   items.forEach(it => it.style.minHeight = (maxH + 6) + 'px');
+// }
+// run after load & on resize with debounce
+// window.addEventListener('load', () => {
+//   equalizeEducation();
+//   // slight delay to ensure fonts/images loaded
+//   setTimeout(equalizeEducation, 600);
+// });
+// let eqTimer;
+// window.addEventListener('resize', () => {
+//   clearTimeout(eqTimer);
+//   eqTimer = setTimeout(equalizeEducation, 240);
+// });
+
+/* ====================================================
+   PROJECTS MODAL + TILT + CLICK-TO-OPEN
+   ==================================================== */
+const modal = document.getElementById('modal');
+function openModal(title,img,desc,gh,linkedin){
+  document.getElementById('modal-title').textContent = title;
+  document.getElementById('modal-img').src = img;
+  document.getElementById('modal-desc').textContent = desc;
+  document.getElementById('modal-gh').href = gh || '#';
+  document.getElementById('modal-link').href = linkedin || '#';
+  modal.classList.add('show');
+  modal.setAttribute('aria-hidden','false');
+  // lock scroll
+  document.documentElement.style.overflow = 'hidden';
+}
+function closeModal(){
+  modal.classList.remove('show');
+  modal.setAttribute('aria-hidden','true');
+  document.documentElement.style.overflow = '';
+}
+modal.addEventListener('click', e => { if(e.target === modal) closeModal(); });
+
+document.querySelectorAll('.project').forEach(p => {
+  p.addEventListener('click', (ev) => {
+    // prevent click on internal link icons to follow immediately
+    const target = ev.target.closest('a');
+    if(target && target.classList.contains('icon')) return;
+    const t = p.dataset.title;
+    const img = p.dataset.img;
+    const desc = p.dataset.desc;
+    const gh = p.dataset.gh;
+    const linkedin = p.querySelector('.links a[title="LinkedIn"]')?.href || '#';
+    openModal(t, img, desc, gh, linkedin);
+  });
+
+  // subtle tilt effect (mouse move)
+  p.addEventListener('mousemove', e=>{
+    const r = p.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+    const cx = r.width/2, cy = r.height/2, dx = (x - cx) / cx, dy = (y - cy) / cy;
+    p.style.transform = `perspective(700px) rotateX(${-dy*5}deg) rotateY(${dx*5}deg)`;
+    p.style.boxShadow = `${-dx*12}px ${dy*12}px 40px rgba(2,6,23,0.6)`;
+  });
+  p.addEventListener('mouseleave', ()=> { p.style.transform=''; p.style.boxShadow=''; });
+});
+
+/* keyboard accessibility: open modal on Enter for focused project */
+document.querySelectorAll('.project').forEach(p => {
+  p.addEventListener('keydown', e => {
+    if(e.key === 'Enter' || e.key === ' '){
+      e.preventDefault();
+      p.click();
+    }
+  });
+});
+
+/* close modal by ESC */
+window.addEventListener('keydown', (e) => {
+  if(e.key === 'Escape') closeModal();
+});
+
+/* ====================================================
+   PERFORMANCE: Pause background animation when tab not visible
+   ==================================================== */
+document.addEventListener('visibilitychange', () => {
+  if(document.hidden){
+    animationEnabled = false;
+  } else {
+    animationEnabled = true;
+    initParticles(Math.min(220, particleCount));
+    draw();
+  }
+});
+
+/* ====================================================
+   FINAL small utilities (no content removed)
+   ==================================================== */
+/* ensure links that should open mail or phone are correct - no change to content */
+const mailLinks = document.querySelectorAll('a[href^="mailto:"]');
+mailLinks.forEach(a => { a.setAttribute('rel','noopener noreferrer'); });
+const extLinks = document.querySelectorAll('a[target="_blank"]');
+extLinks.forEach(a => { a.setAttribute('rel','noopener noreferrer'); });
+
+/* End of scripts */
+</script>
+
+</body>
+</html>
