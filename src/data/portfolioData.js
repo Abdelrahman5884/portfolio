@@ -19,10 +19,10 @@ export const personalData = {
   github: "https://github.com/Abdelrahman5884",
   linkedin: "https://www.linkedin.com/in/abdelrahman-hassan-809b3b339/",
   cvUrl: "/cv.pdf",
-  // The 3 authentic portraits distributed across sections:
-  heroImage: "/images/abdelrahman_suit.jpg",         // 1. Formal Suit with Glasses (Hero)
-  aboutImage: "/images/abdelrahman_casual_new.png",    // 2. Casual Balenciaga Shirt (About Me)
-  journeyImage: "/images/abdelrahman_suit_car.jpg",   // 3. Full Suit by Car (Journey & ITI)
+  // Authentic portraits:
+  heroImage: "/images/abdelrahman_fullbody.png",    // Full-body suit portrait
+  aboutImage: "/images/abdelrahman_casual_new.png",    // Casual Balenciaga Shirt (About Me)
+  journeyImage: "/images/abdelrahman_suit.jpg",       // Formal portrait (ITI & Credentials)
   stats: [
     { label: "Years Experience", value: "2+", icon: "fa-calendar-check" },
     { label: "Production Projects", value: "8+", icon: "fa-diagram-project" },

@@ -9,6 +9,7 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ParticleCanvas from './components/ParticleCanvas';
 import BackgroundBlobs from './components/BackgroundBlobs';
+import FloatingAstronaut from './components/FloatingAstronaut';
 import ProjectModal from './components/ProjectModal';
 import ImagePreviewModal from './components/ImagePreviewModal';
 import Toast from './components/Toast';
@@ -31,6 +32,9 @@ export default function App() {
       {/* Background Interactive Particles & Ambient Blobs */}
       <ParticleCanvas animationEnabled={animationEnabled} />
       <BackgroundBlobs />
+
+      {/* Interactive 3D Astronaut Space Companion */}
+      {animationEnabled && <FloatingAstronaut />}
 
       {/* Sticky Glass Navigation Bar */}
       <Navbar

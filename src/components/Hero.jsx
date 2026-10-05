@@ -1,12 +1,25 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { personalData } from '../data/portfolioData';
 
 export default function Hero() {
   const [typingIndex, setTypingIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
+  const [activeStatIndex, setActiveStatIndex] = useState(null);
+
+  // 3D Tilt & Dynamic Glare for Hero Photo Card
+  const photoCardRef = useRef(null);
+  const [tiltStyle, setTiltStyle] = useState({});
+  const [glarePos, setGlarePos] = useState({ x: 50, y: 50, opacity: 0 });
 
   const texts = personalData.typingTexts;
+
+  const handleStatClick = (idx) => {
+    setActiveStatIndex(idx);
+    setTimeout(() => {
+      setActiveStatIndex(null);
+    }, 700);
+  };
 
   // Typewriter effect
   useEffect(() => {
@@ -37,16 +50,43 @@ export default function Hero() {
     return () => clearTimeout(timer);
   }, [displayedText, isDeleting, typingIndex, texts]);
 
+  // 3D interactive tilt & moving light glare on photo
+  const handlePhotoMouseMove = (e) => {
+    const card = photoCardRef.current;
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = -((y - centerY) / centerY) * 10;
+    const rotateY = ((x - centerX) / centerX) * 10;
+
+    setTiltStyle({
+      transform: `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.025, 1.025, 1.025)`,
+      transition: 'transform 0.08s ease-out',
+    });
+
+    setGlarePos({
+      x: ((x / rect.width) * 100).toFixed(1),
+      y: ((y / rect.height) * 100).toFixed(1),
+      opacity: 0.35,
+    });
+  };
+
+  const handlePhotoMouseLeave = () => {
+    setTiltStyle({
+      transform: 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)',
+      transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+    });
+    setGlarePos((prev) => ({ ...prev, opacity: 0 }));
+  };
+
   return (
     <section id="hero" className="hero-section">
       <div className="content-wrapper hero-grid">
         {/* Left Column: Bio & Core Info */}
         <div className="hero-content">
-          <div className="hero-badge">
-            <span className="pulse-indicator" />
-            <span>Available for Back-End & Laravel Roles</span>
-          </div>
-
           <h1 className="hero-heading">
             Hi, I'm <span className="gradient-text">{personalData.displayName}</span>
           </h1>
@@ -59,26 +99,6 @@ export default function Hero() {
           <p className="hero-lead">
             {personalData.bio}
           </p>
-
-          {/* Call to action buttons */}
-          <div className="hero-actions">
-            <a href="#projects" className="btn btn-primary">
-              <i className="fa-solid fa-code" />
-              <span>Explore Projects</span>
-            </a>
-            <a href="#contact" className="btn btn-secondary">
-              <i className="fa-solid fa-paper-plane" />
-              <span>Contact Me</span>
-            </a>
-            <a
-              href={personalData.cvUrl}
-              download="Abdelrahman_Hassan_CV.pdf"
-              className="btn btn-outline-cyan"
-            >
-              <i className="fa-solid fa-file-arrow-down" />
-              <span>Download CV</span>
-            </a>
-          </div>
 
           {/* Social Quick Bar */}
           <div className="hero-social-bar">
@@ -128,28 +148,51 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Quick Metrics */}
+          {/* Quick Metrics (Interactive Animated Stat Cards) */}
           <div className="hero-stats-row">
             {personalData.stats.map((stat, i) => (
-              <div key={i} className="stat-card">
+              <div
+                key={i}
+                className={`stat-card ${activeStatIndex === i ? 'stat-card-active' : ''}`}
+                onClick={() => handleStatClick(i)}
+                role="button"
+                tabIndex={0}
+                title="Interactive Stat Card"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleStatClick(i);
+                  }
+                }}
+              >
                 <div className="stat-value">{stat.value}</div>
                 <div className="stat-label">
                   <i className={`fa-solid ${stat.icon}`} />
                   <span>{stat.label}</span>
                 </div>
+                {activeStatIndex === i && <span className="stat-ripple-ring" />}
               </div>
             ))}
           </div>
         </div>
 
-        {/* Right Column: Photo 1 (Formal Portrait with Glasses) in Luxury Showcase Card */}
+        {/* Right Column: Hero Photo Showcase with Enriched 3D Showcase & Holographic Laser Border */}
         <div className="hero-avatar-col">
-          <div className="hero-showcase-card">
+          <div
+            className="hero-showcase-card animated-photo-card"
+            ref={photoCardRef}
+            onMouseMove={handlePhotoMouseMove}
+            onMouseLeave={handlePhotoMouseLeave}
+            style={tiltStyle}
+          >
             {/* Ambient Multi-Layer Radial Glow */}
             <div className="hero-photo-glow" />
 
-            {/* Main Portrait Frame */}
+            {/* Main Portrait Frame with Enlarged Frame & Laser Rim Light */}
             <div className="hero-photo-wrapper">
+              {/* Animated Continuous Laser Border Tracer */}
+              <div className="hero-photo-laser-border" />
+
               <img
                 src={personalData.heroImage}
                 alt={`${personalData.displayName} - Software Engineer`}
@@ -157,36 +200,23 @@ export default function Hero() {
                 loading="eager"
               />
 
-              {/* Seamless Bottom Vignette */}
-              <div className="hero-photo-fade" />
-            </div>
+              {/* Glowing Cosmic Pedestal beneath shoes */}
+              <div className="hero-photo-pedestal" aria-hidden="true" />
 
-            {/* Floating Tech Pill: Top Right */}
-            <div className="hero-floating-badge badge-top">
-              <div className="badge-icon laravel">
-                <i className="fa-brands fa-laravel" />
-              </div>
-              <div className="badge-text">
-                <span className="badge-title">Laravel & PHP 8</span>
-                <span className="badge-sub">Backend Core</span>
-              </div>
-            </div>
+              {/* Dynamic Interactive Holographic Glare */}
+              <div
+                className="hero-photo-glare"
+                style={{
+                  background: `radial-gradient(circle at ${glarePos.x}% ${glarePos.y}%, rgba(255, 255, 255, 0.35) 0%, rgba(56, 189, 248, 0.15) 30%, transparent 60%)`,
+                  opacity: glarePos.opacity,
+                }}
+              />
 
-            {/* Floating Tech Pill: Bottom Left */}
-            <div className="hero-floating-badge badge-bottom">
-              <div className="badge-icon db">
-                <i className="fa-solid fa-database" />
-              </div>
-              <div className="badge-text">
-                <span className="badge-title">MySQL & Redis</span>
-                <span className="badge-sub">High-Speed Caching</span>
-              </div>
-            </div>
-
-            {/* Bottom Status Card */}
-            <div className="hero-card-status">
-              <span className="live-dot" />
-              <span>Software Engineering · Mansoura University</span>
+              {/* High-Tech Corner Accent Brackets */}
+              <span className="photo-corner corner-tl" />
+              <span className="photo-corner corner-tr" />
+              <span className="photo-corner corner-bl" />
+              <span className="photo-corner corner-br" />
             </div>
           </div>
         </div>

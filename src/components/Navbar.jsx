@@ -47,18 +47,7 @@ export default function Navbar({ animationEnabled, setAnimationEnabled }) {
       <nav className="navbar-container">
         {/* Brand */}
         <a href="#hero" className="navbar-brand" onClick={handleLinkClick}>
-          <div className="brand-avatar-wrap">
-            <img
-              src={personalData.heroImage}
-              alt={personalData.displayName}
-              className="brand-avatar"
-            />
-            <span className="online-dot" title="Available for opportunities" />
-          </div>
-          <div className="brand-text">
-            <div className="brand-name">{personalData.displayName}</div>
-            <div className="brand-title">Backend Developer</div>
-          </div>
+          <div className="brand-name">{personalData.displayName}</div>
         </a>
 
         {/* Desktop Links */}
@@ -77,26 +66,16 @@ export default function Navbar({ animationEnabled, setAnimationEnabled }) {
           </ul>
 
           <div className="nav-actions">
-            {/* Animation Toggle Button */}
-            <button
-              type="button"
-              className="anim-toggle-btn"
-              onClick={() => setAnimationEnabled((prev) => !prev)}
-              title={animationEnabled ? 'Pause cosmic starfield animation' : 'Resume cosmic animation'}
-              aria-label="Toggle Space Animation"
-            >
-              <i className={`fa-solid ${animationEnabled ? 'fa-meteor' : 'fa-star'}`} />
-              <span>{animationEnabled ? 'Cosmos ON' : 'Paused'}</span>
-            </button>
 
-            {/* CV Download Button */}
+            {/* CV View Button (Opens in new tab) */}
             <a
               href={personalData.cvUrl}
-              download="Abdelrahman_Hassan_CV.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
               className="cv-download-btn"
-              title="Download Abdelrahman's CV"
+              title="Open Abdelrahman's CV in new tab"
             >
-              <i className="fa-solid fa-cloud-arrow-down" />
+              <i className="fa-solid fa-arrow-up-right-from-square" />
               <span>CV</span>
             </a>
           </div>
@@ -106,11 +85,12 @@ export default function Navbar({ animationEnabled, setAnimationEnabled }) {
         <div className="mobile-toggle-wrap">
           <a
             href={personalData.cvUrl}
-            download="Abdelrahman_Hassan_CV.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
             className="cv-download-btn-sm"
-            title="Download CV"
+            title="Open CV"
           >
-            <i className="fa-solid fa-download" />
+            <i className="fa-solid fa-arrow-up-right-from-square" />
           </a>
 
           <button
@@ -144,23 +124,15 @@ export default function Navbar({ animationEnabled, setAnimationEnabled }) {
           </ul>
 
           <div className="mobile-drawer-actions">
-            <button
-              type="button"
-              className="anim-toggle-btn w-full"
-              onClick={() => setAnimationEnabled((prev) => !prev)}
-            >
-              <i className={`fa-solid ${animationEnabled ? 'fa-pause' : 'fa-play'}`} />
-              <span>{animationEnabled ? 'Pause Animation' : 'Resume Animation'}</span>
-            </button>
-
             <a
               href={personalData.cvUrl}
-              download="Abdelrahman_Hassan_CV.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
               className="cv-download-btn w-full"
               onClick={handleLinkClick}
             >
-              <i className="fa-solid fa-cloud-arrow-down" />
-              <span>Download Full CV</span>
+              <i className="fa-solid fa-arrow-up-right-from-square" />
+              <span>View Full CV</span>
             </a>
           </div>
         </div>

@@ -102,11 +102,12 @@ export default function Footer() {
             <div className="footer-cv-download">
               <a
                 href={personalData.cvUrl}
-                download="Abdelrahman_Hassan_CV.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="btn btn-outline-cyan btn-sm"
               >
-                <i className="fa-solid fa-file-arrow-down" />
-                <span>Download CV</span>
+                <i className="fa-solid fa-arrow-up-right-from-square" />
+                <span>View CV</span>
               </a>
             </div>
           </div>
