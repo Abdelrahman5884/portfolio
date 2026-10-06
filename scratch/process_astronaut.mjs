@@ -1,5 +1,4 @@
 import sharp from 'sharp';
-import path from 'path';
 
 async function processAstronaut() {
   const inputPath = 'c:/Users/NV/portfolio/public/images/astronaut.jpg';
@@ -27,7 +26,7 @@ async function processAstronaut() {
   for (let x = 0; x < width; x++) {
     queue.push([x, 0]);
     queue.push([x, height - 1]);
-    visited[0 * width + x] = 1;
+    visited[x] = 1;
     visited[(height - 1) * width + x] = 1;
   }
   for (let y = 0; y < height; y++) {

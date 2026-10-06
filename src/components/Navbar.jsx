@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { personalData } from '../data/portfolioData';
 
-export default function Navbar({ animationEnabled, setAnimationEnabled }) {
+export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');

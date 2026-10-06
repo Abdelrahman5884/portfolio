@@ -4,7 +4,7 @@ import { projectsData } from '../data/portfolioData';
 export default function Projects({ onSelectProject }) {
   const [activeFilter, setActiveFilter] = useState('All');
 
-  const categories = ['All', 'Healthcare & AI', 'AI & EdTech', 'E-Commerce', 'System Backend'];
+  const categories = ['All', ...Array.from(new Set(projectsData.map((p) => p.category)))];
 
   const filteredProjects = activeFilter === 'All'
     ? projectsData

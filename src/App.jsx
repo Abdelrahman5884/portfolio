@@ -15,7 +15,7 @@ import ImagePreviewModal from './components/ImagePreviewModal';
 import Toast from './components/Toast';
 
 export default function App() {
-  const [animationEnabled, setAnimationEnabled] = useState(true);
+  const animationEnabled = true;
   const [selectedProject, setSelectedProject] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
   const [toastMessage, setToastMessage] = useState('');
@@ -37,10 +37,7 @@ export default function App() {
       {animationEnabled && <FloatingAstronaut />}
 
       {/* Sticky Glass Navigation Bar */}
-      <Navbar
-        animationEnabled={animationEnabled}
-        setAnimationEnabled={setAnimationEnabled}
-      />
+      <Navbar />
 
       {/* Main Portfolio Sections */}
       <main id="main-content">

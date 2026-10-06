@@ -1,8 +1,6 @@
-import { useState } from 'react';
 import { achievementsData, personalData } from '../data/portfolioData';
 
 export default function Achievements({ onPreviewCert }) {
-  const [activeMedia, setActiveMedia] = useState('cert'); // 'cert' | 'event'
   const cert = achievementsData[0];
 
   return (

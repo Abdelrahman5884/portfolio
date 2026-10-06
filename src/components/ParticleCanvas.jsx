@@ -72,6 +72,7 @@ export default function ParticleCanvas({ animationEnabled = true }) {
           size,
           baseAlpha,
           alpha: baseAlpha,
+          color,
           twinkleSpeed: rand(0.015, 0.05),
           twinklePhase: rand(0, Math.PI * 2),
           halo: size > 1.6,

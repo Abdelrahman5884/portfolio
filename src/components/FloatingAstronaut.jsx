@@ -259,6 +259,9 @@ export default function FloatingAstronaut() {
       userReactionTimer = 3.2; // 3.2s of enthusiastic wave & thumbs up
       setIsWavingReaction(true);
       setTimeout(() => setIsWavingReaction(false), 3000);
+      if (curtainStateRef.current === 'intro') {
+        startCurtainPull();
+      }
     };
 
     const onCanvasClick = (e) => {
@@ -612,7 +615,7 @@ export default function FloatingAstronaut() {
       pmremGenerator.dispose();
       renderer.dispose();
     };
-  }, []);
+  }, [startCurtainPull]);
 
   return (
     <>
