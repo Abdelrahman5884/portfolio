@@ -1,11 +1,10 @@
 import { useEffect, useRef } from 'react';
 
 /**
- * Deep Space Black Hole Singularity & Astrophotography Canvas
+ * Deep Space Astrophotography Canvas
  * Features:
  * - Pure pitch-black deep cosmos background (#000000)
- * - Supermassive Black Hole with swirling relativistic Accretion Disk & Photon Ring ("كانك داخل الثقب الاسود")
- * - Gravitational Lensing vortex with spiraling matter particles
+ * - (Black hole removed per request: "شيل الثقب الاسود")
  * - Floating zero-G space asteroids & cosmic dust debris tumbling past
  * - Dense Milky Way star cluster with multi-magnitude twinkling stars
  * - Dynamic meteors (shooting stars)
@@ -26,7 +25,6 @@ export default function ParticleCanvas({ animationEnabled = true }) {
 
     let backgroundStars = [];
     let galacticCloudStars = [];
-    let vortexParticles = [];
     let asteroids = [];
     let shootingStars = [];
 
@@ -43,8 +41,13 @@ export default function ParticleCanvas({ animationEnabled = true }) {
       W = canvas.width = window.innerWidth;
       H = canvas.height = window.innerHeight;
 
+      // Phones get fewer stars so the page stays smooth on Android devices
+      const isSmallScreen = W < 768;
+
       // 1. Uniform background stars
-      const bgStarCount = Math.floor(Math.min(800, Math.max(300, (W * H) / 3600)));
+      const bgStarCount = isSmallScreen
+        ? 160
+        : Math.floor(Math.min(800, Math.max(300, (W * H) / 3600)));
       backgroundStars = [];
       for (let i = 0; i < bgStarCount; i++) {
         const mag = Math.random();
@@ -76,7 +79,9 @@ export default function ParticleCanvas({ animationEnabled = true }) {
       }
 
       // 2. Dense Milky Way Galactic Cluster
-      const galacticStarCount = Math.floor(Math.min(1400, Math.max(600, (W * H) / 1800)));
+      const galacticStarCount = isSmallScreen
+        ? 260
+        : Math.floor(Math.min(1400, Math.max(600, (W * H) / 1800)));
       galacticCloudStars = [];
       const bandCenterX = W * 0.76;
       const bandWidth = W * 0.24;
@@ -115,22 +120,8 @@ export default function ParticleCanvas({ animationEnabled = true }) {
         });
       }
 
-      // 3. Black Hole Accretion Matter Particles (Swirling into Singularity)
-      const vCount = 85;
-      vortexParticles = [];
-      for (let i = 0; i < vCount; i++) {
-        vortexParticles.push({
-          angle: rand(0, Math.PI * 2),
-          radius: rand(24, 48),
-          speed: rand(0.012, 0.035),
-          size: rand(0.8, 2.0),
-          alpha: rand(0.4, 0.9),
-          color: Math.random() > 0.6 ? '#ffffff' : (Math.random() > 0.3 ? '#38bdf8' : '#60a5fa'),
-        });
-      }
-
-      // 4. Floating Asteroids (Tumbling Space Debris like cockpit view)
-      const asteroidCount = 8;
+      // 3. Floating Asteroids (Tumbling Space Debris like cockpit view)
+      const asteroidCount = isSmallScreen ? 4 : 8;
       asteroids = [];
       for (let i = 0; i < asteroidCount; i++) {
         const sides = Math.floor(rand(5, 8));
@@ -187,15 +178,9 @@ export default function ParticleCanvas({ animationEnabled = true }) {
       pointerRef.current.active = false;
     };
 
-    let scrollY = window.scrollY || 0;
-    const handleScroll = () => {
-      scrollY = window.scrollY || 0;
-    };
-
     window.addEventListener('resize', handleResize);
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseleave', handleMouseLeave);
-    window.addEventListener('scroll', handleScroll, { passive: true });
 
     initSpace();
 
@@ -260,107 +245,7 @@ export default function ParticleCanvas({ animationEnabled = true }) {
       ctx.globalAlpha = 1.0;
 
       // ========================================================
-      // 3. THE SUPERMASSIVE BLACK HOLE (GRAVITATIONAL SINGULARITY)
-      // "وخلى الثقب الاسود على اليمين ومش متداخل مع الكلام"
-      // Positioned strictly in the far-right upper cosmic margin of the hero section.
-      // Scrolls naturally and fades out smoothly so it NEVER overlaps with text in any section.
-      // ========================================================
-      const isMobile = W < 1024;
-      const bhOpacity = Math.max(0, 1 - scrollY / 320);
-
-      if (bhOpacity > 0.01) {
-        // Place strictly on the right side in deep space
-        const bhX = (isMobile ? Math.min(W - 65, W * 0.88) : Math.max(W * 0.91, W - 130)) - mouseParallaxX * 1.2;
-        const bhY = (isMobile ? 115 : 155) - scrollY * 0.65 - mouseParallaxY * 1.2;
-        const bhCoreRadius = isMobile ? 15 : 22;
-        const diskTilt = -0.48; // Angle matching relativistic horizon
-
-        ctx.save();
-        ctx.globalAlpha = bhOpacity;
-        ctx.translate(bhX, bhY);
-        ctx.rotate(diskTilt);
-
-        // (A) Outer Relativistic Accretion Glow Halo
-        const outerGlow = ctx.createRadialGradient(0, 0, bhCoreRadius * 1.05, 0, 0, bhCoreRadius * 2.2);
-        outerGlow.addColorStop(0, 'rgba(56, 189, 248, 0.32)');
-        outerGlow.addColorStop(0.4, 'rgba(14, 116, 144, 0.12)');
-        outerGlow.addColorStop(0.75, 'rgba(3, 105, 161, 0.03)');
-        outerGlow.addColorStop(1, 'transparent');
-
-        ctx.fillStyle = outerGlow;
-        ctx.beginPath();
-        ctx.ellipse(0, 0, bhCoreRadius * 2.2, bhCoreRadius * 1.1, 0, 0, Math.PI * 2);
-        ctx.fill();
-
-        // (B) Outer Primary Cyan Accretion Ring
-        ctx.beginPath();
-        ctx.ellipse(0, 0, bhCoreRadius * 1.9, bhCoreRadius * 0.7, 0, 0, Math.PI * 2);
-        ctx.strokeStyle = '#38bdf8';
-        ctx.shadowColor = '#38bdf8';
-        ctx.shadowBlur = 10;
-        ctx.lineWidth = 2.8;
-        ctx.stroke();
-        ctx.shadowBlur = 0;
-
-        // (C) Inner Silver-White Concentric Secondary Ring
-        ctx.beginPath();
-        ctx.ellipse(0, 0, bhCoreRadius * 1.5, bhCoreRadius * 0.5, 0, 0, Math.PI * 2);
-        ctx.strokeStyle = 'rgba(241, 245, 249, 0.88)';
-        ctx.lineWidth = 1.8;
-        ctx.stroke();
-
-        // (D) Gravitational Lensing Arch (Upper curved loop over the top of the black sphere)
-        ctx.beginPath();
-        ctx.ellipse(0, -bhCoreRadius * 0.18, bhCoreRadius * 1.25, bhCoreRadius * 1.12, 0, Math.PI * 0.82, Math.PI * 2.18);
-        ctx.strokeStyle = '#7dd3fc';
-        ctx.lineWidth = 2.8;
-        ctx.shadowColor = '#38bdf8';
-        ctx.shadowBlur = 12;
-        ctx.stroke();
-        ctx.shadowBlur = 0;
-
-        // (E) Swirling Matter Inflow (Particles along accretion stream)
-        for (let i = 0; i < vortexParticles.length; i++) {
-          const vp = vortexParticles[i];
-          vp.angle += vp.speed;
-          vp.radius -= 0.08;
-          if (vp.radius < bhCoreRadius * 0.95) {
-            vp.radius = rand(bhCoreRadius * 1.3, bhCoreRadius * 2.1);
-            vp.angle = rand(0, Math.PI * 2);
-          }
-
-          const vpx = Math.cos(vp.angle) * vp.radius;
-          const vpy = Math.sin(vp.angle) * (vp.radius * 0.36);
-
-          ctx.beginPath();
-          ctx.fillStyle = vp.color;
-          ctx.globalAlpha = vp.alpha * bhOpacity;
-          ctx.arc(vpx, vpy, vp.size, 0, Math.PI * 2);
-          ctx.fill();
-        }
-        ctx.globalAlpha = bhOpacity;
-
-        // (F) The Photon Ring (Bright white starlight crescent rim on event horizon)
-        ctx.beginPath();
-        ctx.arc(0, 0, bhCoreRadius * 1.04, 0, Math.PI * 2);
-        ctx.strokeStyle = '#ffffff';
-        ctx.shadowColor = '#38bdf8';
-        ctx.shadowBlur = 14;
-        ctx.lineWidth = 2.4;
-        ctx.stroke();
-        ctx.shadowBlur = 0;
-
-        // (G) The Event Horizon (Pure Black Void Singularity)
-        ctx.beginPath();
-        ctx.arc(0, 0, bhCoreRadius, 0, Math.PI * 2);
-        ctx.fillStyle = '#000000';
-        ctx.fill();
-
-        ctx.restore();
-      }
-
-      // ========================================================
-      // 4. FLOATING SPACE ASTEROIDS & DEBRIS (3D TUMBLING ZERO-G)
+      // 3. FLOATING SPACE ASTEROIDS & DEBRIS (3D TUMBLING ZERO-G)
       // ========================================================
       for (let i = 0; i < asteroids.length; i++) {
         const a = asteroids[i];
@@ -409,7 +294,7 @@ export default function ParticleCanvas({ animationEnabled = true }) {
         ctx.restore();
       }
 
-      // 5. Shooting Stars (Meteors)
+      // 4. Shooting Stars (Meteors)
       const now = Date.now();
       if (now > nextMeteorTime) {
         spawnShootingStar();
@@ -464,7 +349,6 @@ export default function ParticleCanvas({ animationEnabled = true }) {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseleave', handleMouseLeave);
-      window.removeEventListener('scroll', handleScroll);
       if (animFrameId.current) cancelAnimationFrame(animFrameId.current);
     };
   }, [animationEnabled]);

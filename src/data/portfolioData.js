@@ -19,10 +19,12 @@ export const personalData = {
   github: "https://github.com/Abdelrahman5884",
   linkedin: "https://www.linkedin.com/in/abdelrahman-hassan-809b3b339/",
   cvUrl: "/cv.pdf",
-  // Authentic portraits:
-  heroImage: "/images/abdelrahman_fullbody.png",    // Full-body suit portrait
-  aboutImage: "/images/abdelrahman_casual_new.png",    // Casual Balenciaga Shirt (About Me)
-  journeyImage: "/images/abdelrahman_suit.jpg",       // Formal portrait (ITI & Credentials)
+  // Authentic portraits & Interactive Spacesuit Reveal:
+  heroImage: "/images/abdelrahman_hero_balenciaga.jpg",            // Authentic Balenciaga portrait (glasses & lowered hands)
+  heroOriginalImage: "/images/abdelrahman_hero_balenciaga.jpg",     // Authentic casual portrait
+  heroSpacesuitImage: "/images/abdelrahman_hero_balenciaga_suit.jpg", // Astronaut Helmet & Space Suit reveal layer
+  aboutImage: "/images/abdelrahman_casual_new.png",          // Casual Balenciaga Shirt (About Me)
+  journeyImage: "/images/abdelrahman_suit.jpg",             // Formal portrait (ITI & Credentials)
   stats: [
     { label: "Years Experience", value: "2+", icon: "fa-calendar-check" },
     { label: "Production Projects", value: "8+", icon: "fa-diagram-project" },

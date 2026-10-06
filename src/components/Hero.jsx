@@ -1,25 +1,18 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { personalData } from '../data/portfolioData';
 
 export default function Hero() {
   const [typingIndex, setTypingIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
-  const [activeStatIndex, setActiveStatIndex] = useState(null);
 
-  // 3D Tilt & Dynamic Glare for Hero Photo Card
-  const photoCardRef = useRef(null);
-  const [tiltStyle, setTiltStyle] = useState({});
-  const [glarePos, setGlarePos] = useState({ x: 50, y: 50, opacity: 0 });
+  // Astronaut Spacesuit Hover Reveal State
+  const photoWrapperRef = useRef(null);
+  const [isHovered, setIsHovered] = useState(false);
+  const [cursorPos, setCursorPos] = useState({ x: 220, y: 160 });
+  const revealRadius = 135;
 
   const texts = personalData.typingTexts;
-
-  const handleStatClick = (idx) => {
-    setActiveStatIndex(idx);
-    setTimeout(() => {
-      setActiveStatIndex(null);
-    }, 700);
-  };
 
   // Typewriter effect
   useEffect(() => {
@@ -50,43 +43,44 @@ export default function Hero() {
     return () => clearTimeout(timer);
   }, [displayedText, isDeleting, typingIndex, texts]);
 
-  // 3D interactive tilt & moving light glare on photo
-  const handlePhotoMouseMove = (e) => {
-    const card = photoCardRef.current;
-    if (!card) return;
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const rotateX = -((y - centerY) / centerY) * 10;
-    const rotateY = ((x - centerX) / centerX) * 10;
+  // Track cursor position inside photo for spacesuit reveal
+  const updateCursorPosition = useCallback((clientX, clientY) => {
+    const el = photoWrapperRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = Math.max(0, Math.min(rect.width, clientX - rect.left));
+    const y = Math.max(0, Math.min(rect.height, clientY - rect.top));
+    setCursorPos({ x, y });
+  }, []);
 
-    setTiltStyle({
-      transform: `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.025, 1.025, 1.025)`,
-      transition: 'transform 0.08s ease-out',
-    });
-
-    setGlarePos({
-      x: ((x / rect.width) * 100).toFixed(1),
-      y: ((y / rect.height) * 100).toFixed(1),
-      opacity: 0.35,
-    });
+  const handleMouseMove = (e) => {
+    setIsHovered(true);
+    updateCursorPosition(e.clientX, e.clientY);
   };
 
-  const handlePhotoMouseLeave = () => {
-    setTiltStyle({
-      transform: 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)',
-      transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
-    });
-    setGlarePos((prev) => ({ ...prev, opacity: 0 }));
+  const handleMouseEnter = (e) => {
+    setIsHovered(true);
+    updateCursorPosition(e.clientX, e.clientY);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
+  const handleTouchMove = (e) => {
+    if (!e.touches || e.touches.length === 0) return;
+    setIsHovered(true);
+    updateCursorPosition(e.touches[0].clientX, e.touches[0].clientY);
   };
 
   return (
-    <section id="hero" className="hero-section">
-      <div className="content-wrapper hero-grid">
-        {/* Left Column: Bio & Core Info */}
-        <div className="hero-content">
+    <section id="hero" className="hero-section hero-centered-layout">
+      {/* Ambient Cosmic Radial Glow behind Hero */}
+      <div className="hero-ambient-glow" aria-hidden="true" />
+
+      <div className="content-wrapper hero-split-grid">
+        {/* Left Side: Clean Typography & Actions (Exactly as Requested) */}
+        <div className="hero-text-side">
           <h1 className="hero-heading">
             Hi, I'm <span className="gradient-text">{personalData.displayName}</span>
           </h1>
@@ -96,11 +90,31 @@ export default function Hero() {
             <span className="typewriter-cursor">_</span>
           </div>
 
-          <p className="hero-lead">
-            {personalData.bio}
+          <p className="hero-lead hero-clean-lead">
+            Front-End & Back-End Web Developer Specializing In Building High-Converting, Performance-Driven, Scalable Websites & RESTful APIs That Help Businesses Grow And Scale.
           </p>
 
-          {/* Social Quick Bar */}
+          {/* Action Buttons: Ziad-Style Pill CTA & Secondary */}
+          <div className="hero-ziad-actions">
+            <a href="#contact" className="ziad-pill-cta">
+              <span>Contact Me</span>
+              <span className="ziad-arrow-circle">
+                <i className="fa-solid fa-arrow-up-right-from-square" />
+              </span>
+            </a>
+
+            <a
+              href={personalData.cvUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ziad-secondary-cta"
+            >
+              <i className="fa-solid fa-file-arrow-down" />
+              <span>Download CV</span>
+            </a>
+          </div>
+
+          {/* Social Connect Links */}
           <div className="hero-social-bar">
             <span className="social-label">Connect:</span>
             <div className="social-links">
@@ -147,77 +161,71 @@ export default function Hero() {
               </a>
             </div>
           </div>
-
-          {/* Quick Metrics (Interactive Animated Stat Cards) */}
-          <div className="hero-stats-row">
-            {personalData.stats.map((stat, i) => (
-              <div
-                key={i}
-                className={`stat-card ${activeStatIndex === i ? 'stat-card-active' : ''}`}
-                onClick={() => handleStatClick(i)}
-                role="button"
-                tabIndex={0}
-                title="Interactive Stat Card"
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    handleStatClick(i);
-                  }
-                }}
-              >
-                <div className="stat-value">{stat.value}</div>
-                <div className="stat-label">
-                  <i className={`fa-solid ${stat.icon}`} />
-                  <span>{stat.label}</span>
-                </div>
-                {activeStatIndex === i && <span className="stat-ripple-ring" />}
-              </div>
-            ))}
-          </div>
         </div>
 
-        {/* Right Column: Hero Photo Showcase with Enriched 3D Showcase & Holographic Laser Border */}
-        <div className="hero-avatar-col">
+        {/* Center / Right: Centered Portrait Pillar with Spacesuit Reveal & Matching Width Name */}
+        <div className="hero-portrait-pillar">
           <div
-            className="hero-showcase-card animated-photo-card"
-            ref={photoCardRef}
-            onMouseMove={handlePhotoMouseMove}
-            onMouseLeave={handlePhotoMouseLeave}
-            style={tiltStyle}
+            className="hero-seamless-photo-container"
+            ref={photoWrapperRef}
+            onMouseMove={handleMouseMove}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            onTouchMove={handleTouchMove}
+            onTouchStart={handleTouchMove}
           >
-            {/* Ambient Multi-Layer Radial Glow */}
-            <div className="hero-photo-glow" />
+            {/* Base Layer: Authentic Balenciaga Portrait (Hands Lowered naturally) */}
+            <img
+              src={personalData.heroImage}
+              alt={personalData.displayName}
+              className="hero-base-portrait-img"
+              loading="eager"
+            />
 
-            {/* Main Portrait Frame with Enlarged Frame & Laser Rim Light */}
-            <div className="hero-photo-wrapper">
-              {/* Animated Continuous Laser Border Tracer */}
-              <div className="hero-photo-laser-border" />
-
+            {/* Overlay Layer: Astronaut Helmet & Spacesuit (Revealed via Mouse Hover) */}
+            <div
+              className="hero-spacesuit-reveal-mask"
+              style={{
+                WebkitMaskImage: isHovered
+                  ? `radial-gradient(circle ${revealRadius}px at ${cursorPos.x}px ${cursorPos.y}px, black 0%, black 68%, transparent 100%)`
+                  : 'none',
+                maskImage: isHovered
+                  ? `radial-gradient(circle ${revealRadius}px at ${cursorPos.x}px ${cursorPos.y}px, black 0%, black 68%, transparent 100%)`
+                  : 'none',
+                opacity: isHovered ? 1 : 0,
+              }}
+            >
               <img
-                src={personalData.heroImage}
-                alt={`${personalData.displayName} - Software Engineer`}
-                className="hero-main-photo"
+                src={personalData.heroSpacesuitImage}
+                alt={`${personalData.displayName} - Astronaut Spacesuit Mode`}
+                className="hero-suit-portrait-img"
                 loading="eager"
               />
-
-              {/* Glowing Cosmic Pedestal beneath shoes */}
-              <div className="hero-photo-pedestal" aria-hidden="true" />
-
-              {/* Dynamic Interactive Holographic Glare */}
-              <div
-                className="hero-photo-glare"
-                style={{
-                  background: `radial-gradient(circle at ${glarePos.x}% ${glarePos.y}%, rgba(255, 255, 255, 0.35) 0%, rgba(56, 189, 248, 0.15) 30%, transparent 60%)`,
-                  opacity: glarePos.opacity,
-                }}
-              />
-
-              {/* High-Tech Corner Accent Brackets */}
-              <span className="photo-corner corner-tl" />
-              <span className="photo-corner corner-tr" />
-              <span className="photo-corner corner-bl" />
-              <span className="photo-corner corner-br" />
             </div>
+
+            {/* Glowing Cyber HUD Reticle Following Mouse */}
+            {isHovered && (
+              <div
+                className="hero-suit-reticle"
+                style={{
+                  left: `${cursorPos.x}px`,
+                  top: `${cursorPos.y}px`,
+                }}
+                aria-hidden="true"
+              >
+                <span className="reticle-lens-ring" />
+                <span className="reticle-plus-crosshair" />
+                <span className="reticle-tag">EVA SUIT</span>
+              </div>
+            )}
+
+            {/* Soft Ambient Fade at Bottom into black canvas */}
+            <div className="hero-portrait-bottom-fade" aria-hidden="true" />
+          </div>
+
+          {/* Name Underneath: EXACT SAME WIDTH AS THE PHOTO */}
+          <div className="hero-portrait-exact-name" aria-hidden="true">
+            abdelrahman
           </div>
         </div>
       </div>

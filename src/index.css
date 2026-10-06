@@ -623,17 +623,12 @@ section {
    HERO
    ========================================================== */
 .hero-section {
-  min-height: calc(100vh - 80px);
+  min-height: 100vh;
   display: flex;
   align-items: center;
-  padding: 110px 0 60px;
-}
-
-.hero-grid {
-  display: grid;
-  grid-template-columns: 1.25fr 0.95fr;
-  gap: 48px;
-  align-items: center;
+  padding: 120px 0 60px;
+  position: relative;
+  overflow: hidden;
 }
 
 .hero-badge {
@@ -858,196 +853,194 @@ section {
 }
 
 /* ==========================================================
-   HERO SHOWCASE CARD (ENLARGED FRAME & CINEMATIC PHOTO FX)
+   ZIAD-STYLE FULL-BLEED HERO (CINEMATIC BACKGROUND PORTRAIT)
    ========================================================== */
-.hero-avatar-col {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.hero-ziad-layout {
+  min-height: 100vh;
   position: relative;
-  width: 100%;
-}
-
-.hero-showcase-card {
-  position: relative;
-  width: 100%;
-  max-width: 330px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.animated-photo-card {
-  animation: heroPhotoMasterFloat 6.5s infinite ease-in-out alternate;
-  will-change: transform;
-}
-
-@keyframes heroPhotoMasterFloat {
-  0% {
-    transform: translateY(0) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-9px) rotate(0.4deg);
-  }
-  100% {
-    transform: translateY(-16px) rotate(-0.4deg);
-  }
-}
-
-.hero-photo-glow {
-  position: absolute;
-  top: 5%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 350px;
-  height: 540px;
-  background: radial-gradient(
-    circle,
-    rgba(56, 189, 248, 0.22) 0%,
-    rgba(14, 165, 233, 0.06) 45%,
-    transparent 75%
-  );
-  filter: blur(45px);
-  pointer-events: none;
-  z-index: 0;
-  animation: heroGlowPulse 5.5s infinite ease-in-out alternate;
-}
-
-@keyframes heroGlowPulse {
-  0% { transform: translateX(-50%) scale(0.92); opacity: 0.75; }
-  100% { transform: translateX(-50%) scale(1.08); opacity: 1; }
-}
-
-.hero-photo-wrapper {
-  position: relative;
-  width: 100%;
-  max-width: 320px;
-  height: 520px;
-  border-radius: 26px;
   overflow: hidden;
-  background: radial-gradient(ellipse at 50% 30%, rgba(56, 189, 248, 0.16) 0%, rgba(2, 6, 20, 0.96) 65%, #000000 100%);
-  border: 1px solid rgba(56, 189, 248, 0.35);
-  box-shadow:
-    0 30px 65px -15px rgba(0, 0, 0, 0.98),
-    0 0 35px rgba(56, 189, 248, 0.18);
-  z-index: 1;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
   align-items: center;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+  padding: 130px 0 80px;
+  background: radial-gradient(circle at 68% 45%, rgba(56, 189, 248, 0.1) 0%, rgba(2, 6, 23, 0) 65%), #000000;
 }
 
-.hero-photo-wrapper:hover {
-  border-color: rgba(56, 189, 248, 0.65);
-  box-shadow:
-    0 35px 75px -15px rgba(0, 0, 0, 0.98),
-    0 0 45px rgba(56, 189, 248, 0.3);
-}
-
-/* Glowing Cosmic Pedestal beneath shoes */
-.hero-photo-pedestal {
-  position: absolute;
-  bottom: 8px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 75%;
-  height: 24px;
-  border-radius: 50%;
-  background: radial-gradient(ellipse, rgba(56, 189, 248, 0.45) 0%, rgba(14, 165, 233, 0.12) 50%, transparent 80%);
-  filter: blur(8px);
-  pointer-events: none;
-  z-index: 2;
-}
-
-/* Dynamic Continuous Laser Border Tracer */
-.hero-photo-laser-border {
-  position: absolute;
-  inset: -1px;
-  border-radius: 22px;
-  padding: 1.5px;
-  background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.8), #ffffff, rgba(56, 189, 248, 0.8), transparent);
-  background-size: 200% 100%;
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-  z-index: 10;
-  animation: laserSweep 3.5s linear infinite;
-}
-
-@keyframes laserSweep {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
-}
-
-/* Holographic Glare Overlay */
-.hero-photo-glare {
+/* Full Hero Portrait Backdrop: Seamless Space Integration (No Frame / No Border) */
+.hero-portrait-backdrop {
   position: absolute;
   inset: 0;
-  border-radius: 30px;
   pointer-events: none;
-  z-index: 8;
-  mix-blend-mode: screen;
-  transition: opacity 0.3s ease;
+  z-index: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  overflow: hidden;
 }
 
-/* Tech Corner Accent Brackets */
-.photo-corner {
+.hero-backdrop-glow {
   position: absolute;
-  width: 16px;
-  height: 16px;
+  right: 14%;
+  bottom: 8%;
+  width: 680px;
+  height: 680px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.24) 0%, rgba(14, 165, 233, 0.06) 50%, transparent 75%);
+  filter: blur(80px);
   pointer-events: none;
-  z-index: 9;
-  border-color: #38bdf8;
-  opacity: 0.85;
 }
 
-.photo-corner.corner-tl {
-  top: 12px;
-  left: 12px;
-  border-top: 2px solid #38bdf8;
-  border-left: 2px solid #38bdf8;
+.hero-portrait-figure {
+  position: relative;
+  height: 94%;
+  max-height: 860px;
+  width: 55%;
+  max-width: 780px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-right: 4%;
 }
 
-.photo-corner.corner-tr {
-  top: 12px;
-  right: 12px;
-  border-top: 2px solid #38bdf8;
-  border-right: 2px solid #38bdf8;
-}
-
-.photo-corner.corner-bl {
-  bottom: 12px;
-  left: 12px;
-  border-bottom: 2px solid #38bdf8;
-  border-left: 2px solid #38bdf8;
-}
-
-.photo-corner.corner-br {
-  bottom: 12px;
-  right: 12px;
-  border-bottom: 2px solid #38bdf8;
-  border-right: 2px solid #38bdf8;
-}
-
-.hero-main-photo {
-  width: 100%;
+.hero-seamless-photo {
   height: 100%;
+  width: 100%;
   object-fit: contain;
-  object-position: center bottom;
-  filter: contrast(1.05) brightness(1.03) drop-shadow(0 15px 35px rgba(0, 0, 0, 0.95)) drop-shadow(0 0 25px rgba(56, 189, 248, 0.3));
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
-  z-index: 3;
+  object-position: bottom center;
+  filter: contrast(1.08) brightness(1.03);
+  /* Smooth feathering on sides and bottom so it melts into the black space background */
+  -webkit-mask-image: radial-gradient(ellipse 88% 92% at 50% 45%, black 45%, rgba(0, 0, 0, 0.96) 70%, transparent 96%);
+  mask-image: radial-gradient(ellipse 88% 92% at 50% 45%, black 45%, rgba(0, 0, 0, 0.96) 70%, transparent 96%);
 }
 
-.hero-photo-wrapper:hover .hero-main-photo {
-  transform: scale(1.035);
-  filter: contrast(1.07) brightness(1.05) drop-shadow(0 20px 40px rgba(0, 0, 0, 0.98)) drop-shadow(0 0 35px rgba(56, 189, 248, 0.45));
+.hero-fade-overlay-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 240px;
+  background: linear-gradient(to top, #000000 25%, rgba(0, 0, 0, 0.85) 60%, transparent 100%);
+  pointer-events: none;
+}
+
+.hero-fade-overlay-edges {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, #000000 0%, transparent 25%, transparent 80%, #000000 100%);
+  pointer-events: none;
+}
+
+/* Giant Editorial Name across the lower section (Inspired by Ziad: "ziad" in bold white) */
+.hero-giant-ziad-title {
+  position: absolute;
+  bottom: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-main);
+  font-size: clamp(80px, 15vw, 240px);
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.92);
+  letter-spacing: -0.045em;
+  line-height: 0.8;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  z-index: 2;
+  text-shadow: 0 20px 60px rgba(0, 0, 0, 0.95);
+}
+
+/* Foreground Content Wrapper (Left Aligned over the background) */
+.hero-ziad-wrapper {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+}
+
+.hero-ziad-content {
+  max-width: 580px;
+}
+
+.hero-ziad-lead {
+  font-size: 16px;
+  line-height: 1.75;
+  color: #cbd5e1;
+  margin-bottom: 28px;
+  max-width: 520px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+/* Action Buttons (Like Ziad's signature Pill CTA) */
+.hero-ziad-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.ziad-pill-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 24px;
+  border-radius: 9999px;
+  background: #ffffff;
+  color: #000000;
+  font-family: var(--font-main);
+  font-weight: 700;
+  font-size: 15px;
+  text-decoration: none;
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2), 0 0 40px rgba(56, 189, 248, 0.25);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ziad-pill-cta:hover {
+  background: #f0fdf4;
+  color: #000000;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(255, 255, 255, 0.35), 0 0 50px rgba(56, 189, 248, 0.4);
+}
+
+.ziad-arrow-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #000000;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  transition: transform 0.25s ease;
+}
+
+.ziad-pill-cta:hover .ziad-arrow-circle {
+  transform: rotate(45deg);
+}
+
+.ziad-secondary-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 22px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 14.5px;
+  text-decoration: none;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.25s ease;
+}
+
+.ziad-secondary-cta:hover {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: #38bdf8;
+  color: #38bdf8;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(56, 189, 248, 0.2);
 }
 
 .live-dot {
@@ -2808,6 +2801,30 @@ section {
    RESPONSIVE DESIGN
    ========================================================== */
 @media (max-width: 1024px) {
+  .hero-ziad-layout {
+    padding-top: 110px;
+    padding-bottom: 70px;
+  }
+
+  .hero-portrait-backdrop {
+    justify-content: center;
+  }
+
+  .hero-portrait-figure {
+    width: 78%;
+    max-width: 540px;
+    margin-right: 0;
+    opacity: 0.52;
+  }
+
+  .hero-ziad-content {
+    max-width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   .hero-grid {
     grid-template-columns: 1fr;
     gap: 40px;
@@ -2823,17 +2840,25 @@ section {
     justify-content: center;
   }
 
+  .hero-ziad-lead,
   .hero-lead {
     margin-left: auto;
     margin-right: auto;
   }
 
+  .hero-ziad-actions,
   .hero-actions {
     justify-content: center;
   }
 
   .hero-social-bar {
     justify-content: center;
+  }
+
+  .hero-giant-ziad-title {
+    font-size: clamp(60px, 14vw, 150px);
+    bottom: -15px;
+    opacity: 0.85;
   }
 
   .achievement-grid {
@@ -2929,24 +2954,18 @@ section {
   position: fixed;
   inset: 0;
   z-index: 998;
-  background: #000000;
+  background: radial-gradient(circle at 50% 40%, rgba(14, 116, 144, 0.18) 0%, rgba(2, 6, 23, 0.85) 50%, #000000 100%);
   overflow: hidden;
-  cursor: pointer;
   transform: translateY(0);
   transition: transform 1.25s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.5s ease 1s;
 }
 
-.cosmic-portal-curtain.pulling {
-  transform: translateY(-100%);
-  pointer-events: none;
-}
-
+.cosmic-portal-curtain.pulling,
 .cosmic-portal-curtain.opened {
   transform: translateY(-100%);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  display: none;
 }
 
 /* Glowing Neon Laser Seam on the curtain's lower edge */
@@ -2967,38 +2986,6 @@ section {
   filter: blur(8px);
 }
 
-/* Physical Hand Grip Points where astronaut's hands grasp the curtain ("خلى يشد الصفحه بايده") */
-.astronaut-hand-grip-points {
-  position: fixed;
-  inset: 0;
-  z-index: 999;
-  pointer-events: none;
-}
-
-.hand-grip-clamp {
-  position: absolute;
-  top: 92px;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #ffffff 15%, #38bdf8 65%, transparent 85%);
-  box-shadow: 0 0 20px #38bdf8, 0 0 35px rgba(56, 189, 248, 0.9);
-  animation: gripClampPulse 0.15s infinite alternate;
-}
-
-.hand-grip-clamp.left {
-  left: calc(50vw - 46px);
-}
-
-.hand-grip-clamp.right {
-  left: calc(50vw + 24px);
-}
-
-@keyframes gripClampPulse {
-  0% { transform: scale(0.9); opacity: 0.85; filter: drop-shadow(0 0 8px #38bdf8); }
-  100% { transform: scale(1.2); opacity: 1; filter: drop-shadow(0 0 18px #38bdf8); }
-}
-
 /* ==========================================================
    HYPER-REALISTIC 3D WEBGL NASA ASTRONAUT (THREE.JS)
    ========================================================== */
@@ -3013,7 +3000,7 @@ section {
   will-change: transform, top, left, right, width, height;
 }
 
-/* Phase 1: Intro (Front and Center in Deep Space) */
+/* Phase 1: Intro (Front and Center in Clean Deep Space) */
 .real-3d-astronaut-container.astronaut-phase-intro {
   top: 50% !important;
   left: 50% !important;
@@ -3022,7 +3009,7 @@ section {
   width: 340px !important;
   height: 420px !important;
   z-index: 1000 !important;
-  transition: all 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: all 0.85s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* Phase 2: Pulling (Ascends to the Top to Pull Curtain Up) */
@@ -3154,7 +3141,7 @@ section {
   box-shadow: 0 25px 55px -12px rgba(0, 0, 0, 0.98), 0 0 35px rgba(56, 189, 248, 0.22) !important;
 }
 
-/* Responsive Scaling */
+/* Responsive Scaling & Mobile Phone Experience */
 @media (max-width: 1200px) {
   .real-3d-astronaut-container {
     right: 18px;
@@ -3164,10 +3151,60 @@ section {
 }
 
 @media (max-width: 768px) {
-  .real-3d-astronaut-container {
-    right: 10px;
-    width: 150px;
-    height: 195px;
-    z-index: 85;
+  /* Intro on Phones: Perfectly centered in clean deep space */
+  .real-3d-astronaut-container.astronaut-phase-intro {
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 270px !important;
+    height: 340px !important;
+  }
+
+  /* Opened Phase on Mobile: Unobtrusive Floating Companion */
+  .real-3d-astronaut-container.astronaut-phase-opened {
+    right: 8px !important;
+    width: 130px !important;
+    height: 175px !important;
+    z-index: 85 !important;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.85));
+  }
+
+  .real-3d-astronaut-canvas {
+    touch-action: pan-y; /* Allows vertical scrolling to pass through naturally */
+  }
+
+  /* Hero Backdrop on Mobile */
+  .hero-portrait-figure {
+    width: 90%;
+    max-width: 420px;
+    height: 75%;
+    opacity: 0.42;
+  }
+
+  .hero-giant-ziad-title {
+    font-size: clamp(48px, 15vw, 110px);
+    bottom: -10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .real-3d-astronaut-container.astronaut-phase-intro {
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 230px !important;
+    height: 290px !important;
+  }
+
+  .hero-portrait-figure {
+    width: 95%;
+    max-width: 360px;
+    height: 70%;
+    opacity: 0.38;
+  }
+
+  .hero-giant-ziad-title {
+    font-size: clamp(40px, 16vw, 85px);
+    bottom: -8px;
   }
 }
