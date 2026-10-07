@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { personalData } from '../data/portfolioData';
 
-export default function Navbar() {
+export default function Navbar({ onNavigate }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
@@ -38,15 +38,22 @@ export default function Navbar() {
     { name: 'Contact', href: '#contact', id: 'contact' },
   ];
 
-  const handleLinkClick = () => {
+  const handleLinkClick = (e, href) => {
+    e.preventDefault();
     setMobileMenuOpen(false);
+    if (onNavigate) {
+      onNavigate(href);
+    } else {
+      const target = document.querySelector(href);
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
     <header className={`navbar-header ${scrolled ? 'scrolled' : ''}`}>
       <nav className="navbar-container">
         {/* Brand */}
-        <a href="#hero" className="navbar-brand" onClick={handleLinkClick}>
+        <a href="#hero" className="navbar-brand" onClick={(e) => handleLinkClick(e, '#hero')}>
           <div className="brand-name">{personalData.displayName}</div>
         </a>
 
@@ -58,6 +65,7 @@ export default function Navbar() {
                 <a
                   href={link.href}
                   className={`nav-link ${activeSection === link.id ? 'active' : ''}`}
+                  onClick={(e) => handleLinkClick(e, link.href)}
                 >
                   {link.name}
                 </a>
@@ -115,7 +123,7 @@ export default function Navbar() {
                 <a
                   href={link.href}
                   className={`mobile-nav-link ${activeSection === link.id ? 'active' : ''}`}
-                  onClick={handleLinkClick}
+                  onClick={(e) => handleLinkClick(e, link.href)}
                 >
                   {link.name}
                 </a>

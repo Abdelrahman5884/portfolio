@@ -853,119 +853,483 @@ section {
 }
 
 /* ==========================================================
-   ZIAD-STYLE FULL-BLEED HERO (CINEMATIC BACKGROUND PORTRAIT)
+   CENTERED FULL-SCREEN HERO
+   "والصوره بتاعتى قولت تبقى فى النص وتبقى هى كل الاسكرين"
    ========================================================== */
-.hero-ziad-layout {
+.hero-centered-fullscreen {
   min-height: 100vh;
+  height: 100vh;
   position: relative;
   overflow: hidden;
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  padding: 130px 0 80px;
-  background: radial-gradient(circle at 68% 45%, rgba(56, 189, 248, 0.1) 0%, rgba(2, 6, 23, 0) 65%), #000000;
+  padding: 0;
+  background: #000000;
 }
 
-/* Full Hero Portrait Backdrop: Seamless Space Integration (No Frame / No Border) */
-.hero-portrait-backdrop {
+/* Giant Editorial Name Watermark in deep background behind Abdelrahman ("باين سيكا بسيطة") */
+.hero-giant-title {
   position: absolute;
-  inset: 0;
+  top: 36%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-main);
+  font-size: clamp(55px, 11vw, 175px);
+  font-weight: 900;
+  color: transparent;
+  -webkit-text-stroke: 1.2px rgba(255, 255, 255, 0.08);
+  letter-spacing: clamp(6px, 1.4vw, 24px);
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+  text-shadow: 0 0 60px rgba(56, 189, 248, 0.06);
+}
+
+/* Atmospheric Soft Cyan Core Ambient Glow */
+.hero-center-ambient-glow {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  transform: translate(-50%, -50%);
+  width: 750px;
+  height: 750px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.14) 0%, rgba(14, 165, 233, 0.04) 50%, transparent 75%);
+  filter: blur(100px);
   pointer-events: none;
   z-index: 1;
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
-  overflow: hidden;
 }
 
-.hero-backdrop-glow {
+/* Full-Screen Centered Portrait Layer (Exact Middle of the Screen) */
+.hero-fullscreen-portrait-layer {
   position: absolute;
-  right: 14%;
-  bottom: 8%;
-  width: 680px;
-  height: 680px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.24) 0%, rgba(14, 165, 233, 0.06) 50%, transparent 75%);
-  filter: blur(80px);
-  pointer-events: none;
-}
-
-.hero-portrait-figure {
-  position: relative;
-  height: 94%;
-  max-height: 860px;
-  width: 55%;
-  max-width: 780px;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  margin-right: 4%;
+  z-index: 2;
+  pointer-events: auto;
 }
 
-.hero-seamless-photo {
+.hero-portrait-stage {
+  position: relative;
+  width: auto;
   height: 100%;
-  width: 100%;
+  max-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  cursor: crosshair;
+}
+
+.hero-portrait-img-base {
+  height: 94vh;
+  width: auto;
+  max-width: 100vw;
   object-fit: contain;
   object-position: bottom center;
-  filter: contrast(1.08) brightness(1.03);
-  /* Smooth feathering on sides and bottom so it melts into the black space background */
-  -webkit-mask-image: radial-gradient(ellipse 88% 92% at 50% 45%, black 45%, rgba(0, 0, 0, 0.96) 70%, transparent 96%);
-  mask-image: radial-gradient(ellipse 88% 92% at 50% 45%, black 45%, rgba(0, 0, 0, 0.96) 70%, transparent 96%);
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+  filter: contrast(1.05) brightness(1.02);
 }
 
-.hero-fade-overlay-bottom {
+/* Interactive Astronaut Spacesuit Reveal Mask Layer */
+.hero-spacesuit-mask-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 3;
+}
+
+.hero-spacesuit-img {
+  height: 94vh;
+  width: auto;
+  max-width: 100vw;
+  object-fit: contain;
+  object-position: bottom center;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Soft bottom vignette seamlessly blending into space canvas */
+.hero-bottom-fade {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 240px;
-  background: linear-gradient(to top, #000000 25%, rgba(0, 0, 0, 0.85) 60%, transparent 100%);
+  height: 140px;
+  background: linear-gradient(to top, #000000 15%, rgba(0, 0, 0, 0.8) 55%, transparent 100%);
   pointer-events: none;
+  z-index: 4;
 }
 
-.hero-fade-overlay-edges {
+/* Cyber HUD Target Reticle Following Mouse */
+.hero-suit-reticle {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+}
+
+.reticle-lens-ring {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to right, #000000 0%, transparent 25%, transparent 80%, #000000 100%);
-  pointer-events: none;
+  border: 1.5px dashed rgba(56, 189, 248, 0.9);
+  border-radius: 50%;
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.65);
+  animation: reticleSpin 7s linear infinite;
 }
 
-/* Giant Editorial Name across the lower section (Inspired by Ziad: "ziad" in bold white) */
-.hero-giant-ziad-title {
+@keyframes reticleSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.reticle-plus-crosshair {
   position: absolute;
-  bottom: -25px;
+  width: 12px;
+  height: 12px;
+}
+
+.reticle-plus-crosshair::before,
+.reticle-plus-crosshair::after {
+  content: '';
+  position: absolute;
+  background: #38bdf8;
+  box-shadow: 0 0 6px #38bdf8;
+}
+
+.reticle-plus-crosshair::before {
+  top: 5.5px;
+  left: 0;
+  width: 12px;
+  height: 1px;
+}
+
+.reticle-plus-crosshair::after {
+  left: 5.5px;
+  top: 0;
+  width: 1px;
+  height: 12px;
+}
+
+.reticle-tag {
+  position: absolute;
+  bottom: -24px;
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  font-weight: 700;
+  color: #38bdf8;
+  background: rgba(2, 6, 23, 0.88);
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  white-space: nowrap;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* ==========================================================
+   FOREGROUND LEFT CONTENT (HERO TYPOGRAPHY)
+   "ورجع الاسم بتاعى اللى كان فى الجنب والحاجات اللى تحته"
+   ========================================================== */
+.hero-content-left {
+  position: absolute;
+  left: clamp(24px, 5.5vw, 85px);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  pointer-events: auto;
+}
+
+.hero-main-title {
+  font-size: clamp(34px, 4.8vw, 56px);
+  font-weight: 800;
+  line-height: 1.12;
+  color: #ffffff;
+  margin-bottom: 14px;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.95);
+}
+
+.hero-typewriter-box {
+  font-family: var(--font-mono);
+  font-size: clamp(14px, 1.8vw, 17px);
+  color: #bae6fd;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(2, 6, 23, 0.75);
+  padding: 6px 18px;
+  border-radius: 9999px;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  margin-bottom: 18px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+}
+
+.typewriter-prefix {
+  color: #38bdf8;
+  font-weight: 700;
+}
+
+.typewriter-text {
+  color: #f0f9ff;
+  font-weight: 500;
+}
+
+.hero-lead-text {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #cbd5e1;
+  margin-bottom: 24px;
+  max-width: 440px;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9);
+}
+
+.hero-social-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(2, 6, 23, 0.82);
+  padding: 8px 14px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+}
+
+.hero-social-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+  font-size: 15px;
+  transition: all 0.25s ease;
+  text-decoration: none;
+}
+
+.hero-social-icon:hover {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: #38bdf8;
+  color: #38bdf8;
+  transform: translateY(-2px);
+  box-shadow: 0 0 18px rgba(56, 189, 248, 0.45);
+}
+
+/* Ownitt.fr-Style Interactive Scroll Flip Hint */
+.hero-scroll-flip-bottom {
+  position: absolute;
+  bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 10;
+}
+
+.hero-ownitt-scroll-hint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px 12px;
+  transition: transform 0.25s ease;
+}
+
+.hero-ownitt-scroll-hint:hover {
+  transform: translateY(3px);
+}
+
+.scroll-hint-label {
   font-family: var(--font-main);
-  font-size: clamp(80px, 15vw, 240px);
-  font-weight: 900;
-  color: rgba(255, 255, 255, 0.92);
-  letter-spacing: -0.045em;
-  line-height: 0.8;
-  white-space: nowrap;
-  pointer-events: none;
-  user-select: none;
-  z-index: 2;
-  text-shadow: 0 20px 60px rgba(0, 0, 0, 0.95);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: #94a3b8;
+  text-transform: uppercase;
+  transition: color 0.2s ease;
 }
 
-/* Foreground Content Wrapper (Left Aligned over the background) */
-.hero-ziad-wrapper {
+.hero-ownitt-scroll-hint:hover .scroll-hint-label {
+  color: #38bdf8;
+}
+
+.scroll-hint-track {
+  width: 20px;
+  height: 34px;
+  border-radius: 12px;
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
   position: relative;
-  z-index: 5;
-  width: 100%;
+  background: rgba(2, 6, 23, 0.5);
+  backdrop-filter: blur(6px);
+  transition: border-color 0.2s ease;
 }
 
-.hero-ziad-content {
-  max-width: 580px;
+.hero-ownitt-scroll-hint:hover .scroll-hint-track {
+  border-color: #38bdf8;
 }
 
-.hero-ziad-lead {
-  font-size: 16px;
-  line-height: 1.75;
-  color: #cbd5e1;
-  margin-bottom: 28px;
-  max-width: 520px;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+.scroll-hint-dot {
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 6px;
+  border-radius: 3px;
+  background: #38bdf8;
+  box-shadow: 0 0 8px #38bdf8;
+  animation: scrollDotGlider 2s ease-in-out infinite;
+}
+
+@keyframes scrollDotGlider {
+  0% {
+    top: 5px;
+    opacity: 1;
+    transform: translateX(-50%) scaleY(1);
+  }
+  50% {
+    top: 18px;
+    opacity: 0.8;
+    transform: translateX(-50%) scaleY(1.4);
+  }
+  100% {
+    top: 5px;
+    opacity: 1;
+    transform: translateX(-50%) scaleY(1);
+  }
+}
+
+/* ==========================================================
+   DOWNLOAD CV CARD AT THE END OF PORTFOLIO ("خلى الدونلود فى الاخر")
+   ========================================================== */
+.contact-cv-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px 24px;
+  border-radius: 18px;
+  margin-top: 18px;
+  margin-bottom: 24px;
+  border: 1px solid rgba(56, 189, 248, 0.28);
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.08) 0%, rgba(2, 6, 23, 0.8) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.8), 0 0 35px rgba(56, 189, 248, 0.12);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.contact-cv-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(56, 189, 248, 0.55);
+  box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.9), 0 0 45px rgba(56, 189, 248, 0.25);
+}
+
+.cv-card-icon-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: rgba(56, 189, 248, 0.16);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  color: #38bdf8;
+  flex-shrink: 0;
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+}
+
+.cv-card-content {
+  flex: 1;
+}
+
+.cv-card-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.12);
+  padding: 2px 8px;
+  border-radius: 9999px;
+  margin-bottom: 4px;
+}
+
+.cv-card-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 2px;
+}
+
+.cv-card-desc {
+  font-size: 13px;
+  color: #94a3b8;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.btn-download-cv-end {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  border-radius: 9999px;
+  background: #ffffff;
+  color: #000000;
+  font-family: var(--font-main);
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  flex-shrink: 0;
+  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.25), 0 0 30px rgba(56, 189, 248, 0.25);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-download-cv-end:hover {
+  background: #f0fdf4;
+  color: #000000;
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 15px 35px rgba(255, 255, 255, 0.4), 0 0 45px rgba(56, 189, 248, 0.4);
 }
 
 /* Action Buttons (Like Ziad's signature Pill CTA) */
@@ -2947,181 +3311,181 @@ section {
 }
 
 /* ==========================================================
-   COSMIC PORTAL CURTAIN OPENING SEQUENCE
-   "تكون الصفحة فاضية والرجل الفضائى اللى يسحب الصفحه"
+   OWNITT-STYLE SECTION FLIPPER & SNAPPING ("التقليب زى السايت دى ownitt.fr")
    ========================================================== */
-.cosmic-portal-curtain {
+html {
+  scroll-behavior: smooth;
+  scroll-snap-type: y proximity;
+}
+
+section {
+  scroll-snap-align: start;
+  scroll-snap-stop: normal;
+}
+
+/* Floating Right-Edge Section Flipper Dock */
+.ownitt-section-flipper {
   position: fixed;
-  inset: 0;
-  z-index: 998;
-  background: radial-gradient(circle at 50% 40%, rgba(14, 116, 144, 0.18) 0%, rgba(2, 6, 23, 0.85) 50%, #000000 100%);
-  overflow: hidden;
-  transform: translateY(0);
-  transition: transform 1.25s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.5s ease 1s;
-}
-
-.cosmic-portal-curtain.pulling,
-.cosmic-portal-curtain.opened {
-  transform: translateY(-100%);
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-/* Glowing Neon Laser Seam on the curtain's lower edge */
-.curtain-laser-seam {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, transparent 0%, #38bdf8 20%, #ffffff 50%, #38bdf8 80%, transparent 100%);
-  box-shadow: 0 0 25px #38bdf8, 0 0 50px rgba(56, 189, 248, 0.9);
-}
-
-.curtain-laser-glow {
-  position: absolute;
-  inset: -10px 0;
-  background: linear-gradient(180deg, rgba(56, 189, 248, 0.3) 0%, transparent 100%);
-  filter: blur(8px);
-}
-
-/* ==========================================================
-   HYPER-REALISTIC 3D WEBGL NASA ASTRONAUT (THREE.JS)
-   ========================================================== */
-.real-3d-astronaut-container {
-  position: fixed;
-  right: 32px;
-  width: 260px;
-  height: 330px;
-  z-index: 999;
-  pointer-events: none;
-  transition: top 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform, top, left, right, width, height;
-}
-
-/* Phase 1: Intro (Front and Center in Clean Deep Space) */
-.real-3d-astronaut-container.astronaut-phase-intro {
-  top: 50% !important;
-  left: 50% !important;
-  right: auto !important;
-  transform: translate(-50%, -50%) !important;
-  width: 340px !important;
-  height: 420px !important;
-  z-index: 1000 !important;
-  transition: all 0.85s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* Phase 2: Pulling (Ascends to the Top to Pull Curtain Up) */
-.real-3d-astronaut-container.astronaut-phase-pulling {
-  top: 25px !important;
-  left: 50% !important;
-  right: auto !important;
-  transform: translate(-50%, 0) !important;
-  width: 300px !important;
-  height: 380px !important;
-  z-index: 1000 !important;
-  transition: all 1.1s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* Phase 3: Opened (Floats on the Right and Descends with Scroll) */
-.real-3d-astronaut-container.astronaut-phase-opened {
-  right: 32px !important;
-  left: auto !important;
-  transform: none !important;
-  width: 260px !important;
-  height: 330px !important;
-  z-index: 999 !important;
-  animation: astronautMasterFloat3D 7s infinite ease-in-out alternate;
-  transition: right 0.85s cubic-bezier(0.22, 1, 0.36, 1), width 0.8s ease, height 0.8s ease, top 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes astronautMasterFloat3D {
-  0% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  35% {
-    transform: translateY(-12px) rotate(1.2deg);
-  }
-  70% {
-    transform: translateY(-20px) rotate(-1.5deg);
-  }
-  100% {
-    transform: translateY(-7px) rotate(0.6deg);
-  }
-}
-
-.real-3d-astronaut-canvas {
-  width: 100%;
-  height: 100%;
-  display: block;
-  pointer-events: auto;
-  cursor: grab;
-  outline: none;
-  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.96)) drop-shadow(0 0 25px rgba(56, 189, 248, 0.38));
-  transition: filter 0.35s ease;
-  user-select: none;
-  touch-action: none;
-}
-
-.real-3d-astronaut-canvas:active {
-  cursor: grabbing;
-}
-
-.real-3d-astronaut-canvas:hover {
-  filter: drop-shadow(0 25px 50px rgba(0, 0, 0, 0.98)) drop-shadow(0 0 35px rgba(56, 189, 248, 0.68));
-}
-
-/* Subtle Cosmic Aura behind the 3D Model */
-.astronaut-3d-aura {
-  position: absolute;
-  top: 15%;
-  left: 15%;
-  width: 70%;
-  height: 70%;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.16) 0%, rgba(14, 165, 233, 0.05) 50%, transparent 75%);
-  filter: blur(40px);
-  pointer-events: none;
-  z-index: -1;
-}
-
-/* Loader while 3D GLTF loads */
-.astronaut-3d-loader {
-  position: absolute;
+  right: 24px;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateY(-50%);
+  z-index: 85;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 14px;
+  pointer-events: none;
+}
+
+.flipper-track {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: rgba(2, 6, 23, 0.75);
+  padding: 14px 10px;
+  border-radius: 9999px;
+  border: 1px solid rgba(56, 189, 248, 0.22);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 25px rgba(56, 189, 248, 0.12);
+  pointer-events: auto;
+}
+
+.flipper-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  outline: none;
+}
+
+.flipper-label {
+  font-family: var(--font-main);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: #94a3b8;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateX(10px);
+  transition: opacity 0.25s ease, transform 0.25s ease, color 0.25s ease;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.flipper-num {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  color: #64748b;
+  opacity: 0;
+  transition: opacity 0.25s ease, color 0.25s ease;
+}
+
+.flipper-bullet {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.flipper-item:hover .flipper-label,
+.flipper-item:hover .flipper-num {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.flipper-item:hover .flipper-bullet {
+  background: #38bdf8;
+  transform: scale(1.4);
+  box-shadow: 0 0 10px #38bdf8;
+}
+
+.flipper-item.active .flipper-bullet {
+  width: 9px;
+  height: 9px;
+  background: #38bdf8;
+  box-shadow: 0 0 14px #38bdf8, 0 0 25px rgba(56, 189, 248, 0.6);
+  transform: scale(1.2);
+}
+
+.flipper-item.active .flipper-num {
+  opacity: 1;
+  color: #38bdf8;
+}
+
+.flipper-next-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  pointer-events: none;
+  background: rgba(2, 6, 23, 0.85);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  color: #38bdf8;
+  font-size: 13px;
+  cursor: pointer;
+  pointer-events: auto;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5), 0 0 20px rgba(56, 189, 248, 0.2);
+  transition: all 0.25s ease;
+  margin-right: 2px;
 }
 
-.loader-ring {
-  width: 44px;
-  height: 44px;
-  border: 2px solid rgba(56, 189, 248, 0.2);
-  border-top-color: #38bdf8;
-  border-radius: 50%;
-  animation: spinLoader 1s linear infinite;
+.flipper-next-btn:hover {
+  background: rgba(56, 189, 248, 0.25);
+  border-color: #38bdf8;
+  color: #ffffff;
+  transform: translateY(2px) scale(1.08);
+  box-shadow: 0 0 25px rgba(56, 189, 248, 0.6);
 }
 
-@keyframes spinLoader {
-  to { transform: rotate(360deg); }
-}
-
-.loader-dot {
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #38bdf8;
-  box-shadow: 0 0 8px #38bdf8;
+@media (max-width: 992px) {
+  .ownitt-section-flipper {
+    display: none;
+  }
 }
 
 /* ==========================================================
-   GLOBAL 3D PORTFOLIO ENHANCEMENTS ("خلى البورتفولية كله 3D")
+   OWNITT-STYLE SILKY LUXURY SECTION TRANSITIONS
+   Inspired by https://ownitt.fr/
+   - Silky smooth scrolling
+   - Graceful kinetic section reveal as user scrolls
+   - Zero intrusive door seams or wheel locks
+   ========================================================== */
+html {
+  scroll-behavior: smooth;
+}
+
+.section-reveal-ready {
+  opacity: 0.35;
+  transform: translateY(28px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.section-reveal-ready.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hero section is always immediately visible */
+#hero.section-reveal-ready {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* ==========================================================
+   GLOBAL 3D CARD ENHANCEMENTS
    ========================================================== */
 .bento-card,
 .skill-category-card,
@@ -3141,70 +3505,99 @@ section {
   box-shadow: 0 25px 55px -12px rgba(0, 0, 0, 0.98), 0 0 35px rgba(56, 189, 248, 0.22) !important;
 }
 
-/* Responsive Scaling & Mobile Phone Experience */
-@media (max-width: 1200px) {
-  .real-3d-astronaut-container {
-    right: 18px;
-    width: 210px;
-    height: 270px;
+/* ==========================================================
+   RESPONSIVE STYLES FOR HERO
+   ========================================================== */
+/* ==========================================================
+   RESPONSIVE STYLES FOR HERO
+   ========================================================== */
+@media (max-width: 1100px) {
+  .hero-content-left {
+    left: 32px;
+    max-width: 420px;
+  }
+
+  .hero-main-title {
+    font-size: clamp(30px, 4.2vw, 46px);
+  }
+
+  .hero-portrait-img-base,
+  .hero-spacesuit-img {
+    height: 88vh;
   }
 }
 
-@media (max-width: 768px) {
-  /* Intro on Phones: Perfectly centered in clean deep space */
-  .real-3d-astronaut-container.astronaut-phase-intro {
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    width: 270px !important;
-    height: 340px !important;
+@media (max-width: 900px) {
+  .hero-centered-fullscreen {
+    justify-content: flex-start;
+    padding-top: 85px;
+    height: auto;
+    min-height: 100vh;
   }
 
-  /* Opened Phase on Mobile: Unobtrusive Floating Companion */
-  .real-3d-astronaut-container.astronaut-phase-opened {
-    right: 8px !important;
-    width: 130px !important;
-    height: 175px !important;
-    z-index: 85 !important;
-    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.85));
+  .hero-content-left {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+    align-items: center;
+    text-align: center;
+    max-width: 92%;
+    margin: 0 auto;
+    padding: 20px 16px;
+    z-index: 10;
   }
 
-  .real-3d-astronaut-canvas {
-    touch-action: pan-y; /* Allows vertical scrolling to pass through naturally */
+  .hero-lead-text {
+    margin-left: auto;
+    margin-right: auto;
   }
 
-  /* Hero Backdrop on Mobile */
-  .hero-portrait-figure {
-    width: 90%;
-    max-width: 420px;
-    height: 75%;
-    opacity: 0.42;
+  .hero-fullscreen-portrait-layer {
+    position: relative;
+    height: 65vh;
   }
 
-  .hero-giant-ziad-title {
-    font-size: clamp(48px, 15vw, 110px);
-    bottom: -10px;
+  .hero-portrait-stage {
+    height: 65vh;
+  }
+
+  .hero-portrait-img-base,
+  .hero-spacesuit-img {
+    height: 65vh;
+  }
+
+  .hero-scroll-flip-bottom {
+    display: none;
   }
 }
 
 @media (max-width: 480px) {
-  .real-3d-astronaut-container.astronaut-phase-intro {
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    width: 230px !important;
-    height: 290px !important;
+  .hero-fullscreen-portrait-layer,
+  .hero-portrait-stage,
+  .hero-portrait-img-base,
+  .hero-spacesuit-img {
+    height: 55vh;
   }
 
-  .hero-portrait-figure {
-    width: 95%;
-    max-width: 360px;
-    height: 70%;
-    opacity: 0.38;
+  .hero-main-title {
+    font-size: 28px;
   }
 
-  .hero-giant-ziad-title {
-    font-size: clamp(40px, 16vw, 85px);
-    bottom: -8px;
+  .hero-giant-title {
+    font-size: clamp(34px, 12vw, 68px);
+    letter-spacing: 4px;
+    top: 32%;
+  }
+
+  .hero-social-pill {
+    padding: 6px 10px;
+    gap: 8px;
+  }
+
+  .hero-social-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 13px;
   }
 }

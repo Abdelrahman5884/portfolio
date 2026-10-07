@@ -33,39 +33,13 @@ export default function FloatingAstronaut() {
     curtainStateRef.current = curtainState;
   }, [curtainState]);
 
-  // Open the page smoothly when user clicks anywhere ("تخلى الصفحة تفتح لما اضغط على الصفح")
-  // Astronaut stays in place and glides smoothly to the right, NOT pulled up to top ("ومدخليش وانت بتفتح الصفحة الرائد الفضاء يطلع معاها")
   const startCurtainPull = useCallback(() => {
     if (curtainStateRef.current !== 'intro') return;
-    setCurtainState('opened');
+    setCurtainState('opening');
+    setTimeout(() => {
+      setCurtainState('opened');
+    }, 1250);
   }, []);
-
-  // Track window scroll to descend the astronaut down through the portfolio ("وبعدين انزل")
-  useEffect(() => {
-    const handleScroll = () => {
-      if (curtainState !== 'opened') return;
-      const scrollY = window.scrollY;
-      const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-      const progress = Math.min(1, Math.max(0, scrollY / maxScroll));
-
-      // From top (90px) to bottom (viewport height - 380px)
-      const isMobile = window.innerWidth < 768;
-      const offsetBottom = isMobile ? 220 : 380;
-      const minTop = isMobile ? 70 : 90;
-      const maxTop = Math.max(minTop + 30, window.innerHeight - offsetBottom);
-      const currentTop = minTop + progress * (maxTop - minTop);
-      setTopPos(currentTop);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', handleScroll);
-    handleScroll();
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleScroll);
-    };
-  }, [curtainState]);
 
   // Three.js 3D WebGL Scene & Skeletal Kinematics Loop
   useEffect(() => {
@@ -617,41 +591,37 @@ export default function FloatingAstronaut() {
     };
   }, [startCurtainPull]);
 
+  if (curtainState === 'opened') return null;
+
   return (
-    <>
-      {/* ========================================================
-          1. CLEAN DEEP SPACE CURTAIN (OPENS ON CLICK)
-          "شيل الكلام اللى فى الصفحة وتخلى الصفحة تفتح لما اضغط على الصفحة"
-          ======================================================== */}
-      <div
-        className={`cosmic-portal-curtain ${curtainState}`}
-        onClick={startCurtainPull}
-        role="button"
-        tabIndex={0}
-        aria-label="انقر لفتح البورتفوليو"
-        aria-hidden={curtainState === 'opened'}
-      >
-        {/* Laser Energy Seam on bottom of curtain */}
-        <div className="curtain-laser-seam">
-          <div className="curtain-laser-glow" />
-        </div>
+    <div
+      className={`ownitt-intro-portal ${curtainState}`}
+      onClick={startCurtainPull}
+      role="button"
+      tabIndex={0}
+      aria-label="انقر لفتح البورتفوليو"
+    >
+      {/* Left Door - Slides Left like ownitt.fr */}
+      <div className={`ownitt-door ownitt-door-left ${curtainState === 'opening' ? 'opening' : ''}`}>
+        <div className="ownitt-door-grain" aria-hidden="true" />
       </div>
 
-      {/* ========================================================
-          2. THE HYPER-REALISTIC 3D ARTICULATED ASTRONAUT
-          In intro: Front and Center waving hello!
-          In pulling: Ascends to top, grabs laser edge & pulls page open!
-          In opened: Glides on the right and descends smoothly with scroll!
-          ======================================================== */}
+      {/* Right Door - Slides Right like ownitt.fr */}
+      <div className={`ownitt-door ownitt-door-right ${curtainState === 'opening' ? 'opening' : ''}`}>
+        <div className="ownitt-door-grain" aria-hidden="true" />
+      </div>
+
+      {/* Center Laser Seam */}
+      <div className={`ownitt-door-seam ${curtainState === 'opening' ? 'opening' : ''}`}>
+        <div className="door-seam-glow" />
+      </div>
+
+      {/* Floating 3D Astronaut on Intro Stage (Outside Only) */}
       <aside
-        className={`real-3d-astronaut-container astronaut-phase-${curtainState}`}
+        className={`real-3d-astronaut-container astronaut-intro-stage ${curtainState === 'opening' ? 'opening' : ''}`}
         ref={containerRef}
-        style={{
-          top: curtainState === 'opened' ? `${topPos}px` : undefined,
-        }}
-        aria-label="Hyper-Realistic 3D WebGL Articulated Astronaut"
+        aria-label="3D WebGL Articulated Astronaut"
       >
-        {/* Loading Space Indicator */}
         {loading && (
           <div className="astronaut-3d-loader" aria-hidden="true">
             <div className="loader-ring" />
@@ -659,17 +629,29 @@ export default function FloatingAstronaut() {
           </div>
         )}
 
-        {/* Real-time WebGL Canvas with Touch & Drag */}
         <canvas
           ref={canvasRef}
           id="astronaut-3d-canvas"
           className="real-3d-astronaut-canvas"
-          title="انقر أو اسحب لتدوير رائد الفضاء 360 درجة!"
+          title="انقر أو اسحب لتدوير رائد الفضاء 360 درجة"
         />
 
-        {/* Subtle Zero-G Atmospheric Aura behind 3D model */}
         <div className="astronaut-3d-aura" aria-hidden="true" />
       </aside>
-    </>
+
+      {/* Futuristic Launch CTA HUD */}
+      <div className={`ownitt-launch-hud ${curtainState === 'opening' ? 'opening' : ''}`}>
+        <div className="hud-greeting-pill">
+          <span className="hud-live-dot" />
+          <span>مرحباً بك • Abdelrahman Hassan</span>
+        </div>
+        <button type="button" className="ownitt-launch-btn">
+          <i className="fa-solid fa-rocket" />
+          <span>🚀 ابدأ الرحلة البرمجية • Launch</span>
+          <i className="fa-solid fa-arrow-right" />
+        </button>
+        <span className="hud-click-hint">انقر في أي مكان للدخول إلى البورتفوليو</span>
+      </div>
+    </div>
   );
 }

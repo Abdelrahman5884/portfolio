@@ -33,7 +33,7 @@ export default function Footer() {
               />
               <div>
                 <h3 className="footer-name">{personalData.displayName}</h3>
-                <div className="footer-role">Backend Developer & Laravel Specialist</div>
+                <div className="footer-role">Software Engineer & Web Developer</div>
               </div>
             </div>
             <p className="footer-bio">

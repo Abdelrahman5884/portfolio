@@ -171,6 +171,29 @@ export default function Contact({ onShowToast }) {
               </div>
             </div>
 
+            {/* Prominent Download CV Card at the End of Portfolio ("خلى الدونلود فى الاخر") */}
+            <div className="contact-cv-card glass-card">
+              <div className="cv-card-icon-wrap">
+                <i className="fa-solid fa-file-pdf" />
+              </div>
+              <div className="cv-card-content">
+                <span className="cv-card-badge">Official Document</span>
+                <h4 className="cv-card-title">Curriculum Vitae (CV)</h4>
+                <p className="cv-card-desc">Download complete engineering credentials, backend projects, and education history.</p>
+              </div>
+              <a
+                href={personalData.cvUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-download-cv-end"
+                download="Abdelrahman_Hassan_CV.pdf"
+                title="Download Abdelrahman's CV (PDF)"
+              >
+                <i className="fa-solid fa-file-arrow-down" />
+                <span>Download CV</span>
+              </a>
+            </div>
+
             {/* Social Links Row */}
             <div className="contact-socials-row">
               <a

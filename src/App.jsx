@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -9,10 +9,12 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ParticleCanvas from './components/ParticleCanvas';
 import BackgroundBlobs from './components/BackgroundBlobs';
-import FloatingAstronaut from './components/FloatingAstronaut';
+import SectionFlipper from './components/SectionFlipper';
 import ProjectModal from './components/ProjectModal';
 import ImagePreviewModal from './components/ImagePreviewModal';
 import Toast from './components/Toast';
+
+const SECTION_IDS = ['hero', 'about', 'skills', 'projects', 'achievements', 'contact'];
 
 export default function App() {
   const animationEnabled = true;
@@ -27,21 +29,55 @@ export default function App() {
     }, 3500);
   };
 
+  // Silky Smooth Section Navigation (No jarring door lines or wheel hijacking)
+  const handleNavigate = useCallback((href) => {
+    const target = document.querySelector(href);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, []);
+
+  // Ownitt-Style Section Reveal Animations via IntersectionObserver
+  useEffect(() => {
+    const observerCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, {
+      threshold: 0.15,
+      rootMargin: '0px 0px -50px 0px',
+    });
+
+    SECTION_IDS.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.classList.add('section-reveal-ready');
+        observer.observe(el);
+      }
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className="app-container">
       {/* Background Interactive Particles & Ambient Blobs */}
       <ParticleCanvas animationEnabled={animationEnabled} />
       <BackgroundBlobs />
 
-      {/* Interactive 3D Astronaut Space Companion */}
-      {animationEnabled && <FloatingAstronaut />}
+      {/* Ownitt-style Section Flipper & Kinetic Navigation Dock */}
+      <SectionFlipper onNavigate={handleNavigate} />
 
       {/* Sticky Glass Navigation Bar */}
-      <Navbar />
+      <Navbar onNavigate={handleNavigate} />
 
       {/* Main Portfolio Sections */}
       <main id="main-content">
-        <Hero />
+        <Hero onScrollNext={handleNavigate} />
         <About />
         <Skills />
         <Projects onSelectProject={(project) => setSelectedProject(project)} />

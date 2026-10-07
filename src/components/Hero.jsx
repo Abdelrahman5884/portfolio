@@ -1,16 +1,23 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { personalData } from '../data/portfolioData';
 
-export default function Hero() {
+/**
+ * Editorial Full-Screen Hero Showcase
+ * - Left side: Name, animated typewriter text, bio summary & social links (Restored exactly as requested)
+ * - Center: Full-screen authentic portrait with interactive astronaut suit hover reveal
+ * - Background: Subtle editorial name watermark ("ABDELRAHMAN") framing shoulders
+ * - Bottom: Smooth scroll indicator leading to About section
+ */
+export default function Hero({ onScrollNext }) {
   const [typingIndex, setTypingIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
 
   // Astronaut Spacesuit Hover Reveal State
-  const photoWrapperRef = useRef(null);
+  const photoStageRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
-  const [cursorPos, setCursorPos] = useState({ x: 220, y: 160 });
-  const revealRadius = 135;
+  const [cursorPos, setCursorPos] = useState({ x: 250, y: 200 });
+  const revealRadius = 185;
 
   const texts = personalData.typingTexts;
 
@@ -43,192 +50,203 @@ export default function Hero() {
     return () => clearTimeout(timer);
   }, [displayedText, isDeleting, typingIndex, texts]);
 
-  // Track cursor position inside photo for spacesuit reveal
-  const updateCursorPosition = useCallback((clientX, clientY) => {
-    const el = photoWrapperRef.current;
+  const handleMouseMove = useCallback((e) => {
+    const el = photoStageRef.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
-    const x = Math.max(0, Math.min(rect.width, clientX - rect.left));
-    const y = Math.max(0, Math.min(rect.height, clientY - rect.top));
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
     setCursorPos({ x, y });
+    setIsHovered(true);
   }, []);
 
-  const handleMouseMove = (e) => {
+  const handleMouseEnter = useCallback((e) => {
+    const el = photoStageRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    setCursorPos({ x, y });
     setIsHovered(true);
-    updateCursorPosition(e.clientX, e.clientY);
-  };
+  }, []);
 
-  const handleMouseEnter = (e) => {
-    setIsHovered(true);
-    updateCursorPosition(e.clientX, e.clientY);
-  };
-
-  const handleMouseLeave = () => {
+  const handleMouseLeave = useCallback(() => {
     setIsHovered(false);
-  };
+  }, []);
 
-  const handleTouchMove = (e) => {
+  const handleTouchMove = useCallback((e) => {
     if (!e.touches || e.touches.length === 0) return;
+    const el = photoStageRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const touch = e.touches[0];
+    const x = touch.clientX - rect.left;
+    const y = touch.clientY - rect.top;
+    setCursorPos({ x, y });
     setIsHovered(true);
-    updateCursorPosition(e.touches[0].clientX, e.touches[0].clientY);
+  }, []);
+
+  const handleScrollClick = () => {
+    if (onScrollNext) {
+      onScrollNext('#about');
+    } else {
+      const el = document.querySelector('#about');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
-    <section id="hero" className="hero-section hero-centered-layout">
-      {/* Ambient Cosmic Radial Glow behind Hero */}
-      <div className="hero-ambient-glow" aria-hidden="true" />
+    <section id="hero" className="hero-section hero-centered-fullscreen">
+      {/* Giant Editorial Name Watermark in Deep Background Behind Photo ("باين سيكا بسيطة") */}
+      <div className="hero-giant-title" aria-hidden="true">
+        ABDELRAHMAN
+      </div>
 
-      <div className="content-wrapper hero-split-grid">
-        {/* Left Side: Clean Typography & Actions (Exactly as Requested) */}
-        <div className="hero-text-side">
-          <h1 className="hero-heading">
-            Hi, I'm <span className="gradient-text">{personalData.displayName}</span>
-          </h1>
+      {/* Atmospheric Soft Cyan Core Ambient Glow */}
+      <div className="hero-center-ambient-glow" aria-hidden="true" />
 
-          <div className="hero-typewriter-wrap">
-            <span className="typewriter-text">{displayedText}</span>
-            <span className="typewriter-cursor">_</span>
-          </div>
+      {/* Full-Screen Centered Portrait Layer */}
+      <div className="hero-fullscreen-portrait-layer">
+        <div
+          className="hero-portrait-stage"
+          ref={photoStageRef}
+          onMouseMove={handleMouseMove}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          onTouchStart={handleTouchMove}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleMouseLeave}
+        >
+          {/* Base Layer: Authentic Portrait (Front & Center, Full Screen) */}
+          <img
+            src={personalData.heroImage}
+            alt={personalData.displayName}
+            className="hero-portrait-img-base"
+            loading="eager"
+          />
 
-          <p className="hero-lead hero-clean-lead">
-            Front-End & Back-End Web Developer Specializing In Building High-Converting, Performance-Driven, Scalable Websites & RESTful APIs That Help Businesses Grow And Scale.
-          </p>
-
-          {/* Action Buttons: Ziad-Style Pill CTA & Secondary */}
-          <div className="hero-ziad-actions">
-            <a href="#contact" className="ziad-pill-cta">
-              <span>Contact Me</span>
-              <span className="ziad-arrow-circle">
-                <i className="fa-solid fa-arrow-up-right-from-square" />
-              </span>
-            </a>
-
-            <a
-              href={personalData.cvUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="ziad-secondary-cta"
-            >
-              <i className="fa-solid fa-file-arrow-down" />
-              <span>Download CV</span>
-            </a>
-          </div>
-
-          {/* Social Connect Links */}
-          <div className="hero-social-bar">
-            <span className="social-label">Connect:</span>
-            <div className="social-links">
-              <a
-                href={personalData.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="social-btn"
-                title="GitHub Profile"
-              >
-                <i className="fa-brands fa-github" />
-              </a>
-              <a
-                href={personalData.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="social-btn"
-                title="LinkedIn Profile"
-              >
-                <i className="fa-brands fa-linkedin-in" />
-              </a>
-              <a
-                href={`mailto:${personalData.email}`}
-                className="social-btn"
-                title="Send Email"
-              >
-                <i className="fa-solid fa-envelope" />
-              </a>
-              <a
-                href={personalData.whatsapp}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="social-btn"
-                title="Chat on WhatsApp"
-              >
-                <i className="fa-brands fa-whatsapp" />
-              </a>
-              <a
-                href={`tel:${personalData.phoneRaw}`}
-                className="social-btn"
-                title="Call Phone"
-              >
-                <i className="fa-solid fa-phone" />
-              </a>
-            </div>
-          </div>
-        </div>
-
-        {/* Center / Right: Centered Portrait Pillar with Spacesuit Reveal & Matching Width Name */}
-        <div className="hero-portrait-pillar">
+          {/* Interactive Astronaut Spacesuit Reveal Mask */}
           <div
-            className="hero-seamless-photo-container"
-            ref={photoWrapperRef}
-            onMouseMove={handleMouseMove}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            onTouchMove={handleTouchMove}
-            onTouchStart={handleTouchMove}
+            className="hero-spacesuit-mask-layer"
+            style={{
+              WebkitMaskImage: isHovered
+                ? `radial-gradient(circle ${revealRadius}px at ${cursorPos.x}px ${cursorPos.y}px, black 0%, black 65%, transparent 100%)`
+                : 'none',
+              maskImage: isHovered
+                ? `radial-gradient(circle ${revealRadius}px at ${cursorPos.x}px ${cursorPos.y}px, black 0%, black 65%, transparent 100%)`
+                : 'none',
+              opacity: isHovered ? 1 : 0,
+            }}
           >
-            {/* Base Layer: Authentic Balenciaga Portrait (Hands Lowered naturally) */}
             <img
-              src={personalData.heroImage}
-              alt={personalData.displayName}
-              className="hero-base-portrait-img"
+              src={personalData.heroSpacesuitImage}
+              alt={`${personalData.displayName} - Astronaut Suit`}
+              className="hero-spacesuit-img"
               loading="eager"
             />
+          </div>
 
-            {/* Overlay Layer: Astronaut Helmet & Spacesuit (Revealed via Mouse Hover) */}
+          {/* Futuristic Reveal Reticle */}
+          {isHovered && (
             <div
-              className="hero-spacesuit-reveal-mask"
+              className="hero-suit-reticle"
               style={{
-                WebkitMaskImage: isHovered
-                  ? `radial-gradient(circle ${revealRadius}px at ${cursorPos.x}px ${cursorPos.y}px, black 0%, black 68%, transparent 100%)`
-                  : 'none',
-                maskImage: isHovered
-                  ? `radial-gradient(circle ${revealRadius}px at ${cursorPos.x}px ${cursorPos.y}px, black 0%, black 68%, transparent 100%)`
-                  : 'none',
-                opacity: isHovered ? 1 : 0,
+                left: `${cursorPos.x}px`,
+                top: `${cursorPos.y}px`,
               }}
+              aria-hidden="true"
             >
-              <img
-                src={personalData.heroSpacesuitImage}
-                alt={`${personalData.displayName} - Astronaut Spacesuit Mode`}
-                className="hero-suit-portrait-img"
-                loading="eager"
-              />
+              <span className="reticle-lens-ring" />
+              <span className="reticle-plus-crosshair" />
+              <span className="reticle-tag">EVA SUIT</span>
             </div>
+          )}
+        </div>
 
-            {/* Glowing Cyber HUD Reticle Following Mouse */}
-            {isHovered && (
-              <div
-                className="hero-suit-reticle"
-                style={{
-                  left: `${cursorPos.x}px`,
-                  top: `${cursorPos.y}px`,
-                }}
-                aria-hidden="true"
-              >
-                <span className="reticle-lens-ring" />
-                <span className="reticle-plus-crosshair" />
-                <span className="reticle-tag">EVA SUIT</span>
-              </div>
-            )}
+        {/* Soft bottom vignette seamlessly blending into dark background */}
+        <div className="hero-bottom-fade" aria-hidden="true" />
+      </div>
 
-            {/* Soft Ambient Fade at Bottom into black canvas */}
-            <div className="hero-portrait-bottom-fade" aria-hidden="true" />
-          </div>
+      {/* Left Content Side: Name & Details (Restored exactly as requested) */}
+      <div className="hero-content-left">
+        <h1 className="hero-main-title">
+          Hi, I'm <br />
+          <span className="gradient-text">{personalData.displayName}</span>
+        </h1>
 
-          {/* Name Underneath: EXACT SAME WIDTH AS THE PHOTO */}
-          <div className="hero-portrait-exact-name" aria-hidden="true">
-            abdelrahman
-          </div>
+        <div className="hero-typewriter-box">
+          <span className="typewriter-prefix">&gt; </span>
+          <span className="typewriter-text">{displayedText}</span>
+          <span className="typewriter-cursor">_</span>
+        </div>
+
+        <p className="hero-lead-text">
+          Front-End &amp; Back-End Web Developer Specializing In Building High-Converting, Scalable Websites &amp; RESTful APIs.
+        </p>
+
+        {/* Social Connect Links */}
+        <div className="hero-social-pill">
+          <a
+            href={personalData.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hero-social-icon"
+            title="GitHub Profile"
+            aria-label="GitHub Profile"
+          >
+            <i className="fa-brands fa-github" />
+          </a>
+          <a
+            href={personalData.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hero-social-icon"
+            title="LinkedIn Profile"
+            aria-label="LinkedIn Profile"
+          >
+            <i className="fa-brands fa-linkedin-in" />
+          </a>
+          <a
+            href={`mailto:${personalData.email}`}
+            className="hero-social-icon"
+            title="Email Abdelrahman"
+            aria-label="Email Abdelrahman"
+          >
+            <i className="fa-solid fa-envelope" />
+          </a>
+          <a
+            href={personalData.whatsapp}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hero-social-icon"
+            title="WhatsApp Chat"
+            aria-label="WhatsApp Chat"
+          >
+            <i className="fa-brands fa-whatsapp" />
+          </a>
+          <a
+            href={`tel:${personalData.phoneRaw}`}
+            className="hero-social-icon"
+            title="Call Abdelrahman"
+            aria-label="Call Abdelrahman"
+          >
+            <i className="fa-solid fa-phone" />
+          </a>
         </div>
       </div>
+
+      {/* Ownitt.fr-Style Interactive Scroll Indicator (Bottom Center) */}
+      <button
+        type="button"
+        className="hero-ownitt-scroll-hint hero-scroll-flip-bottom"
+        onClick={handleScrollClick}
+        aria-label="Scroll to about section"
+      >
+        <span className="scroll-hint-label">SCROLL</span>
+        <div className="scroll-hint-track">
+          <span className="scroll-hint-dot" />
+        </div>
+      </button>
     </section>
   );
 }

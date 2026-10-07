@@ -1,11 +1,11 @@
 export const personalData = {
   name: "Abdelrahman Hassan Mohamed",
   displayName: "Abdelrahman Hassan",
-  title: "Back-End Developer | Laravel Specialist",
+  title: "Software Engineer",
   tagline: "Building scalable, high-performance backends & robust APIs",
   typingTexts: [
-    "Laravel & PHP Specialist",
     "High-Performance Database Architect",
+    "Laravel & PHP Specialist",
     "Scalable RESTful APIs Engineer",
     "MySQL · Redis · Sanctum Auth"
   ],
