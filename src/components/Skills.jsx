@@ -17,6 +17,7 @@ export default function Skills() {
           </p>
         </div>
 
+        {/* 5 CATEGORY CARDS — DIVIDED AS ORIGINAL, WITH BIG COLORFUL ICONS */}
         <div className="skills-categories-grid">
           {skillsCategories.map((cat, idx) => (
             <div key={idx} className="skill-category-card glass-card">
@@ -27,50 +28,37 @@ export default function Skills() {
                 <h3 className="category-title">{cat.category}</h3>
               </div>
 
-              <div className="skills-pill-wrap">
+              <div className="category-skills-grid">
                 {cat.skills.map((skill, sIdx) => (
                   <div
                     key={sIdx}
-                    className={`skill-pill ${skill.highlight ? 'highlighted' : ''}`}
+                    className={`skill-icon-tile ${skill.highlight ? 'highlighted' : ''}`}
+                    style={{
+                      '--brand-color': skill.color,
+                      '--brand-rgb': skill.rgb,
+                    }}
                   >
-                    <i className={skill.icon} />
-                    <span>{skill.name}</span>
-                    {skill.highlight && <span className="star-dot" title="Core Strength" />}
+                    {skill.highlight && (
+                      <span className="skill-tile-star" title="Core Strength">★</span>
+                    )}
+
+                    <div className="skill-tile-icon-box">
+                      {skill.isFontAwesome ? (
+                        <i className={skill.devicon} style={{ color: skill.color }} />
+                      ) : (
+                        <i
+                          className={skill.devicon}
+                          style={skill.isWhite ? { color: '#ffffff' } : undefined}
+                        />
+                      )}
+                    </div>
+
+                    <span className="skill-tile-name">{skill.name}</span>
                   </div>
                 ))}
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Engineering Standards & Languages Bar */}
-        <div className="extra-skills-row glass-card">
-          <div className="extra-skill-col">
-            <div className="extra-label">
-              <i className="fa-solid fa-shield-halved text-cyan" />
-              <span>Engineering Standards:</span>
-            </div>
-            <div className="tags-list">
-              <span className="sub-tag">SOLID Principles</span>
-              <span className="sub-tag">DRY & Clean Code</span>
-              <span className="sub-tag">OWASP Security</span>
-              <span className="sub-tag">RESTful Standards</span>
-              <span className="sub-tag">Git Flow</span>
-            </div>
-          </div>
-
-          <div className="extra-divider" />
-
-          <div className="extra-skill-col">
-            <div className="extra-label">
-              <i className="fa-solid fa-language text-emerald" />
-              <span>Languages:</span>
-            </div>
-            <div className="tags-list">
-              <span className="sub-tag highlight-lang">Arabic (Native)</span>
-              <span className="sub-tag highlight-lang">English (Professional)</span>
-            </div>
-          </div>
         </div>
       </div>
     </section>

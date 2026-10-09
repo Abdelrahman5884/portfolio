@@ -15,7 +15,6 @@ export default function Footer() {
     { name: 'Education', href: '#education' },
     { name: 'Skills', href: '#skills' },
     { name: 'Projects', href: '#projects' },
-    { name: 'Achievements', href: '#achievements' },
     { name: 'Contact', href: '#contact' }
   ];
 
@@ -27,7 +26,7 @@ export default function Footer() {
           <div className="footer-brand-box">
             <div className="footer-brand-header">
               <img
-                src={personalData.avatarUrl}
+                src={personalData.avatarUrl || '/images/profile.jpg'}
                 alt={personalData.displayName}
                 className="footer-avatar"
               />

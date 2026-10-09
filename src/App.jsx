@@ -2,24 +2,22 @@ import { useState, useEffect, useCallback } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
+import Education from './components/Education';
 import Skills from './components/Skills';
 import Projects from './components/Projects';
-import Achievements from './components/Achievements';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ParticleCanvas from './components/ParticleCanvas';
 import BackgroundBlobs from './components/BackgroundBlobs';
 import SectionFlipper from './components/SectionFlipper';
 import ProjectModal from './components/ProjectModal';
-import ImagePreviewModal from './components/ImagePreviewModal';
 import Toast from './components/Toast';
 
-const SECTION_IDS = ['hero', 'about', 'skills', 'projects', 'achievements', 'contact'];
+const SECTION_IDS = ['hero', 'about', 'education', 'skills', 'projects', 'contact'];
 
 export default function App() {
   const animationEnabled = true;
   const [selectedProject, setSelectedProject] = useState(null);
-  const [previewImage, setPreviewImage] = useState(null);
   const [toastMessage, setToastMessage] = useState('');
 
   const showToast = (msg) => {
@@ -79,9 +77,9 @@ export default function App() {
       <main id="main-content">
         <Hero onScrollNext={handleNavigate} />
         <About />
+        <Education />
         <Skills />
         <Projects onSelectProject={(project) => setSelectedProject(project)} />
-        <Achievements onPreviewCert={(imgSrc) => setPreviewImage(imgSrc)} />
         <Contact onShowToast={showToast} />
       </main>
 
@@ -93,15 +91,6 @@ export default function App() {
         <ProjectModal
           project={selectedProject}
           onClose={() => setSelectedProject(null)}
-        />
-      )}
-
-      {/* Certificate / Image Full View Modal */}
-      {previewImage && (
-        <ImagePreviewModal
-          imageSrc={previewImage}
-          onClose={() => setPreviewImage(null)}
-          title="Information Technology Institute (ITI) Credential"
         />
       )}
 

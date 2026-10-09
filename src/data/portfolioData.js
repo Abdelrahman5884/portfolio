@@ -19,79 +19,369 @@ export const personalData = {
   github: "https://github.com/Abdelrahman5884",
   linkedin: "https://www.linkedin.com/in/abdelrahman-hassan-809b3b339/",
   cvUrl: "/cv.pdf",
+  avatarUrl: "/images/profile.jpg",
+  suitImage: "/images/abdelrahman_suit.jpg",
   // Authentic portraits & Interactive Spacesuit Reveal:
   heroImage: "/images/abdelrahman_hero_balenciaga.jpg",            // Authentic Balenciaga portrait (glasses & lowered hands)
   heroOriginalImage: "/images/abdelrahman_hero_balenciaga.jpg",     // Authentic casual portrait
   heroSpacesuitImage: "/images/abdelrahman_hero_balenciaga_suit.jpg", // Astronaut Helmet & Space Suit reveal layer
   aboutImage: "/images/abdelrahman_casual_new.png",          // Casual Balenciaga Shirt (About Me)
-  journeyImage: "/images/abdelrahman_suit.jpg",             // Formal portrait (ITI & Credentials)
+  journeyImage: "/images/iti.jpg",             // Authentic ITI Graduation portrait (Creativa Hub)
   stats: [
     { label: "Years Experience", value: "2+", icon: "fa-calendar-check" },
     { label: "Production Projects", value: "8+", icon: "fa-diagram-project" },
-    { label: "ITI Certified Hours", value: "150h", icon: "fa-certificate" },
+    { label: "REST APIs Built", value: "25+", icon: "fa-network-wired" },
     { label: "Engineering @ Mansoura", value: "CS", icon: "fa-graduation-cap" }
   ]
 };
+
+export const techSkills = [
+  // Backend Development
+  {
+    id: "laravel",
+    name: "Laravel",
+    category: "backend",
+    categoryName: "Backend & DB",
+    devicon: "devicon-laravel-original colored",
+    color: "#FF2D20",
+    rgb: "255, 45, 32",
+    tag: "Core Framework",
+    highlight: true
+  },
+  {
+    id: "php",
+    name: "PHP 8.x",
+    category: "backend",
+    categoryName: "Backend & DB",
+    devicon: "devicon-php-plain colored",
+    color: "#777BB4",
+    rgb: "119, 123, 180",
+    tag: "Primary Language",
+    highlight: true
+  },
+  {
+    id: "mysql",
+    name: "MySQL",
+    category: "backend",
+    categoryName: "Backend & DB",
+    devicon: "devicon-mysql-original colored",
+    color: "#00758F",
+    rgb: "0, 117, 143",
+    tag: "Relational DB",
+    highlight: true
+  },
+  {
+    id: "redis",
+    name: "Redis",
+    category: "backend",
+    categoryName: "Backend & DB",
+    devicon: "devicon-redis-plain colored",
+    color: "#DC382D",
+    rgb: "220, 56, 45",
+    tag: "Caching & Queues",
+    highlight: true
+  },
+  {
+    id: "composer",
+    name: "Composer",
+    category: "backend",
+    categoryName: "Backend & DB",
+    devicon: "devicon-composer-line colored",
+    color: "#885630",
+    rgb: "136, 86, 48",
+    tag: "Dependency Manager",
+    highlight: false
+  },
+  {
+    id: "sqlite",
+    name: "SQLite",
+    category: "backend",
+    categoryName: "Backend & DB",
+    devicon: "devicon-sqlite-plain colored",
+    color: "#003B57",
+    rgb: "0, 59, 87",
+    tag: "Embedded DB",
+    highlight: false
+  },
+
+  // Cloud & DevOps
+  {
+    id: "aws",
+    name: "AWS EC2",
+    category: "devops",
+    categoryName: "Cloud & DevOps",
+    devicon: "devicon-amazonwebservices-plain-wordmark colored",
+    color: "#FF9900",
+    rgb: "255, 153, 0",
+    tag: "Cloud Infrastructure",
+    highlight: true
+  },
+  {
+    id: "git",
+    name: "Git",
+    category: "devops",
+    categoryName: "Cloud & DevOps",
+    devicon: "devicon-git-plain colored",
+    color: "#F05032",
+    rgb: "240, 80, 50",
+    tag: "Version Control",
+    highlight: true
+  },
+  {
+    id: "github",
+    name: "GitHub",
+    category: "devops",
+    categoryName: "Cloud & DevOps",
+    devicon: "devicon-github-original",
+    color: "#F0F6FC",
+    rgb: "240, 246, 252",
+    tag: "CI/CD & Git Flow",
+    highlight: false
+  },
+  {
+    id: "docker",
+    name: "Docker",
+    category: "devops",
+    categoryName: "Cloud & DevOps",
+    devicon: "devicon-docker-plain colored",
+    color: "#2496ED",
+    rgb: "36, 150, 237",
+    tag: "Containerization",
+    highlight: false
+  },
+  {
+    id: "linux",
+    name: "Linux",
+    category: "devops",
+    categoryName: "Cloud & DevOps",
+    devicon: "devicon-linux-plain colored",
+    color: "#FCC624",
+    rgb: "252, 198, 36",
+    tag: "Server Environment",
+    highlight: false
+  },
+  {
+    id: "apache",
+    name: "Apache",
+    category: "devops",
+    categoryName: "Cloud & DevOps",
+    devicon: "devicon-apache-plain colored",
+    color: "#D22128",
+    rgb: "210, 33, 40",
+    tag: "Web Server",
+    highlight: false
+  },
+
+  // Programming & Core
+  {
+    id: "python",
+    name: "Python",
+    category: "languages",
+    categoryName: "Programming",
+    devicon: "devicon-python-plain colored",
+    color: "#3776AB",
+    rgb: "55, 118, 171",
+    tag: "Scripting & AI Tools",
+    highlight: false
+  },
+  {
+    id: "cpp",
+    name: "C++",
+    category: "languages",
+    categoryName: "Programming",
+    devicon: "devicon-cplusplus-plain colored",
+    color: "#00599C",
+    rgb: "0, 89, 156",
+    tag: "Data Structures & OOP",
+    highlight: false
+  },
+  {
+    id: "csharp",
+    name: "C#",
+    category: "languages",
+    categoryName: "Programming",
+    devicon: "devicon-csharp-plain colored",
+    color: "#68217A",
+    rgb: "104, 33, 122",
+    tag: "OOP & CS Core",
+    highlight: false
+  },
+  {
+    id: "javascript",
+    name: "JavaScript",
+    category: "languages",
+    categoryName: "Programming",
+    devicon: "devicon-javascript-plain colored",
+    color: "#F7DF1E",
+    rgb: "247, 223, 30",
+    tag: "ES6+ Fullstack",
+    highlight: false
+  },
+
+  // Tools & IDEs
+  {
+    id: "postman",
+    name: "Postman",
+    category: "tools",
+    categoryName: "Tools & Web",
+    devicon: "devicon-postman-plain colored",
+    color: "#FF6C37",
+    rgb: "255, 108, 55",
+    tag: "API Testing & Docs",
+    highlight: false
+  },
+  {
+    id: "phpstorm",
+    name: "PhpStorm",
+    category: "tools",
+    categoryName: "Tools & Web",
+    devicon: "devicon-phpstorm-plain colored",
+    color: "#FF318C",
+    rgb: "255, 49, 140",
+    tag: "JetBrains IDE",
+    highlight: false
+  },
+  {
+    id: "vscode",
+    name: "VS Code",
+    category: "tools",
+    categoryName: "Tools & Web",
+    devicon: "devicon-vscode-plain colored",
+    color: "#007ACC",
+    rgb: "0, 122, 204",
+    tag: "Code Editor",
+    highlight: false
+  },
+
+  // Frontend & Web
+  {
+    id: "html5",
+    name: "HTML5",
+    category: "frontend",
+    categoryName: "Tools & Web",
+    devicon: "devicon-html5-plain colored",
+    color: "#E34F26",
+    rgb: "227, 79, 38",
+    tag: "Semantic Markup",
+    highlight: false
+  },
+  {
+    id: "css3",
+    name: "CSS3",
+    category: "frontend",
+    categoryName: "Tools & Web",
+    devicon: "devicon-css3-plain colored",
+    color: "#1572B6",
+    rgb: "21, 114, 182",
+    tag: "Modern Layouts",
+    highlight: false
+  },
+  {
+    id: "bootstrap",
+    name: "Bootstrap",
+    category: "frontend",
+    categoryName: "Tools & Web",
+    devicon: "devicon-bootstrap-plain colored",
+    color: "#7952B3",
+    rgb: "121, 82, 179",
+    tag: "Responsive Design",
+    highlight: false
+  },
+  {
+    id: "jquery",
+    name: "jQuery",
+    category: "frontend",
+    categoryName: "Tools & Web",
+    devicon: "devicon-jquery-plain colored",
+    color: "#0769AD",
+    rgb: "7, 105, 173",
+    tag: "DOM Manipulation",
+    highlight: false
+  },
+  {
+    id: "react",
+    name: "React",
+    category: "frontend",
+    categoryName: "Tools & Web",
+    devicon: "devicon-react-original colored",
+    color: "#61DAFB",
+    rgb: "97, 218, 251",
+    tag: "Client-Side UI",
+    highlight: false
+  }
+];
 
 export const skillsCategories = [
   {
     category: "Backend Development",
     icon: "fa-server",
     skills: [
-      { name: "Laravel (PHP)", icon: "fa-brands fa-laravel", highlight: true },
-      { name: "RESTful API Design", icon: "fa fa-network-wired", highlight: true },
-      { name: "Authentication & Sanctum", icon: "fa fa-shield-halved", highlight: false },
-      { name: "Middleware & Policies", icon: "fa fa-user-lock", highlight: false },
-      { name: "Eloquent ORM & Relations", icon: "fa fa-cubes", highlight: false },
-      { name: "Caching & Queues (Redis)", icon: "fa fa-bolt", highlight: true },
-      { name: "Unit & Feature Testing (PHPUnit)", icon: "fa fa-vial-circle-check", highlight: false },
-      { name: "Blade Templates", icon: "fa fa-layer-group", highlight: false }
+      { name: "Laravel", devicon: "devicon-laravel-original colored", color: "#FF2D20", rgb: "255, 45, 32", highlight: true },
+      { name: "PHP 8.x", devicon: "devicon-php-plain colored", color: "#777BB4", rgb: "119, 123, 180", highlight: true },
+      { name: "RESTful APIs", devicon: "fa-solid fa-network-wired", isFontAwesome: true, color: "#38BDF8", rgb: "56, 189, 248", highlight: true },
+      { name: "Redis", devicon: "devicon-redis-plain colored", color: "#DC382D", rgb: "220, 56, 45", highlight: true },
+      { name: "Sanctum Auth", devicon: "fa-solid fa-shield-halved", isFontAwesome: true, color: "#10B981", rgb: "16, 185, 129", highlight: false },
+      { name: "Composer", devicon: "devicon-composer-line colored", color: "#885630", rgb: "136, 86, 48", highlight: false }
     ]
   },
   {
     category: "Database & Architecture",
     icon: "fa-database",
     skills: [
-      { name: "MySQL Schema Design", icon: "fa fa-database", highlight: true },
-      { name: "Migrations & Seeders", icon: "fa fa-seedling", highlight: false },
-      { name: "Query Optimization & Indexing", icon: "fa fa-gauge-high", highlight: true },
-      { name: "Database Transactions", icon: "fa fa-arrow-right-arrow-left", highlight: false },
-      { name: "Redis Caching & Sessions", icon: "fa fa-bolt-lightning", highlight: true }
+      { name: "MySQL", devicon: "devicon-mysql-original colored", color: "#00758F", rgb: "0, 117, 143", highlight: true },
+      { name: "Redis Cache", devicon: "devicon-redis-plain colored", color: "#DC382D", rgb: "220, 56, 45", highlight: true },
+      { name: "PostgreSQL", devicon: "devicon-postgresql-plain colored", color: "#336791", rgb: "51, 103, 145", highlight: false },
+      { name: "SQLite", devicon: "devicon-sqlite-plain colored", color: "#003B57", rgb: "0, 59, 87", highlight: false }
     ]
   },
   {
     category: "Programming & Core",
     icon: "fa-code",
     skills: [
-      { name: "OOP & SOLID Principles", icon: "fa fa-cubes-stacked", highlight: true },
-      { name: "Data Structures & Algorithms", icon: "fa fa-diagram-project", highlight: true },
-      { name: "PHP 8.x", icon: "fa-brands fa-php", highlight: true },
-      { name: "C++", icon: "fa fa-terminal", highlight: false },
-      { name: "C#", icon: "fa fa-laptop-code", highlight: false },
-      { name: "Python", icon: "fa-brands fa-python", highlight: false }
+      { name: "PHP", devicon: "devicon-php-plain colored", color: "#777BB4", rgb: "119, 123, 180", highlight: true },
+      { name: "Python", devicon: "devicon-python-plain colored", color: "#3776AB", rgb: "55, 118, 171", highlight: false },
+      { name: "C++", devicon: "devicon-cplusplus-plain colored", color: "#00599C", rgb: "0, 89, 156", highlight: false },
+      { name: "C#", devicon: "devicon-csharp-plain colored", color: "#68217A", rgb: "104, 33, 122", highlight: false },
+      { name: "JavaScript", devicon: "devicon-javascript-plain colored", color: "#F7DF1E", rgb: "247, 223, 30", highlight: false }
     ]
   },
   {
     category: "Tools, DevOps & Cloud",
     icon: "fa-toolbox",
     skills: [
-      { name: "Git & GitHub", icon: "fa-brands fa-github", highlight: true },
-      { name: "AWS EC2", icon: "fa-brands fa-aws", highlight: true },
-      { name: "Postman API Testing", icon: "fa fa-paper-plane", highlight: false },
-      { name: "Apache & XAMPP", icon: "fa fa-server", highlight: false },
-      { name: "VS Code & PhpStorm", icon: "fa fa-file-code", highlight: false }
+      { name: "AWS EC2", devicon: "devicon-amazonwebservices-plain-wordmark colored", color: "#FF9900", rgb: "255, 153, 0", highlight: true },
+      { name: "Git", devicon: "devicon-git-plain colored", color: "#F05032", rgb: "240, 80, 50", highlight: true },
+      { name: "GitHub", devicon: "devicon-github-original", isWhite: true, color: "#F0F6FC", rgb: "240, 246, 252", highlight: false },
+      { name: "Postman", devicon: "devicon-postman-plain colored", color: "#FF6C37", rgb: "255, 108, 55", highlight: false },
+      { name: "Docker", devicon: "devicon-docker-plain colored", color: "#2496ED", rgb: "36, 150, 237", highlight: false },
+      { name: "Apache", devicon: "devicon-apache-plain colored", color: "#D22128", rgb: "210, 33, 40", highlight: false },
+      { name: "VS Code", devicon: "devicon-vscode-plain colored", color: "#007ACC", rgb: "0, 122, 204", highlight: false },
+      { name: "PhpStorm", devicon: "devicon-phpstorm-plain colored", color: "#FF318C", rgb: "255, 49, 140", highlight: false }
     ]
   },
   {
     category: "Frontend & Web",
     icon: "fa-desktop",
     skills: [
-      { name: "HTML5 & CSS3", icon: "fa-brands fa-html5", highlight: false },
-      { name: "JavaScript", icon: "fa-brands fa-js", highlight: false },
-      { name: "Bootstrap", icon: "fa-brands fa-bootstrap", highlight: false },
-      { name: "jQuery", icon: "fa fa-code", highlight: false }
+      { name: "HTML5", devicon: "devicon-html5-plain colored", color: "#E34F26", rgb: "227, 79, 38", highlight: false },
+      { name: "CSS3", devicon: "devicon-css3-plain colored", color: "#1572B6", rgb: "21, 114, 182", highlight: false },
+      { name: "JavaScript", devicon: "devicon-javascript-plain colored", color: "#F7DF1E", rgb: "247, 223, 30", highlight: false },
+      { name: "Bootstrap", devicon: "devicon-bootstrap-plain colored", color: "#7952B3", rgb: "121, 82, 179", highlight: false },
+      { name: "jQuery", devicon: "devicon-jquery-plain colored", color: "#0769AD", rgb: "7, 105, 173", highlight: false },
+      { name: "React", devicon: "devicon-react-original colored", color: "#61DAFB", rgb: "97, 218, 251", highlight: false }
     ]
   }
+];
+
+export const engineeringStandards = [
+  { name: "SOLID Principles", icon: "fa-cubes-stacked" },
+  { name: "DRY & Clean Architecture", icon: "fa-broom" },
+  { name: "OWASP API Security", icon: "fa-shield-halved" },
+  { name: "RESTful API Standards", icon: "fa-network-wired" },
+  { name: "Query Optimization & Indexing", icon: "fa-gauge-high" },
+  { name: "Database Transactions & ACID", icon: "fa-arrow-right-arrow-left" },
+  { name: "Authentication & Sanctum", icon: "fa-user-lock" },
+  { name: "Git Flow & Version Control", icon: "fa-code-branch" }
 ];
 
 export const educationData = [
@@ -120,7 +410,7 @@ export const projectsData = [
     category: "Healthcare & AI",
     tagline: "AI-Driven Clinical Diagnostics & Patient Analytics Dashboard",
     description: "An advanced clinician intelligence platform designed to help doctors analyze patient medical records, extract clinical data, and compare test results in one place. Provides intelligent medical summaries, biomarker trend tracking (HbA1c, CRP, TSH), and high-confidence AI diagnosis suggestions.",
-    image: "/images/diagnosense.jpg",
+    image: "/images/diagnosense.png",
     website: "https://diagnosense.vercel.app/",
     github: "https://github.com/Abdelrahman5884",
     linkedin: "https://www.linkedin.com/in/abdelrahman-hassan-809b3b339/",
@@ -156,7 +446,7 @@ export const projectsData = [
     category: "AI & Hospitality",
     tagline: "AI Hotel Guest Support & Meta API Platform (Aeroenix)",
     description: "Contributed to the development of Aeroenix / AZUL, an AI-powered customer service platform for hotels, as part of a development team at Aeroenix Company. Integrated Meta APIs to manage guest conversations across social media, automated customer interactions using AI, and implemented real-time notifications.",
-    image: "/images/azul.jpg",
+    image: "/images/azul.png",
     website: "https://azull.vercel.app/en/admin/login",
     github: "https://github.com/Abdelrahman5884",
     linkedin: "https://www.linkedin.com/in/abdelrahman-hassan-809b3b339/",
@@ -170,11 +460,11 @@ export const projectsData = [
   },
   {
     id: "motafawweq",
-    title: "Motafawweq (المتفوق)",
+    title: "Motafawweq",
     category: "AI & EdTech",
     tagline: "Large-Scale Educational Platform with AI Mind Mapping & Speech-to-Text",
     description: "A large-scale educational platform designed for students, teachers, educational centers, and parents. Offers an integrated learning environment featuring lesson management, interactive assessments, AI-powered speech-to-text lecture transcriptions, and interactive mind maps.",
-    image: "/images/motafawweq.jpg",
+    image: "/images/motafawweq.png",
     website: "https://motafawweq.vercel.app/",
     github: "https://github.com/Abdelrahman5884",
     linkedin: "https://www.linkedin.com/in/abdelrahman-hassan-809b3b339/",

@@ -3,9 +3,9 @@ import { useState, useEffect, useCallback } from 'react';
 const SECTIONS = [
   { id: 'hero', name: 'Intro', num: '01' },
   { id: 'about', name: 'About', num: '02' },
-  { id: 'skills', name: 'Skills', num: '03' },
-  { id: 'projects', name: 'Work', num: '04' },
-  { id: 'achievements', name: 'Credentials', num: '05' },
+  { id: 'education', name: 'Education', num: '03' },
+  { id: 'skills', name: 'Skills', num: '04' },
+  { id: 'projects', name: 'Work', num: '05' },
   { id: 'contact', name: 'Contact', num: '06' },
 ];
 

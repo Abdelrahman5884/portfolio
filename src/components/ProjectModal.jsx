@@ -22,56 +22,91 @@ export default function ProjectModal({ project, onClose }) {
   return (
     <div className="modal-backdrop" onClick={onClose} role="dialog" aria-modal="true">
       <div
-        className="modal-content glass-card"
+        className="modal-content glass-card project-modal-luxury"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close Button */}
-        <button
-          type="button"
-          className="modal-close-btn"
-          onClick={onClose}
-          aria-label="Close project modal"
-        >
-          <i className="fa-solid fa-xmark" />
-        </button>
-
-        {/* Modal Banner Image */}
-        <div className="modal-image-wrapper">
-          <img
-            src={project.image}
-            alt={project.title}
-            className="modal-banner-img"
-          />
-          <div className="modal-image-gradient" />
-          <div className="modal-badge-row">
-            <span className="modal-category-badge">{project.category}</span>
+        {/* Top Header Bar */}
+        <div className="modal-luxury-header">
+          <div className="modal-header-tags">
+            <span className="modal-category-badge">
+              <i className="fa-solid fa-layer-group" />
+              <span>{project.category}</span>
+            </span>
+            <span className="modal-status-badge">
+              <span className="status-live-dot" />
+              <span>Architecture Verified</span>
+            </span>
           </div>
+
+          <button
+            type="button"
+            className="modal-close-btn"
+            onClick={onClose}
+            aria-label="Close project modal"
+          >
+            <i className="fa-solid fa-xmark" />
+          </button>
         </div>
 
-        {/* Modal Body */}
+        {/* Modal Scrollable Body */}
         <div className="modal-body-scroll">
+          {/* Project Title & Tagline */}
           <div className="modal-header-meta">
             <h2 className="modal-title">{project.title}</h2>
-            <div className="modal-tagline">{project.tagline}</div>
+            <div className="modal-tagline">
+              <i className="fa-solid fa-terminal" />
+              <span>{project.tagline}</span>
+            </div>
           </div>
 
-          <p className="modal-description">{project.description}</p>
+          {/* High-Resolution Project Screenshot Showcase */}
+          <div className="modal-hero-frame">
+            <img
+              src={project.image}
+              alt={project.title}
+              className="modal-showcase-img"
+              loading="eager"
+            />
+            {project.website && (
+              <a
+                href={project.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="modal-floating-live-link"
+                title="Launch Live Platform"
+              >
+                <span>Live Preview</span>
+                <i className="fa-solid fa-arrow-up-right-from-square" />
+              </a>
+            )}
+          </div>
 
-          {/* Key Architectural Highlights */}
+          {/* Architectural Overview */}
+          <div className="modal-overview-block">
+            <h4 className="modal-section-title">
+              <i className="fa-solid fa-file-code text-cyan" />
+              <span>System Architecture & Overview</span>
+            </h4>
+            <p className="modal-description">{project.description}</p>
+          </div>
+
+          {/* Backend Engineering Highlights */}
           {project.features && project.features.length > 0 && (
             <div className="modal-features-section">
               <h4 className="modal-section-title">
-                <i className="fa-solid fa-cube text-cyan" />
-                <span>Backend Engineering Highlights:</span>
+                <i className="fa-solid fa-shield-halved text-cyan" />
+                <span>Backend Engineering Highlights</span>
               </h4>
-              <ul className="modal-features-list">
+              <div className="modal-features-grid">
                 {project.features.map((feat, idx) => (
-                  <li key={idx} className="modal-feature-item">
-                    <i className="fa-solid fa-circle-check feature-check-icon" />
-                    <span>{feat}</span>
-                  </li>
+                  <div key={idx} className="modal-feature-card">
+                    <div className="feature-icon-wrapper">
+                      <i className="fa-solid fa-check" />
+                    </div>
+                    <span className="feature-text">{feat}</span>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
           )}
 
@@ -79,7 +114,7 @@ export default function ProjectModal({ project, onClose }) {
           <div className="modal-tech-section">
             <h4 className="modal-section-title">
               <i className="fa-solid fa-microchip text-emerald" />
-              <span>Technology Stack & Modules:</span>
+              <span>Technology Stack & Modules</span>
             </h4>
             <div className="modal-tech-tags">
               {project.technologies.map((tech, idx) => (
@@ -90,53 +125,20 @@ export default function ProjectModal({ project, onClose }) {
             </div>
           </div>
 
-          {/* Modal Action Buttons */}
-          <div className="modal-actions-bar">
-            {project.website && (
+          {/* Only Live Website Action If Available (Removed the 3 cluttered buttons) */}
+          {project.website && (
+            <div className="modal-actions-bar single-action">
               <a
                 href={project.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn-primary"
+                className="btn btn-primary modal-primary-cta"
               >
+                <span>Launch Live Platform</span>
                 <i className="fa-solid fa-arrow-up-right-from-square" />
-                <span>Visit Live Platform</span>
               </a>
-            )}
-
-            {project.github && (
-              <a
-                href={project.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={project.website ? "btn btn-secondary" : "btn btn-primary"}
-              >
-                <i className="fa-brands fa-github" />
-                <span>Source Code (GitHub)</span>
-              </a>
-            )}
-
-            {project.linkedin && (
-              <a
-                href={project.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-secondary"
-              >
-                <i className="fa-brands fa-linkedin-in" />
-                <span>LinkedIn Showcase</span>
-              </a>
-            )}
-
-            <a
-              href="#contact"
-              onClick={onClose}
-              className="btn btn-outline-cyan"
-            >
-              <i className="fa-solid fa-paper-plane" />
-              <span>Inquire About System</span>
-            </a>
-          </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

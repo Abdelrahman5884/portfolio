@@ -1,15 +1,6 @@
-import { useState } from 'react';
 import { projectsData } from '../data/portfolioData';
 
 export default function Projects({ onSelectProject }) {
-  const [activeFilter, setActiveFilter] = useState('All');
-
-  const categories = ['All', ...Array.from(new Set(projectsData.map((p) => p.category)))];
-
-  const filteredProjects = activeFilter === 'All'
-    ? projectsData
-    : projectsData.filter((p) => p.category === activeFilter);
-
   return (
     <section id="projects" className="projects-section">
       <div className="content-wrapper">
@@ -26,30 +17,9 @@ export default function Projects({ onSelectProject }) {
           </p>
         </div>
 
-        {/* Filter Tabs */}
-        <div className="projects-filter-bar">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              type="button"
-              className={`filter-btn ${activeFilter === cat ? 'active' : ''}`}
-              onClick={() => setActiveFilter(cat)}
-            >
-              <span>{cat}</span>
-              {cat === 'All' ? (
-                <span className="filter-count">{projectsData.length}</span>
-              ) : (
-                <span className="filter-count">
-                  {projectsData.filter((p) => p.category === cat).length}
-                </span>
-              )}
-            </button>
-          ))}
-        </div>
-
         {/* Projects Grid */}
         <div className="projects-grid">
-          {filteredProjects.map((project) => (
+          {projectsData.map((project) => (
             <article
               key={project.id}
               className="project-card glass-card"

@@ -34,6 +34,7 @@ export default function Education() {
                       <span>{edu.period}</span>
                     </span>
                     <span className={`edu-status-badge ${edu.status.includes('Enrolled') ? 'active' : ''}`}>
+                      {edu.status.includes('Enrolled') && <span className="edu-live-dot" />}
                       {edu.status}
                     </span>
                   </div>
