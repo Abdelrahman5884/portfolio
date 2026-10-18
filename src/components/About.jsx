@@ -13,10 +13,6 @@ export default function About() {
       <div className="content-wrapper">
         {/* Section Header */}
         <div className="section-header">
-          <div className="section-tag">
-            <i className="fa-solid fa-code" />
-            <span>Profile &amp; Engineering Philosophy</span>
-          </div>
           <h2 className="section-title">
             About <span className="gradient-text">Me</span>
           </h2>
