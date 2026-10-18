@@ -8,7 +8,7 @@ import { personalData } from '../data/portfolioData';
  * - Background: Subtle editorial name watermark ("ABDELRAHMAN") framing shoulders
  * - Bottom: Smooth scroll indicator leading to About section
  */
-export default function Hero({ onScrollNext }) {
+export default function Hero({ onScrollNext: _onScrollNext }) {
   const [typingIndex, setTypingIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);

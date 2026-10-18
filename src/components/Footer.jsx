@@ -2,12 +2,26 @@ import { personalData } from '../data/portfolioData';
 
 const currentYear = new Date().getFullYear();
 
-export default function Footer() {
+export default function Footer({ onNavigate }) {
   const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
+    if (onNavigate) {
+      onNavigate('#hero');
+    } else {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  const handleLinkClick = (e, href) => {
+    e.preventDefault();
+    if (onNavigate) {
+      onNavigate(href);
+    } else {
+      const target = document.querySelector(href);
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   const navLinks = [
@@ -46,7 +60,11 @@ export default function Footer() {
             <ul className="footer-nav-list">
               {navLinks.map((link) => (
                 <li key={link.href}>
-                  <a href={link.href} className="footer-nav-link">
+                  <a
+                    href={link.href}
+                    className="footer-nav-link"
+                    onClick={(e) => handleLinkClick(e, link.href)}
+                  >
                     {link.name}
                   </a>
                 </li>
