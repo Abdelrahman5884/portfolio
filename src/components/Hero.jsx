@@ -86,15 +86,6 @@ export default function Hero({ onScrollNext }) {
     setIsHovered(true);
   }, []);
 
-  const handleScrollClick = () => {
-    if (onScrollNext) {
-      onScrollNext('#about');
-    } else {
-      const el = document.querySelector('#about');
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
     <section id="hero" className="hero-section hero-centered-fullscreen">
       {/* Giant Editorial Name Watermark in Deep Background Behind Photo ("باين سيكا بسيطة") */}
@@ -234,19 +225,6 @@ export default function Hero({ onScrollNext }) {
           </a>
         </div>
       </div>
-
-      {/* Ownitt.fr-Style Interactive Scroll Indicator (Bottom Center) */}
-      <button
-        type="button"
-        className="hero-ownitt-scroll-hint hero-scroll-flip-bottom"
-        onClick={handleScrollClick}
-        aria-label="Scroll to about section"
-      >
-        <span className="scroll-hint-label">SCROLL</span>
-        <div className="scroll-hint-track">
-          <span className="scroll-hint-dot" />
-        </div>
-      </button>
     </section>
   );
 }

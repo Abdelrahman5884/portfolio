@@ -22,9 +22,9 @@ export const personalData = {
   avatarUrl: "/images/profile.jpg",
   suitImage: "/images/abdelrahman_suit.jpg",
   // Authentic portraits & Interactive Spacesuit Reveal:
-  heroImage: "/images/abdelrahman_hero_balenciaga.jpg",            // Authentic Balenciaga portrait (glasses & lowered hands)
-  heroOriginalImage: "/images/abdelrahman_hero_balenciaga.jpg",     // Authentic casual portrait
-  heroSpacesuitImage: "/images/abdelrahman_hero_balenciaga_suit.jpg", // Astronaut Helmet & Space Suit reveal layer
+  heroImage: "/images/abdelrahman_suit_hero.jpg",
+  heroOriginalImage: "/images/abdelrahman_suit_hero.jpg",
+  heroSpacesuitImage: "/images/abdelrahman_astronaut_hero.jpg",
   aboutImage: "/images/abdelrahman_casual_new.png",          // Casual Balenciaga Shirt (About Me)
   journeyImage: "/images/iti.jpg",             // Authentic ITI Graduation portrait (Creativa Hub)
   stats: [
