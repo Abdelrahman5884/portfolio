@@ -196,9 +196,8 @@ export default function ParticleCanvas({ animationEnabled = true }) {
 
       time += 0.02;
 
-      // 1. Pitch-Black Cosmic Abyss
-      ctx.fillStyle = '#000000';
-      ctx.fillRect(0, 0, W, H);
+      // Clear canvas with transparency so the cinematic scene background shines through
+      ctx.clearRect(0, 0, W, H);
 
       const mouse = pointerRef.current;
       const mouseParallaxX = mouse.active ? (mouse.x - W / 2) * 0.008 : 0;
@@ -364,7 +363,7 @@ export default function ParticleCanvas({ animationEnabled = true }) {
         inset: 0,
         zIndex: 0,
         pointerEvents: 'none',
-        background: '#000000',
+        background: 'transparent',
       }}
     />
   );

@@ -8,7 +8,7 @@ import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ParticleCanvas from './components/ParticleCanvas';
-import BackgroundBlobs from './components/BackgroundBlobs';
+import CinematicSceneBackdrop from './components/CinematicSceneBackdrop';
 import SectionFlipper from './components/SectionFlipper';
 import ProjectModal from './components/ProjectModal';
 import Toast from './components/Toast';
@@ -20,6 +20,13 @@ export default function App() {
   const animationEnabled = true;
   const [selectedProject, setSelectedProject] = useState(null);
   const [toastMessage, setToastMessage] = useState('');
+  const [activeScene, setActiveScene] = useState(() => {
+    if (typeof window !== 'undefined' && window.location.hash) {
+      const hashId = window.location.hash.replace('#', '');
+      if (SECTION_IDS.includes(hashId)) return hashId;
+    }
+    return 'hero';
+  });
   const wipeRef = useRef(null);
 
   const showToast = (msg) => {
@@ -67,18 +74,21 @@ export default function App() {
     }
   }, []);
 
-  // Ownitt-Style Section Reveal Animations via IntersectionObserver
+  // Coordinated Scene Tracking via IntersectionObserver
   useEffect(() => {
     const observerCallback = (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add('in-view');
+          if (!wipeRef.current?.isTransitioning()) {
+            setActiveScene(entry.target.id);
+          }
         }
       });
     };
 
     const observer = new IntersectionObserver(observerCallback, {
-      threshold: 0.15,
+      threshold: 0.25,
       rootMargin: '0px 0px -50px 0px',
     });
 
@@ -95,12 +105,15 @@ export default function App() {
 
   return (
     <div className="app-container">
-      {/* Background Interactive Particles & Ambient Blobs */}
+      {/* Background Interactive Particles & Atmospheric Scene Backdrop */}
       <ParticleCanvas animationEnabled={animationEnabled} />
-      <BackgroundBlobs />
+      <CinematicSceneBackdrop activeScene={activeScene} />
 
       {/* Full-Screen Upward Cinematic Wipe (Jason Bergh Inspired) */}
-      <CinematicWipe ref={wipeRef} />
+      <CinematicWipe
+        ref={wipeRef}
+        onScenePrepare={(nextScene) => setActiveScene(nextScene)}
+      />
 
       {/* Ownitt-style Section Flipper & Kinetic Navigation Dock */}
       <SectionFlipper onNavigate={handleNavigate} />

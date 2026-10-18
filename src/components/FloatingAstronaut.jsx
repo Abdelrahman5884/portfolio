@@ -26,7 +26,6 @@ export default function FloatingAstronaut() {
   const canvasRef = useRef(null);
   const [loading, setLoading] = useState(true);
   const [curtainState, setCurtainState] = useState('intro'); // 'intro' | 'opened'
-  const [topPos, setTopPos] = useState(90);
 
   const curtainStateRef = useRef(curtainState);
   useEffect(() => {

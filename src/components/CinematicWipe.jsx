@@ -1,18 +1,18 @@
 import { useState, useRef, useEffect, forwardRef, useImperativeHandle, useCallback } from 'react';
 
 /**
- * CinematicPageTransition
- * Full-screen, upward-sweeping cinematic black wipe inspired by jasonbergh.com
- * - Bottom to top wipe-in (translateY: 100% -> 0%)
- * - Seamless scroll & route repositioning while 100% covered in solid black
- * - Bottom to top wipe-out (translateY: 0% -> -100%)
- * - Target total duration: ~750ms (inside the 600-850ms window)
- * - Cubic-bezier(0.76, 0, 0.24, 1) cinematic editorial easing
- * - Respects prefers-reduced-motion
- * - Auto-safety reset fail-safe
+ * CinematicWipe
+ * Premium Multi-Scene Cinematic Transition Engine (Jason Bergh Inspiration)
+ * Coordinates:
+ * 1. Outgoing scene subtle scale-down and light dimming
+ * 2. Solid black curtain upward wipe-in (translateY: 100% -> 0%)
+ * 3. Apex swap: instantaneous scroll repositioning & destination background preparation
+ * 4. Curtain upward wipe-out (translateY: 0% -> -100%)
+ * 5. Incoming scene expansion & coordinated content reveal
+ * Total duration: ~900ms (within the 700-1100ms window)
  */
 const CinematicWipe = forwardRef(function CinematicWipe(
-  { onTransitionStart, onTransitionComplete },
+  { onScenePrepare, onTransitionStart, onTransitionComplete },
   ref
 ) {
   // 'idle' | 'covering' | 'covered' | 'revealing'
@@ -20,7 +20,6 @@ const CinematicWipe = forwardRef(function CinematicWipe(
   const isNavigatingRef = useRef(false);
   const safetyTimeoutRef = useRef(null);
 
-  // Clear any existing fail-safe timer
   const clearSafetyTimer = useCallback(() => {
     if (safetyTimeoutRef.current) {
       clearTimeout(safetyTimeoutRef.current);
@@ -32,11 +31,16 @@ const CinematicWipe = forwardRef(function CinematicWipe(
     clearSafetyTimer();
     isNavigatingRef.current = false;
     setTransitionStage('idle');
+    document.body.classList.remove('scene-transition-active');
+    const mainContent = document.getElementById('main-content');
+    if (mainContent) {
+      mainContent.classList.remove('scene-outgoing', 'scene-incoming');
+    }
   }, [clearSafetyTimer]);
 
   const navigateTo = useCallback(
     (targetHref, options = {}) => {
-      // Prevent overlapping transitions if already animating
+      // Prevent rapid overlapping transitions
       if (isNavigatingRef.current) return;
 
       const href = typeof targetHref === 'string' ? targetHref : targetHref?.href;
@@ -45,71 +49,88 @@ const CinematicWipe = forwardRef(function CinematicWipe(
       const targetId = href.replace(/^#/, '');
       const targetElement = document.getElementById(targetId);
 
-      // Check current scroll position vs target element
+      // Check if already positioned at target
       const currentHash = window.location.hash.replace(/^#/, '');
       if (currentHash === targetId && targetElement) {
-        // If already at the target, ensure smooth reposition without stuck transition
         const rect = targetElement.getBoundingClientRect();
         if (Math.abs(rect.top) < 20) return;
       }
 
       isNavigatingRef.current = true;
+      document.body.classList.add('scene-transition-active');
+
+      const mainContent = document.getElementById('main-content');
       if (onTransitionStart) onTransitionStart(targetId);
 
-      // Check if user prefers reduced motion
+      // Check prefers-reduced-motion
       const prefersReducedMotion =
         typeof window !== 'undefined' &&
         window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      // Fail-safe timeout: Force reset after 1500ms if anything hangs
+      // Fail-safe auto reset timer
       clearSafetyTimer();
       safetyTimeoutRef.current = setTimeout(() => {
         resetToIdle();
-      }, 1500);
+      }, 1600);
 
-      const coverDuration = prefersReducedMotion ? 180 : 330;
-      const holdDuration = 60;
-      const revealDuration = prefersReducedMotion ? 200 : 370;
+      const coverDuration = prefersReducedMotion ? 200 : 380;
+      const holdDuration = 90;
+      const revealDuration = prefersReducedMotion ? 220 : 430;
 
-      // Stage 1: Wipe Upward from Bottom (translateY 100% -> 0%)
+      // Stage 1: Outgoing Scene Reaction & Curtain Wipe Upward
+      if (mainContent) {
+        mainContent.classList.add('scene-outgoing');
+        mainContent.classList.remove('scene-incoming');
+      }
       setTransitionStage('covering');
 
       setTimeout(() => {
-        // Stage 2: 100% Solid Black Cover
+        // Stage 2: 100% Solid Black Viewport Cover (Apex)
         setTransitionStage('covered');
 
-        // Swap scroll position instantaneously behind the solid black curtain
+        // Prepare destination background and notify parent
+        if (onScenePrepare) onScenePrepare(targetId);
+
+        // Reposition scroll cleanly behind solid black curtain
         if (targetElement) {
           targetElement.scrollIntoView({ behavior: 'auto' });
         } else if (href === '#hero' || targetId === 'hero') {
           window.scrollTo({ top: 0, behavior: 'auto' });
         }
 
-        // Update URL hash without standard jerky browser jump
+        // Update URL hash cleanly
         if (!options.isBrowserHistory && window.history?.pushState) {
           window.history.pushState(null, '', href);
         }
 
-        // Ensure rendering and layout settle behind cover
+        // Prepare incoming scene class
+        if (mainContent) {
+          mainContent.classList.remove('scene-outgoing');
+          mainContent.classList.add('scene-incoming');
+        }
+
+        // Allow browser layout and background to settle behind cover
         setTimeout(() => {
-          // Stage 3: Wipe Upward Off-Screen (translateY 0% -> -100%)
+          // Stage 3: Curtain Wipe Upward Off-Screen & Scene Reveal
           setTransitionStage('revealing');
 
-          // Trigger content reveal for destination section
+          // Trigger content reveal animations on destination section
           if (targetElement) {
             targetElement.classList.add('in-view');
-            targetElement.classList.add('cinematic-active');
           }
 
           setTimeout(() => {
-            // Stage 4: Completed, reset to idle
+            // Stage 4: Scene Settled
+            if (mainContent) {
+              mainContent.classList.remove('scene-incoming');
+            }
             resetToIdle();
             if (onTransitionComplete) onTransitionComplete(targetId);
           }, revealDuration);
         }, holdDuration);
       }, coverDuration);
     },
-    [clearSafetyTimer, resetToIdle, onTransitionStart, onTransitionComplete]
+    [clearSafetyTimer, resetToIdle, onScenePrepare, onTransitionStart, onTransitionComplete]
   );
 
   useImperativeHandle(
@@ -121,7 +142,6 @@ const CinematicWipe = forwardRef(function CinematicWipe(
     [navigateTo]
   );
 
-  // Clean up any timers on unmount
   useEffect(() => {
     return () => {
       clearSafetyTimer();
