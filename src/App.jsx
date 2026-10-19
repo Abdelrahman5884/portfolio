@@ -13,11 +13,13 @@ import SectionFlipper from './components/SectionFlipper';
 import ProjectModal from './components/ProjectModal';
 import Toast from './components/Toast';
 import CinematicWipe from './components/CinematicWipe';
+import IntroVideo from './components/IntroVideo';
 
 const SECTION_IDS = ['hero', 'about', 'education', 'skills', 'projects', 'contact'];
 
 export default function App() {
   const animationEnabled = true;
+  const [showIntro, setShowIntro] = useState(true);
   const [selectedProject, setSelectedProject] = useState(null);
   const [toastMessage, setToastMessage] = useState('');
   const [activeScene, setActiveScene] = useState(() => {
@@ -148,6 +150,11 @@ export default function App() {
           message={toastMessage}
           onClose={() => setToastMessage('')}
         />
+      )}
+
+      {/* Cinematic Full-Screen Video Intro (ekko.mp4) */}
+      {showIntro && (
+        <IntroVideo onComplete={() => setShowIntro(false)} />
       )}
     </div>
   );
