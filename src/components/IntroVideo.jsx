@@ -58,13 +58,9 @@ export default function IntroVideo({ onComplete }) {
     const playPromise = video.play();
     if (playPromise !== undefined) {
       playPromise
-        .then(() => {
-          setHasStarted(true);
-        })
         .catch((err) => {
           console.warn('Autoplay prevented or failed:', err);
           // If video completely fails to autoplay or load, dismiss gracefully
-          // after a short moment so portfolio isn't blocked
         });
     }
   }, []);
@@ -95,7 +91,6 @@ export default function IntroVideo({ onComplete }) {
         onEnded={handleFinish}
         onError={handleFinish}
         onTimeUpdate={handleTimeUpdate}
-        onPlay={() => setHasStarted(true)}
       />
 
       {/* Cinematic subtle vignette overlay */}
