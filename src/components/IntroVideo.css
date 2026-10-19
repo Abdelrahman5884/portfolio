@@ -176,18 +176,25 @@
 /* Mobile responsive adjustments */
 @media (max-width: 640px) {
   .intro-video-controls {
-    top: 1.25rem;
-    left: 1.25rem;
-    right: 1.25rem;
+    top: max(1.25rem, env(safe-area-inset-top));
+    left: max(1rem, env(safe-area-inset-left));
+    right: max(1rem, env(safe-area-inset-right));
   }
 
   .intro-video-badge {
-    padding: 0.35rem 0.75rem;
-    font-size: 0.7rem;
+    padding: 0.4rem 0.85rem;
+    font-size: 0.72rem;
   }
 
   .intro-skip-button {
-    padding: 0.45rem 1rem;
-    font-size: 0.78rem;
+    padding: 0.55rem 1.15rem;
+    font-size: 0.82rem;
+    min-height: 44px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6);
+  }
+
+  .intro-progress-track {
+    bottom: env(safe-area-inset-bottom, 0px);
+    height: 5px;
   }
 }

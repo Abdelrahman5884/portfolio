@@ -30,6 +30,18 @@ export default function Navbar({ onNavigate }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Prevent background scroll when mobile drawer is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
+
   const navLinks = [
     { name: 'About', href: '#about', id: 'about' },
     { name: 'Education', href: '#education', id: 'education' },
@@ -115,8 +127,14 @@ export default function Navbar({ onNavigate }) {
       </nav>
 
       {/* Mobile Drawer */}
-      <div className={`mobile-drawer ${mobileMenuOpen ? 'open' : ''}`}>
-        <div className="mobile-drawer-content">
+      <div
+        className={`mobile-drawer ${mobileMenuOpen ? 'open' : ''}`}
+        onClick={() => setMobileMenuOpen(false)}
+      >
+        <div
+          className="mobile-drawer-content"
+          onClick={(e) => e.stopPropagation()}
+        >
           <ul className="mobile-nav-list">
             {navLinks.map((link) => (
               <li key={link.id}>
@@ -137,7 +155,7 @@ export default function Navbar({ onNavigate }) {
               target="_blank"
               rel="noopener noreferrer"
               className="cv-download-btn w-full"
-              onClick={handleLinkClick}
+              onClick={() => setMobileMenuOpen(false)}
             >
               <i className="fa-solid fa-arrow-up-right-from-square" />
               <span>View Full CV</span>

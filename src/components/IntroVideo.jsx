@@ -78,6 +78,7 @@ export default function IntroVideo({ onComplete }) {
       className={`intro-video-overlay ${isExiting ? 'intro-video-exiting' : ''}`}
       role="dialog"
       aria-label="Portfolio Cinematic Intro"
+      onClick={handleFinish}
     >
       {/* Video Canvas */}
       <video
@@ -87,6 +88,8 @@ export default function IntroVideo({ onComplete }) {
         autoPlay
         muted
         playsInline
+        webkit-playsinline="true"
+        x5-playsinline="true"
         preload="auto"
         onEnded={handleFinish}
         onError={handleFinish}
@@ -97,7 +100,7 @@ export default function IntroVideo({ onComplete }) {
       <div className="intro-video-vignette" />
 
       {/* Top Bar with Skip Button & Soundless Badge */}
-      <div className="intro-video-controls">
+      <div className="intro-video-controls" onClick={(e) => e.stopPropagation()}>
         <div className="intro-video-badge">
           <span className="intro-pulse-dot" />
           <span>INTRO</span>
