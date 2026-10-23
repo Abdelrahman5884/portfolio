@@ -112,6 +112,44 @@
   }
 }
 
+.intro-actions-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Sound / Mute Toggle Button */
+.intro-sound-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.15rem;
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 9999px;
+  color: #f1f5f9;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+}
+
+.intro-sound-button:hover {
+  background: rgba(30, 41, 59, 0.9);
+  border-color: rgba(56, 189, 248, 0.5);
+  color: #38bdf8;
+  transform: translateY(-2px) scale(1.03);
+}
+
+.intro-sound-button:active {
+  transform: translateY(0) scale(0.98);
+}
+
 /* Modern Frosted Skip Button */
 .intro-skip-button {
   display: inline-flex;
@@ -154,6 +192,38 @@
   transform: translateX(2px);
 }
 
+/* Center Large Play Button Overlay when paused */
+.intro-center-play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.8);
+  border: 2px solid rgba(56, 189, 248, 0.6);
+  color: #38bdf8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  cursor: pointer;
+  z-index: 12;
+  box-shadow: 0 0 35px rgba(56, 189, 248, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  padding-left: 5px; /* Visual center compensation for play triangle */
+}
+
+.intro-center-play-btn:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+  background: rgba(30, 41, 59, 0.95);
+  border-color: #38bdf8;
+  box-shadow: 0 0 45px rgba(56, 189, 248, 0.6);
+}
+
 /* Bottom Progress Track & Bar */
 .intro-progress-track {
   position: absolute;
@@ -177,20 +247,38 @@
 @media (max-width: 640px) {
   .intro-video-controls {
     top: max(1.25rem, env(safe-area-inset-top));
-    left: max(1rem, env(safe-area-inset-left));
-    right: max(1rem, env(safe-area-inset-right));
+    left: max(0.85rem, env(safe-area-inset-left));
+    right: max(0.85rem, env(safe-area-inset-right));
   }
 
   .intro-video-badge {
-    padding: 0.4rem 0.85rem;
-    font-size: 0.72rem;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+  }
+
+  .intro-actions-group {
+    gap: 0.45rem;
+  }
+
+  .intro-sound-button {
+    padding: 0.45rem 0.85rem;
+    font-size: 0.76rem;
+    min-height: 38px;
+    gap: 0.4rem;
   }
 
   .intro-skip-button {
-    padding: 0.55rem 1.15rem;
-    font-size: 0.82rem;
-    min-height: 44px;
+    padding: 0.45rem 0.95rem;
+    font-size: 0.78rem;
+    min-height: 38px;
     box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6);
+  }
+
+  .intro-center-play-btn {
+    width: 64px;
+    height: 64px;
+    font-size: 22px;
   }
 
   .intro-progress-track {
@@ -198,3 +286,83 @@
     height: 5px;
   }
 }
+
+@media (max-width: 420px) {
+  .intro-sound-button span {
+    display: none;
+  }
+  .intro-sound-button {
+    padding: 0.45rem 0.75rem;
+  }
+}
+
+/* Buffering Badge & Spinner */
+.intro-buffering-badge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 1.25rem;
+  background: rgba(3, 7, 18, 0.75);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 9999px;
+  color: #e2e8f0;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+  z-index: 15;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(56, 189, 248, 0.2);
+  pointer-events: none;
+}
+
+.intro-buffer-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(56, 189, 248, 0.25);
+  border-top-color: #38bdf8;
+  border-radius: 50%;
+  animation: introBufferSpin 0.8s linear infinite;
+}
+
+@keyframes introBufferSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* Subtle Mobile Tap Hint */
+.intro-tap-hint {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(226, 232, 240, 0.65);
+  font-size: 0.76rem;
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: 0.04em;
+  background: rgba(15, 23, 42, 0.5);
+  padding: 4px 12px;
+  border-radius: 9999px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  pointer-events: none;
+  z-index: 9;
+  opacity: 0.85;
+  animation: introTapPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes introTapPulse {
+  0%, 100% { opacity: 0.55; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 0.95; transform: translateX(-50%) translateY(-2px); }
+}
+
+@media (min-width: 769px) {
+  .intro-tap-hint {
+    display: none;
+  }
+}
+

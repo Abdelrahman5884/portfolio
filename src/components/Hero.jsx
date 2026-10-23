@@ -74,6 +74,8 @@ export default function Hero({ onScrollNext: _onScrollNext }) {
     setIsHovered(false);
   }, []);
 
+  const touchTimerRef = useRef(null);
+
   const handleTouchMove = useCallback((e) => {
     if (!e.touches || e.touches.length === 0) return;
     const el = photoStageRef.current;
@@ -84,6 +86,19 @@ export default function Hero({ onScrollNext: _onScrollNext }) {
     const y = touch.clientY - rect.top;
     setCursorPos({ x, y });
     setIsHovered(true);
+
+    if (touchTimerRef.current) clearTimeout(touchTimerRef.current);
+    touchTimerRef.current = setTimeout(() => {
+      setIsHovered(false);
+    }, 2400);
+  }, []);
+
+  const handleTouchEnd = useCallback(() => {
+    // Keep visible briefly for 2s so user can admire the astronaut suit on phone
+    if (touchTimerRef.current) clearTimeout(touchTimerRef.current);
+    touchTimerRef.current = setTimeout(() => {
+      setIsHovered(false);
+    }, 2000);
   }, []);
 
   return (
@@ -106,15 +121,22 @@ export default function Hero({ onScrollNext: _onScrollNext }) {
           onMouseLeave={handleMouseLeave}
           onTouchStart={handleTouchMove}
           onTouchMove={handleTouchMove}
-          onTouchEnd={handleMouseLeave}
+          onTouchEnd={handleTouchEnd}
         >
           {/* Base Layer: Authentic Portrait (Front & Center, Full Screen) */}
-          <img
-            src={personalData.heroImage}
-            alt={personalData.displayName}
-            className="hero-portrait-img-base"
-            loading="eager"
-          />
+          <picture>
+            <source
+              srcSet={personalData.heroImage.replace(/\.(png|jpg|jpeg)$/i, '.webp')}
+              type="image/webp"
+            />
+            <img
+              src={personalData.heroImage}
+              alt={personalData.displayName}
+              className="hero-portrait-img-base"
+              loading="eager"
+              decoding="async"
+            />
+          </picture>
 
           {/* Interactive Astronaut Spacesuit Reveal Mask */}
           <div
@@ -129,12 +151,19 @@ export default function Hero({ onScrollNext: _onScrollNext }) {
               opacity: isHovered ? 1 : 0,
             }}
           >
-            <img
-              src={personalData.heroSpacesuitImage}
-              alt={`${personalData.displayName} - Astronaut Suit`}
-              className="hero-spacesuit-img"
-              loading="eager"
-            />
+            <picture>
+              <source
+                srcSet={personalData.heroSpacesuitImage.replace(/\.(png|jpg|jpeg)$/i, '.webp')}
+                type="image/webp"
+              />
+              <img
+                src={personalData.heroSpacesuitImage}
+                alt={`${personalData.displayName} - Astronaut Suit`}
+                className="hero-spacesuit-img"
+                loading="eager"
+                decoding="async"
+              />
+            </picture>
           </div>
 
           {/* Futuristic Reveal Reticle */}

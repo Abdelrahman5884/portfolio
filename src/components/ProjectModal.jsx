@@ -12,7 +12,7 @@ export default function ProjectModal({ project, onClose }) {
     window.addEventListener('keydown', handleKeyDown);
 
     return () => {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = '';
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [project, onClose]);
@@ -61,12 +61,19 @@ export default function ProjectModal({ project, onClose }) {
 
           {/* High-Resolution Project Screenshot Showcase */}
           <div className="modal-hero-frame">
-            <img
-              src={project.image}
-              alt={project.title}
-              className="modal-showcase-img"
-              loading="eager"
-            />
+            <picture>
+              <source
+                srcSet={project.image.replace(/\.(png|jpg|jpeg)$/i, '.webp')}
+                type="image/webp"
+              />
+              <img
+                src={project.image}
+                alt={project.title}
+                className="modal-showcase-img"
+                loading="eager"
+                decoding="async"
+              />
+            </picture>
             {project.website && (
               <a
                 href={project.website}

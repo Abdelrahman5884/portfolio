@@ -38,12 +38,19 @@ export default function Projects({ onSelectProject }) {
                 role="button"
                 tabIndex={-1}
               >
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="project-thumb-img"
-                  loading="lazy"
-                />
+                <picture>
+                  <source
+                    srcSet={project.image.replace(/\.(png|jpg|jpeg)$/i, '.webp')}
+                    type="image/webp"
+                  />
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="project-thumb-img"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
                 <div className="project-thumb-overlay">
                   <span className="quick-view-badge">
                     <i className="fa-solid fa-magnifying-glass-plus" />

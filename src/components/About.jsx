@@ -27,12 +27,19 @@ export default function About() {
           <div className="about-profile-col">
             <div className="about-photo-card glass-card">
               <div className="about-photo-wrapper">
-                <img
-                  src={personalData.aboutImage}
-                  alt={personalData.displayName}
-                  className="about-photo-img"
-                  loading="lazy"
-                />
+                <picture>
+                  <source
+                    srcSet={personalData.aboutImage.replace(/\.(png|jpg|jpeg)$/i, '.webp')}
+                    type="image/webp"
+                  />
+                  <img
+                    src={personalData.aboutImage}
+                    alt={personalData.displayName}
+                    className="about-photo-img"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
                 <div className="about-photo-glow" aria-hidden="true" />
               </div>
             </div>

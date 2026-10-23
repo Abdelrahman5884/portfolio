@@ -40,13 +40,16 @@ export default function App() {
 
   // Cinematic Full-Screen Wipe Navigation (Jason Bergh Inspiration)
   const handleNavigate = useCallback((href) => {
+    const targetId = typeof href === 'string' ? href.replace(/^#/, '') : '';
+    const target = document.getElementById(targetId);
+    if (target) {
+      target.classList.add('in-view');
+    }
+
     if (wipeRef.current) {
       wipeRef.current.navigate(href);
-    } else {
-      const target = document.querySelector(href);
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth' });
-      }
+    } else if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
     }
   }, []);
 
@@ -54,6 +57,8 @@ export default function App() {
   useEffect(() => {
     const handlePopState = () => {
       const hash = window.location.hash || '#hero';
+      const target = document.getElementById(hash.replace(/^#/, ''));
+      if (target) target.classList.add('in-view');
       if (wipeRef.current) {
         wipeRef.current.navigate(hash, { isBrowserHistory: true });
       }
@@ -68,15 +73,16 @@ export default function App() {
     if (window.location.hash) {
       const initialTarget = document.querySelector(window.location.hash);
       if (initialTarget) {
+        initialTarget.classList.add('in-view');
         setTimeout(() => {
           initialTarget.scrollIntoView({ behavior: 'auto' });
           initialTarget.classList.add('in-view');
-        }, 80);
+        }, 50);
       }
     }
   }, []);
 
-  // Coordinated Scene Tracking via IntersectionObserver
+  // Coordinated Scene Tracking via IntersectionObserver with eager trigger margins
   useEffect(() => {
     const observerCallback = (entries) => {
       entries.forEach((entry) => {
@@ -89,9 +95,10 @@ export default function App() {
       });
     };
 
+    const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
     const observer = new IntersectionObserver(observerCallback, {
-      threshold: 0.25,
-      rootMargin: '0px 0px -50px 0px',
+      threshold: isMobile ? 0.01 : 0.05,
+      rootMargin: isMobile ? '240px 0px 80px 0px' : '140px 0px -20px 0px',
     });
 
     SECTION_IDS.forEach((id) => {
@@ -107,8 +114,8 @@ export default function App() {
 
   return (
     <div className="app-container">
-      {/* Background Interactive Particles & Atmospheric Scene Backdrop */}
-      <ParticleCanvas animationEnabled={animationEnabled} />
+      {/* Background Interactive Particles (paused during intro for max video GPU/CPU performance) */}
+      <ParticleCanvas animationEnabled={animationEnabled && !showIntro} />
       <CinematicSceneBackdrop activeScene={activeScene} />
 
       {/* Full-Screen Upward Cinematic Wipe (Jason Bergh Inspired) */}
