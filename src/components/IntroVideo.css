@@ -112,43 +112,7 @@
   }
 }
 
-.intro-actions-group {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
-}
 
-/* Sound / Mute Toggle Button */
-.intro-sound-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.55rem 1.15rem;
-  background: rgba(15, 23, 42, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-radius: 9999px;
-  color: #f1f5f9;
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.82rem;
-  font-weight: 500;
-  cursor: pointer;
-  outline: none;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
-}
-
-.intro-sound-button:hover {
-  background: rgba(30, 41, 59, 0.9);
-  border-color: rgba(56, 189, 248, 0.5);
-  color: #38bdf8;
-  transform: translateY(-2px) scale(1.03);
-}
-
-.intro-sound-button:active {
-  transform: translateY(0) scale(0.98);
-}
 
 /* Modern Frosted Skip Button */
 .intro-skip-button {
@@ -257,17 +221,6 @@
     letter-spacing: 0.08em;
   }
 
-  .intro-actions-group {
-    gap: 0.45rem;
-  }
-
-  .intro-sound-button {
-    padding: 0.45rem 0.85rem;
-    font-size: 0.76rem;
-    min-height: 38px;
-    gap: 0.4rem;
-  }
-
   .intro-skip-button {
     padding: 0.45rem 0.95rem;
     font-size: 0.78rem;
@@ -284,15 +237,6 @@
   .intro-progress-track {
     bottom: env(safe-area-inset-bottom, 0px);
     height: 5px;
-  }
-}
-
-@media (max-width: 420px) {
-  .intro-sound-button span {
-    display: none;
-  }
-  .intro-sound-button {
-    padding: 0.45rem 0.75rem;
   }
 }
 
