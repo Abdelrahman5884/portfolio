@@ -4,10 +4,10 @@ import './IntroVideo.css';
 /**
  * IntroVideo Component
  * High-performance full-screen cinematic intro video (ekko.mp4):
- * - Direct src="/images/ekko.mp4" (faststart streaming enabled with moov atom at beginning)
- * - Autoplays muted by default for guaranteed cross-browser support
- * - Unmute / Sound toggle button
- * - Play / Pause toggle
+ * - 100% soundless / muted ("من غير صوت")
+ * - Direct src="/images/ekko.mp4" with faststart progressive streaming
+ * - Autoplays reliably across all mobile and desktop browsers
+ * - Play / Pause toggle on screen click
  * - Dedicated sleek Skip button & keyboard shortcuts (Escape / Space / Enter)
  * - Automatic smooth transition to portfolio upon completion
  */
@@ -15,7 +15,6 @@ export default function IntroVideo({ onComplete }) {
   const videoRef = useRef(null);
   const [isExiting, setIsExiting] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [isMuted, setIsMuted] = useState(true);
   const [isPlaying, setIsPlaying] = useState(true);
   const completedRef = useRef(false);
 
@@ -41,7 +40,7 @@ export default function IntroVideo({ onComplete }) {
     };
   }, []);
 
-  // Keyboard shortcut: Escape, Space, or Enter to skip
+  // Keyboard shortcut: Escape, Space, or Enter to skip/pause
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape' || e.key === 'Enter') {
@@ -50,9 +49,6 @@ export default function IntroVideo({ onComplete }) {
       } else if (e.key === ' ') {
         e.preventDefault();
         togglePlayPause();
-      } else if (e.key === 'm' || e.key === 'M') {
-        e.preventDefault();
-        toggleSound();
       }
     };
 
@@ -60,7 +56,7 @@ export default function IntroVideo({ onComplete }) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleFinish]);
 
-  // Reliable Autoplay on mount
+  // Reliable Autoplay on mount (muted is required and guaranteed by browsers)
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -79,16 +75,6 @@ export default function IntroVideo({ onComplete }) {
         });
     }
   }, []);
-
-  // Toggle sound
-  const toggleSound = (e) => {
-    if (e) e.stopPropagation();
-    const video = videoRef.current;
-    if (!video) return;
-    const nextMuted = !video.muted;
-    video.muted = nextMuted;
-    setIsMuted(nextMuted);
-  };
 
   // Toggle play/pause
   const togglePlayPause = (e) => {
@@ -117,7 +103,7 @@ export default function IntroVideo({ onComplete }) {
       role="dialog"
       aria-label="Portfolio Cinematic Intro"
     >
-      {/* Direct Full-Bleed Video Element */}
+      {/* Direct Full-Bleed Soundless Video Element */}
       <video
         ref={videoRef}
         src="/images/ekko.mp4"
@@ -149,37 +135,22 @@ export default function IntroVideo({ onComplete }) {
         </button>
       )}
 
-      {/* Top Bar with Badge, Sound Toggle & Skip Button */}
+      {/* Top Bar with Badge & Skip Button */}
       <div className="intro-video-controls">
         <div className="intro-video-badge">
           <span className="intro-pulse-dot" />
           <span>CINEMATIC INTRO</span>
         </div>
 
-        <div className="intro-actions-group">
-          {/* Sound Toggle Button */}
-          <button
-            type="button"
-            className="intro-sound-button"
-            onClick={toggleSound}
-            aria-label={isMuted ? 'Unmute intro video' : 'Mute intro video'}
-            title={isMuted ? 'Enable Sound' : 'Mute Sound'}
-          >
-            <i className={`fa-solid ${isMuted ? 'fa-volume-xmark' : 'fa-volume-high'}`} />
-            <span>{isMuted ? 'Sound Off' : 'Sound On'}</span>
-          </button>
-
-          {/* Skip Button */}
-          <button
-            type="button"
-            className="intro-skip-button"
-            onClick={handleFinish}
-            aria-label="Skip Intro Video"
-          >
-            <span>Skip</span>
-            <i className="fa-solid fa-forward-step" />
-          </button>
-        </div>
+        <button
+          type="button"
+          className="intro-skip-button"
+          onClick={handleFinish}
+          aria-label="Skip Intro Video"
+        >
+          <span>Skip</span>
+          <i className="fa-solid fa-forward-step" />
+        </button>
       </div>
 
       {/* Bottom Sleek Glowing Progress Bar */}
